@@ -1,0 +1,88 @@
+{
+    "DeviceId" : "D43DB33F",
+    "DeviceName" : "SHAS Control Hub",
+    "MySHASId" : "",
+    "ACIdList" : 
+    [
+        170,
+        187,
+        204,
+        221
+    ],
+    "ACVals" : 
+    [ 
+        {
+            "Actuators" : 
+            [ 
+                { 
+                    "ActId" : 0,
+                    "ActType" : 0,
+                    "ActVal" : 0
+                }
+            ],
+            "Sensors" : 
+            [ 
+                { 
+                    "SensId" : 0,
+                    "SensType" : 0,
+                    "SensVal" : 0
+                }
+            ]
+        }, 
+        {
+            "Actuators" : 
+            [
+                 
+                { 
+                    "ActId" : 0,
+                    "ActType" : 0,
+                    "ActVal" : 0
+                }
+            ],
+            "Sensors" : 
+            [ 
+                { 
+                    "SensId" : 0,
+                    "SensType" : 0,
+                    "SensVal" : 0
+                }
+            ]
+        }, 
+        {
+            "Actuators" : 
+            [ 
+                { 
+                    "ActId" : 0,
+                    "ActType" : 0,
+                    "ActVal" : 0
+                }
+            ],
+            "Sensors" : 
+            [ 
+                { 
+                    "SensId" : 0,
+                    "SensType" : 0,
+                    "SensVal" : 0
+                }
+            ]
+        }, 
+        {
+            "Actuators" : 
+            [ 
+                { 
+                    "ActId" : 0,
+                    "ActType" : 0,
+                    "ActVal" : 0
+                }
+            ],
+            "Sensors" : 
+            [
+                { 
+                    "SensId" : 0,
+                    "SensType" : 0,
+                    "SensVal" : 0
+                }
+            ]
+        }
+    ]
+}

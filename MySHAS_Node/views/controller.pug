@@ -1,0 +1,102 @@
+extends layout
+
+block content
+  script(type="text/javascript", src="/javascripts/sensdata_handler.js")
+  #main_viewport.viewport
+    .viewport_content_wrapper
+      .blur
+      #controller_block.disp_block
+        #controller_block_title.block_title
+          #logo_wrapper
+          h1= pagetitle 
+        #controller_block_wrapper.wrapper
+          .table_view_wrapper
+            .table_view_cell
+              table#sens_table_0.senstable
+                tr
+                  th Sens ID
+                  th Sens Type
+                  th Sens Val
+                tr(id="R0")
+                  td(id="T0R0C0")
+                  td(id="T0R0C1")
+                  td(id="T0R0C2")
+                tr(id="R1")
+                  td(id="T0R1C0")
+                  td(id="T0R1C1")
+                  td(id="T0R1C2")
+                tr(id="R2")
+                  td(id="T0R2C0")
+                  td(id="T0R2C1")
+                  td(id="T0R2C2")
+                tr(id="R3")
+                  td(id="T0R3C0")
+                  td(id="T0R3C1")
+                  td(id="T0R3C2")
+            .table_view_cell
+              table#sens_table_1.senstable
+                tr
+                  th Sens ID
+                  th Sens Type
+                  th Sens Val
+                tr(id="R0")
+                  td(id="T1R0C0")
+                  td(id="T1R0C1")
+                  td(id="T1R0C2")
+                tr(id="R1")
+                  td(id="T1R1C0")
+                  td(id="T1R1C1")
+                  td(id="T1R1C2")
+                tr(id="R2")
+                  td(id="T1R2C0")
+                  td(id="T1R2C1")
+                  td(id="T1R2C2")
+                tr(id="R3")
+                  td(id="T1R3C0")
+                  td(id="T1R3C1")
+                  td(id="T1R3C2")
+          .table_view_wrapper
+            .table_view_cell
+              table#sens_table_2.senstable
+                tr
+                  th Sens ID
+                  th Sens Type
+                  th Sens Val
+                tr(id="R0")
+                  td(id="T2R0C0")
+                  td(id="T2R0C1")
+                  td(id="T2R0C2")
+                tr(id="R1")
+                  td(id="T2R1C0")
+                  td(id="T2R1C1")
+                  td(id="T2R1C2")
+                tr(id="R2")
+                  td(id="T2R2C0")
+                  td(id="T2R2C1")
+                  td(id="T2R2C2")
+                tr(id="R3")
+                  td(id="T2R3C0")
+                  td(id="T2R3C1")
+                  td(id="T2R3C2")
+            .table_view_cell
+              table#sens_table_3.senstable
+                tr
+                  th Sens ID
+                  th Sens Type
+                  th Sens Val
+                tr(id="R0")
+                  td(id="T3R0C0")
+                  td(id="T3R0C1")
+                  td(id="T3R0C2")
+                tr(id="R1")
+                  td(id="T3R1C0")
+                  td(id="T3R1C1")
+                  td(id="T3R1C2")
+                tr(id="R2")
+                  td(id="T3R2C0")
+                  td(id="T3R2C1")
+                  td(id="T3R2C2")
+                tr(id="R3")
+                  td(id="T3R3C0")
+                  td(id="T3R3C1")
+                  td(id="T3R3C2")

@@ -1,0 +1,817 @@
+ARM GAS  C:\Users\Kotori\AppData\Local\Temp\ccoz1PtI.s 			page 1
+
+
+   1              		.syntax unified
+   2              		.cpu cortex-m3
+   3              		.fpu softvfp
+   4              		.eabi_attribute 20, 1
+   5              		.eabi_attribute 21, 1
+   6              		.eabi_attribute 23, 3
+   7              		.eabi_attribute 24, 1
+   8              		.eabi_attribute 25, 1
+   9              		.eabi_attribute 26, 1
+  10              		.eabi_attribute 30, 1
+  11              		.eabi_attribute 34, 1
+  12              		.eabi_attribute 18, 4
+  13              		.thumb
+  14              		.syntax unified
+  15              		.file	"RGB_OUT.c"
+  16              		.text
+  17              	.Ltext0:
+  18              		.cfi_sections	.debug_frame
+  19              		.section	.text.RGB_OUT_Write,"ax",%progbits
+  20              		.align	2
+  21              		.global	RGB_OUT_Write
+  22              		.thumb
+  23              		.thumb_func
+  24              		.type	RGB_OUT_Write, %function
+  25              	RGB_OUT_Write:
+  26              	.LFB0:
+  27              		.file 1 "Generated_Source\\PSoC5\\RGB_OUT.c"
+   1:Generated_Source\PSoC5/RGB_OUT.c **** /*******************************************************************************
+   2:Generated_Source\PSoC5/RGB_OUT.c **** * File Name: RGB_OUT.c  
+   3:Generated_Source\PSoC5/RGB_OUT.c **** * Version 2.20
+   4:Generated_Source\PSoC5/RGB_OUT.c **** *
+   5:Generated_Source\PSoC5/RGB_OUT.c **** * Description:
+   6:Generated_Source\PSoC5/RGB_OUT.c **** *  This file contains API to enable firmware control of a Pins component.
+   7:Generated_Source\PSoC5/RGB_OUT.c **** *
+   8:Generated_Source\PSoC5/RGB_OUT.c **** * Note:
+   9:Generated_Source\PSoC5/RGB_OUT.c **** *
+  10:Generated_Source\PSoC5/RGB_OUT.c **** ********************************************************************************
+  11:Generated_Source\PSoC5/RGB_OUT.c **** * Copyright 2008-2015, Cypress Semiconductor Corporation.  All rights reserved.
+  12:Generated_Source\PSoC5/RGB_OUT.c **** * You may use this file only in accordance with the license, terms, conditions, 
+  13:Generated_Source\PSoC5/RGB_OUT.c **** * disclaimers, and limitations in the end user license agreement accompanying 
+  14:Generated_Source\PSoC5/RGB_OUT.c **** * the software package with which this file was provided.
+  15:Generated_Source\PSoC5/RGB_OUT.c **** *******************************************************************************/
+  16:Generated_Source\PSoC5/RGB_OUT.c **** 
+  17:Generated_Source\PSoC5/RGB_OUT.c **** #include "cytypes.h"
+  18:Generated_Source\PSoC5/RGB_OUT.c **** #include "RGB_OUT.h"
+  19:Generated_Source\PSoC5/RGB_OUT.c **** 
+  20:Generated_Source\PSoC5/RGB_OUT.c **** /* APIs are not generated for P15[7:6] on PSoC 5 */
+  21:Generated_Source\PSoC5/RGB_OUT.c **** #if !(CY_PSOC5A &&\
+  22:Generated_Source\PSoC5/RGB_OUT.c **** 	 RGB_OUT__PORT == 15 && ((RGB_OUT__MASK & 0xC0) != 0))
+  23:Generated_Source\PSoC5/RGB_OUT.c **** 
+  24:Generated_Source\PSoC5/RGB_OUT.c **** 
+  25:Generated_Source\PSoC5/RGB_OUT.c **** /*******************************************************************************
+  26:Generated_Source\PSoC5/RGB_OUT.c **** * Function Name: RGB_OUT_Write
+  27:Generated_Source\PSoC5/RGB_OUT.c **** ****************************************************************************//**
+  28:Generated_Source\PSoC5/RGB_OUT.c **** *
+  29:Generated_Source\PSoC5/RGB_OUT.c **** * \brief Writes the value to the physical port (data output register), masking
+  30:Generated_Source\PSoC5/RGB_OUT.c **** *  and shifting the bits appropriately. 
+ARM GAS  C:\Users\Kotori\AppData\Local\Temp\ccoz1PtI.s 			page 2
+
+
+  31:Generated_Source\PSoC5/RGB_OUT.c **** *
+  32:Generated_Source\PSoC5/RGB_OUT.c **** * The data output register controls the signal applied to the physical pin in 
+  33:Generated_Source\PSoC5/RGB_OUT.c **** * conjunction with the drive mode parameter. This function avoids changing 
+  34:Generated_Source\PSoC5/RGB_OUT.c **** * other bits in the port by using the appropriate method (read-modify-write or
+  35:Generated_Source\PSoC5/RGB_OUT.c **** * bit banding).
+  36:Generated_Source\PSoC5/RGB_OUT.c **** *
+  37:Generated_Source\PSoC5/RGB_OUT.c **** * <b>Note</b> This function should not be used on a hardware digital output pin 
+  38:Generated_Source\PSoC5/RGB_OUT.c **** * as it is driven by the hardware signal attached to it.
+  39:Generated_Source\PSoC5/RGB_OUT.c **** *
+  40:Generated_Source\PSoC5/RGB_OUT.c **** * \param value
+  41:Generated_Source\PSoC5/RGB_OUT.c **** *  Value to write to the component instance.
+  42:Generated_Source\PSoC5/RGB_OUT.c **** *
+  43:Generated_Source\PSoC5/RGB_OUT.c **** * \return 
+  44:Generated_Source\PSoC5/RGB_OUT.c **** *  None 
+  45:Generated_Source\PSoC5/RGB_OUT.c **** *
+  46:Generated_Source\PSoC5/RGB_OUT.c **** * \sideeffect
+  47:Generated_Source\PSoC5/RGB_OUT.c **** *  If you use read-modify-write operations that are not atomic; the Interrupt 
+  48:Generated_Source\PSoC5/RGB_OUT.c **** *  Service Routines (ISR) can cause corruption of this function. An ISR that 
+  49:Generated_Source\PSoC5/RGB_OUT.c **** *  interrupts this function and performs writes to the Pins component data 
+  50:Generated_Source\PSoC5/RGB_OUT.c **** *  register can cause corrupted port data. To avoid this issue, you should 
+  51:Generated_Source\PSoC5/RGB_OUT.c **** *  either use the Per-Pin APIs (primary method) or disable interrupts around 
+  52:Generated_Source\PSoC5/RGB_OUT.c **** *  this function.
+  53:Generated_Source\PSoC5/RGB_OUT.c **** *
+  54:Generated_Source\PSoC5/RGB_OUT.c **** * \funcusage
+  55:Generated_Source\PSoC5/RGB_OUT.c **** *  \snippet RGB_OUT_SUT.c usage_RGB_OUT_Write
+  56:Generated_Source\PSoC5/RGB_OUT.c **** *******************************************************************************/
+  57:Generated_Source\PSoC5/RGB_OUT.c **** void RGB_OUT_Write(uint8 value)
+  58:Generated_Source\PSoC5/RGB_OUT.c **** {
+  28              		.loc 1 58 0
+  29              		.cfi_startproc
+  30              		@ args = 0, pretend = 0, frame = 0
+  31              		@ frame_needed = 0, uses_anonymous_args = 0
+  32              		@ link register save eliminated.
+  33              	.LVL0:
+  59:Generated_Source\PSoC5/RGB_OUT.c ****     uint8 staticBits = (RGB_OUT_DR & (uint8)(~RGB_OUT_MASK));
+  34              		.loc 1 59 0
+  35 0000 044A     		ldr	r2, .L2
+  36 0002 1378     		ldrb	r3, [r2]	@ zero_extendqisi2
+  37 0004 03F08703 		and	r3, r3, #135
+  38              	.LVL1:
+  60:Generated_Source\PSoC5/RGB_OUT.c ****     RGB_OUT_DR = staticBits | ((uint8)(value << RGB_OUT_SHIFT) & RGB_OUT_MASK);
+  39              		.loc 1 60 0
+  40 0008 C000     		lsls	r0, r0, #3
+  41              	.LVL2:
+  42 000a 00F07800 		and	r0, r0, #120
+  43 000e 1843     		orrs	r0, r0, r3
+  44 0010 1070     		strb	r0, [r2]
+  45 0012 7047     		bx	lr
+  46              	.L3:
+  47              		.align	2
+  48              	.L2:
+  49 0014 20510040 		.word	1073762592
+  50              		.cfi_endproc
+  51              	.LFE0:
+  52              		.size	RGB_OUT_Write, .-RGB_OUT_Write
+  53              		.section	.text.RGB_OUT_SetDriveMode,"ax",%progbits
+  54              		.align	2
+ARM GAS  C:\Users\Kotori\AppData\Local\Temp\ccoz1PtI.s 			page 3
+
+
+  55              		.global	RGB_OUT_SetDriveMode
+  56              		.thumb
+  57              		.thumb_func
+  58              		.type	RGB_OUT_SetDriveMode, %function
+  59              	RGB_OUT_SetDriveMode:
+  60              	.LFB1:
+  61:Generated_Source\PSoC5/RGB_OUT.c **** }
+  62:Generated_Source\PSoC5/RGB_OUT.c **** 
+  63:Generated_Source\PSoC5/RGB_OUT.c **** 
+  64:Generated_Source\PSoC5/RGB_OUT.c **** /*******************************************************************************
+  65:Generated_Source\PSoC5/RGB_OUT.c **** * Function Name: RGB_OUT_SetDriveMode
+  66:Generated_Source\PSoC5/RGB_OUT.c **** ****************************************************************************//**
+  67:Generated_Source\PSoC5/RGB_OUT.c **** *
+  68:Generated_Source\PSoC5/RGB_OUT.c **** * \brief Sets the drive mode for each of the Pins component's pins.
+  69:Generated_Source\PSoC5/RGB_OUT.c **** * 
+  70:Generated_Source\PSoC5/RGB_OUT.c **** * <b>Note</b> This affects all pins in the Pins component instance. Use the
+  71:Generated_Source\PSoC5/RGB_OUT.c **** * Per-Pin APIs if you wish to control individual pin's drive modes.
+  72:Generated_Source\PSoC5/RGB_OUT.c **** *
+  73:Generated_Source\PSoC5/RGB_OUT.c **** * \param mode
+  74:Generated_Source\PSoC5/RGB_OUT.c **** *  Mode for the selected signals. Valid options are documented in 
+  75:Generated_Source\PSoC5/RGB_OUT.c **** *  \ref driveMode.
+  76:Generated_Source\PSoC5/RGB_OUT.c **** *
+  77:Generated_Source\PSoC5/RGB_OUT.c **** * \return
+  78:Generated_Source\PSoC5/RGB_OUT.c **** *  None
+  79:Generated_Source\PSoC5/RGB_OUT.c **** *
+  80:Generated_Source\PSoC5/RGB_OUT.c **** * \sideeffect
+  81:Generated_Source\PSoC5/RGB_OUT.c **** *  If you use read-modify-write operations that are not atomic, the ISR can
+  82:Generated_Source\PSoC5/RGB_OUT.c **** *  cause corruption of this function. An ISR that interrupts this function 
+  83:Generated_Source\PSoC5/RGB_OUT.c **** *  and performs writes to the Pins component Drive Mode registers can cause 
+  84:Generated_Source\PSoC5/RGB_OUT.c **** *  corrupted port data. To avoid this issue, you should either use the Per-Pin
+  85:Generated_Source\PSoC5/RGB_OUT.c **** *  APIs (primary method) or disable interrupts around this function.
+  86:Generated_Source\PSoC5/RGB_OUT.c **** *
+  87:Generated_Source\PSoC5/RGB_OUT.c **** * \funcusage
+  88:Generated_Source\PSoC5/RGB_OUT.c **** *  \snippet RGB_OUT_SUT.c usage_RGB_OUT_SetDriveMode
+  89:Generated_Source\PSoC5/RGB_OUT.c **** *******************************************************************************/
+  90:Generated_Source\PSoC5/RGB_OUT.c **** void RGB_OUT_SetDriveMode(uint8 mode)
+  91:Generated_Source\PSoC5/RGB_OUT.c **** {
+  61              		.loc 1 91 0
+  62              		.cfi_startproc
+  63              		@ args = 0, pretend = 0, frame = 0
+  64              		@ frame_needed = 0, uses_anonymous_args = 0
+  65              		@ link register save eliminated.
+  66              	.LVL3:
+  92:Generated_Source\PSoC5/RGB_OUT.c **** 	CyPins_SetPinDriveMode(RGB_OUT_0, mode);
+  67              		.loc 1 92 0
+  68 0000 0D4A     		ldr	r2, .L5
+  69 0002 1378     		ldrb	r3, [r2]	@ zero_extendqisi2
+  70 0004 00F00E00 		and	r0, r0, #14
+  71              	.LVL4:
+  72 0008 03F0F103 		and	r3, r3, #241
+  73 000c 0343     		orrs	r3, r3, r0
+  74 000e 1370     		strb	r3, [r2]
+  93:Generated_Source\PSoC5/RGB_OUT.c **** 	CyPins_SetPinDriveMode(RGB_OUT_1, mode);
+  75              		.loc 1 93 0
+  76 0010 0132     		adds	r2, r2, #1
+  77 0012 1378     		ldrb	r3, [r2]	@ zero_extendqisi2
+  78 0014 03F0F103 		and	r3, r3, #241
+ARM GAS  C:\Users\Kotori\AppData\Local\Temp\ccoz1PtI.s 			page 4
+
+
+  79 0018 0343     		orrs	r3, r3, r0
+  80 001a 1370     		strb	r3, [r2]
+  94:Generated_Source\PSoC5/RGB_OUT.c **** 	CyPins_SetPinDriveMode(RGB_OUT_2, mode);
+  81              		.loc 1 94 0
+  82 001c 0132     		adds	r2, r2, #1
+  83 001e 1378     		ldrb	r3, [r2]	@ zero_extendqisi2
+  84 0020 03F0F103 		and	r3, r3, #241
+  85 0024 0343     		orrs	r3, r3, r0
+  86 0026 1370     		strb	r3, [r2]
+  95:Generated_Source\PSoC5/RGB_OUT.c **** 	CyPins_SetPinDriveMode(RGB_OUT_3, mode);
+  87              		.loc 1 95 0
+  88 0028 0132     		adds	r2, r2, #1
+  89 002a 1378     		ldrb	r3, [r2]	@ zero_extendqisi2
+  90 002c 03F0F103 		and	r3, r3, #241
+  91 0030 1843     		orrs	r0, r0, r3
+  92 0032 1070     		strb	r0, [r2]
+  93 0034 7047     		bx	lr
+  94              	.L6:
+  95 0036 00BF     		.align	2
+  96              	.L5:
+  97 0038 13500040 		.word	1073762323
+  98              		.cfi_endproc
+  99              	.LFE1:
+ 100              		.size	RGB_OUT_SetDriveMode, .-RGB_OUT_SetDriveMode
+ 101              		.section	.text.RGB_OUT_Read,"ax",%progbits
+ 102              		.align	2
+ 103              		.global	RGB_OUT_Read
+ 104              		.thumb
+ 105              		.thumb_func
+ 106              		.type	RGB_OUT_Read, %function
+ 107              	RGB_OUT_Read:
+ 108              	.LFB2:
+  96:Generated_Source\PSoC5/RGB_OUT.c **** }
+  97:Generated_Source\PSoC5/RGB_OUT.c **** 
+  98:Generated_Source\PSoC5/RGB_OUT.c **** 
+  99:Generated_Source\PSoC5/RGB_OUT.c **** /*******************************************************************************
+ 100:Generated_Source\PSoC5/RGB_OUT.c **** * Function Name: RGB_OUT_Read
+ 101:Generated_Source\PSoC5/RGB_OUT.c **** ****************************************************************************//**
+ 102:Generated_Source\PSoC5/RGB_OUT.c **** *
+ 103:Generated_Source\PSoC5/RGB_OUT.c **** * \brief Reads the associated physical port (pin status register) and masks 
+ 104:Generated_Source\PSoC5/RGB_OUT.c **** *  the required bits according to the width and bit position of the component
+ 105:Generated_Source\PSoC5/RGB_OUT.c **** *  instance. 
+ 106:Generated_Source\PSoC5/RGB_OUT.c **** *
+ 107:Generated_Source\PSoC5/RGB_OUT.c **** * The pin's status register returns the current logic level present on the 
+ 108:Generated_Source\PSoC5/RGB_OUT.c **** * physical pin.
+ 109:Generated_Source\PSoC5/RGB_OUT.c **** *
+ 110:Generated_Source\PSoC5/RGB_OUT.c **** * \return 
+ 111:Generated_Source\PSoC5/RGB_OUT.c **** *  The current value for the pins in the component as a right justified number.
+ 112:Generated_Source\PSoC5/RGB_OUT.c **** *
+ 113:Generated_Source\PSoC5/RGB_OUT.c **** * \funcusage
+ 114:Generated_Source\PSoC5/RGB_OUT.c **** *  \snippet RGB_OUT_SUT.c usage_RGB_OUT_Read  
+ 115:Generated_Source\PSoC5/RGB_OUT.c **** *******************************************************************************/
+ 116:Generated_Source\PSoC5/RGB_OUT.c **** uint8 RGB_OUT_Read(void)
+ 117:Generated_Source\PSoC5/RGB_OUT.c **** {
+ 109              		.loc 1 117 0
+ 110              		.cfi_startproc
+ 111              		@ args = 0, pretend = 0, frame = 0
+ARM GAS  C:\Users\Kotori\AppData\Local\Temp\ccoz1PtI.s 			page 5
+
+
+ 112              		@ frame_needed = 0, uses_anonymous_args = 0
+ 113              		@ link register save eliminated.
+ 118:Generated_Source\PSoC5/RGB_OUT.c ****     return (RGB_OUT_PS & RGB_OUT_MASK) >> RGB_OUT_SHIFT;
+ 114              		.loc 1 118 0
+ 115 0000 024B     		ldr	r3, .L8
+ 116 0002 1878     		ldrb	r0, [r3]	@ zero_extendqisi2
+ 119:Generated_Source\PSoC5/RGB_OUT.c **** }
+ 117              		.loc 1 119 0
+ 118 0004 C0F3C300 		ubfx	r0, r0, #3, #4
+ 119 0008 7047     		bx	lr
+ 120              	.L9:
+ 121 000a 00BF     		.align	2
+ 122              	.L8:
+ 123 000c 21510040 		.word	1073762593
+ 124              		.cfi_endproc
+ 125              	.LFE2:
+ 126              		.size	RGB_OUT_Read, .-RGB_OUT_Read
+ 127              		.section	.text.RGB_OUT_ReadDataReg,"ax",%progbits
+ 128              		.align	2
+ 129              		.global	RGB_OUT_ReadDataReg
+ 130              		.thumb
+ 131              		.thumb_func
+ 132              		.type	RGB_OUT_ReadDataReg, %function
+ 133              	RGB_OUT_ReadDataReg:
+ 134              	.LFB3:
+ 120:Generated_Source\PSoC5/RGB_OUT.c **** 
+ 121:Generated_Source\PSoC5/RGB_OUT.c **** 
+ 122:Generated_Source\PSoC5/RGB_OUT.c **** /*******************************************************************************
+ 123:Generated_Source\PSoC5/RGB_OUT.c **** * Function Name: RGB_OUT_ReadDataReg
+ 124:Generated_Source\PSoC5/RGB_OUT.c **** ****************************************************************************//**
+ 125:Generated_Source\PSoC5/RGB_OUT.c **** *
+ 126:Generated_Source\PSoC5/RGB_OUT.c **** * \brief Reads the associated physical port's data output register and masks 
+ 127:Generated_Source\PSoC5/RGB_OUT.c **** *  the correct bits according to the width and bit position of the component 
+ 128:Generated_Source\PSoC5/RGB_OUT.c **** *  instance. 
+ 129:Generated_Source\PSoC5/RGB_OUT.c **** *
+ 130:Generated_Source\PSoC5/RGB_OUT.c **** * The data output register controls the signal applied to the physical pin in 
+ 131:Generated_Source\PSoC5/RGB_OUT.c **** * conjunction with the drive mode parameter. This is not the same as the 
+ 132:Generated_Source\PSoC5/RGB_OUT.c **** * preferred RGB_OUT_Read() API because the 
+ 133:Generated_Source\PSoC5/RGB_OUT.c **** * RGB_OUT_ReadDataReg() reads the data register instead of the status 
+ 134:Generated_Source\PSoC5/RGB_OUT.c **** * register. For output pins this is a useful function to determine the value 
+ 135:Generated_Source\PSoC5/RGB_OUT.c **** * just written to the pin.
+ 136:Generated_Source\PSoC5/RGB_OUT.c **** *
+ 137:Generated_Source\PSoC5/RGB_OUT.c **** * \return 
+ 138:Generated_Source\PSoC5/RGB_OUT.c **** *  The current value of the data register masked and shifted into a right 
+ 139:Generated_Source\PSoC5/RGB_OUT.c **** *  justified number for the component instance.
+ 140:Generated_Source\PSoC5/RGB_OUT.c **** *
+ 141:Generated_Source\PSoC5/RGB_OUT.c **** * \funcusage
+ 142:Generated_Source\PSoC5/RGB_OUT.c **** *  \snippet RGB_OUT_SUT.c usage_RGB_OUT_ReadDataReg 
+ 143:Generated_Source\PSoC5/RGB_OUT.c **** *******************************************************************************/
+ 144:Generated_Source\PSoC5/RGB_OUT.c **** uint8 RGB_OUT_ReadDataReg(void)
+ 145:Generated_Source\PSoC5/RGB_OUT.c **** {
+ 135              		.loc 1 145 0
+ 136              		.cfi_startproc
+ 137              		@ args = 0, pretend = 0, frame = 0
+ 138              		@ frame_needed = 0, uses_anonymous_args = 0
+ 139              		@ link register save eliminated.
+ 146:Generated_Source\PSoC5/RGB_OUT.c ****     return (RGB_OUT_DR & RGB_OUT_MASK) >> RGB_OUT_SHIFT;
+ARM GAS  C:\Users\Kotori\AppData\Local\Temp\ccoz1PtI.s 			page 6
+
+
+ 140              		.loc 1 146 0
+ 141 0000 024B     		ldr	r3, .L11
+ 142 0002 1878     		ldrb	r0, [r3]	@ zero_extendqisi2
+ 147:Generated_Source\PSoC5/RGB_OUT.c **** }
+ 143              		.loc 1 147 0
+ 144 0004 C0F3C300 		ubfx	r0, r0, #3, #4
+ 145 0008 7047     		bx	lr
+ 146              	.L12:
+ 147 000a 00BF     		.align	2
+ 148              	.L11:
+ 149 000c 20510040 		.word	1073762592
+ 150              		.cfi_endproc
+ 151              	.LFE3:
+ 152              		.size	RGB_OUT_ReadDataReg, .-RGB_OUT_ReadDataReg
+ 153              		.text
+ 154              	.Letext0:
+ 155              		.file 2 "Generated_Source\\PSoC5\\cytypes.h"
+ 156              		.section	.debug_info,"",%progbits
+ 157              	.Ldebug_info0:
+ 158 0000 1B010000 		.4byte	0x11b
+ 159 0004 0400     		.2byte	0x4
+ 160 0006 00000000 		.4byte	.Ldebug_abbrev0
+ 161 000a 04       		.byte	0x4
+ 162 000b 01       		.uleb128 0x1
+ 163 000c 25000000 		.4byte	.LASF20
+ 164 0010 0C       		.byte	0xc
+ 165 0011 B3000000 		.4byte	.LASF21
+ 166 0015 05010000 		.4byte	.LASF22
+ 167 0019 00000000 		.4byte	.Ldebug_ranges0+0
+ 168 001d 00000000 		.4byte	0
+ 169 0021 00000000 		.4byte	.Ldebug_line0
+ 170 0025 02       		.uleb128 0x2
+ 171 0026 01       		.byte	0x1
+ 172 0027 06       		.byte	0x6
+ 173 0028 D4010000 		.4byte	.LASF0
+ 174 002c 02       		.uleb128 0x2
+ 175 002d 01       		.byte	0x1
+ 176 002e 08       		.byte	0x8
+ 177 002f 17000000 		.4byte	.LASF1
+ 178 0033 02       		.uleb128 0x2
+ 179 0034 02       		.byte	0x2
+ 180 0035 05       		.byte	0x5
+ 181 0036 AD010000 		.4byte	.LASF2
+ 182 003a 02       		.uleb128 0x2
+ 183 003b 02       		.byte	0x2
+ 184 003c 07       		.byte	0x7
+ 185 003d EB000000 		.4byte	.LASF3
+ 186 0041 02       		.uleb128 0x2
+ 187 0042 04       		.byte	0x4
+ 188 0043 05       		.byte	0x5
+ 189 0044 BD010000 		.4byte	.LASF4
+ 190 0048 02       		.uleb128 0x2
+ 191 0049 04       		.byte	0x4
+ 192 004a 07       		.byte	0x7
+ 193 004b D9000000 		.4byte	.LASF5
+ 194 004f 02       		.uleb128 0x2
+ 195 0050 08       		.byte	0x8
+ARM GAS  C:\Users\Kotori\AppData\Local\Temp\ccoz1PtI.s 			page 7
+
+
+ 196 0051 05       		.byte	0x5
+ 197 0052 85010000 		.4byte	.LASF6
+ 198 0056 02       		.uleb128 0x2
+ 199 0057 08       		.byte	0x8
+ 200 0058 07       		.byte	0x7
+ 201 0059 69010000 		.4byte	.LASF7
+ 202 005d 03       		.uleb128 0x3
+ 203 005e 04       		.byte	0x4
+ 204 005f 05       		.byte	0x5
+ 205 0060 696E7400 		.ascii	"int\000"
+ 206 0064 02       		.uleb128 0x2
+ 207 0065 04       		.byte	0x4
+ 208 0066 07       		.byte	0x7
+ 209 0067 5C010000 		.4byte	.LASF8
+ 210 006b 04       		.uleb128 0x4
+ 211 006c B7010000 		.4byte	.LASF12
+ 212 0070 02       		.byte	0x2
+ 213 0071 E401     		.2byte	0x1e4
+ 214 0073 2C000000 		.4byte	0x2c
+ 215 0077 02       		.uleb128 0x2
+ 216 0078 04       		.byte	0x4
+ 217 0079 04       		.byte	0x4
+ 218 007a 11000000 		.4byte	.LASF9
+ 219 007e 02       		.uleb128 0x2
+ 220 007f 08       		.byte	0x8
+ 221 0080 04       		.byte	0x4
+ 222 0081 FE000000 		.4byte	.LASF10
+ 223 0085 02       		.uleb128 0x2
+ 224 0086 01       		.byte	0x1
+ 225 0087 08       		.byte	0x8
+ 226 0088 93010000 		.4byte	.LASF11
+ 227 008c 04       		.uleb128 0x4
+ 228 008d D4000000 		.4byte	.LASF13
+ 229 0091 02       		.byte	0x2
+ 230 0092 8E02     		.2byte	0x28e
+ 231 0094 98000000 		.4byte	0x98
+ 232 0098 05       		.uleb128 0x5
+ 233 0099 6B000000 		.4byte	0x6b
+ 234 009d 06       		.uleb128 0x6
+ 235 009e C6010000 		.4byte	.LASF14
+ 236 00a2 01       		.byte	0x1
+ 237 00a3 39       		.byte	0x39
+ 238 00a4 00000000 		.4byte	.LFB0
+ 239 00a8 18000000 		.4byte	.LFE0-.LFB0
+ 240 00ac 01       		.uleb128 0x1
+ 241 00ad 9C       		.byte	0x9c
+ 242 00ae CF000000 		.4byte	0xcf
+ 243 00b2 07       		.uleb128 0x7
+ 244 00b3 00000000 		.4byte	.LASF16
+ 245 00b7 01       		.byte	0x1
+ 246 00b8 39       		.byte	0x39
+ 247 00b9 6B000000 		.4byte	0x6b
+ 248 00bd 00000000 		.4byte	.LLST0
+ 249 00c1 08       		.uleb128 0x8
+ 250 00c2 06000000 		.4byte	.LASF23
+ 251 00c6 01       		.byte	0x1
+ 252 00c7 3B       		.byte	0x3b
+ARM GAS  C:\Users\Kotori\AppData\Local\Temp\ccoz1PtI.s 			page 8
+
+
+ 253 00c8 6B000000 		.4byte	0x6b
+ 254 00cc 01       		.uleb128 0x1
+ 255 00cd 53       		.byte	0x53
+ 256 00ce 00       		.byte	0
+ 257 00cf 06       		.uleb128 0x6
+ 258 00d0 98010000 		.4byte	.LASF15
+ 259 00d4 01       		.byte	0x1
+ 260 00d5 5A       		.byte	0x5a
+ 261 00d6 00000000 		.4byte	.LFB1
+ 262 00da 3C000000 		.4byte	.LFE1-.LFB1
+ 263 00de 01       		.uleb128 0x1
+ 264 00df 9C       		.byte	0x9c
+ 265 00e0 F4000000 		.4byte	0xf4
+ 266 00e4 07       		.uleb128 0x7
+ 267 00e5 80010000 		.4byte	.LASF17
+ 268 00e9 01       		.byte	0x1
+ 269 00ea 5A       		.byte	0x5a
+ 270 00eb 6B000000 		.4byte	0x6b
+ 271 00ef 21000000 		.4byte	.LLST1
+ 272 00f3 00       		.byte	0
+ 273 00f4 09       		.uleb128 0x9
+ 274 00f5 E0010000 		.4byte	.LASF18
+ 275 00f9 01       		.byte	0x1
+ 276 00fa 74       		.byte	0x74
+ 277 00fb 6B000000 		.4byte	0x6b
+ 278 00ff 00000000 		.4byte	.LFB2
+ 279 0103 10000000 		.4byte	.LFE2-.LFB2
+ 280 0107 01       		.uleb128 0x1
+ 281 0108 9C       		.byte	0x9c
+ 282 0109 09       		.uleb128 0x9
+ 283 010a ED010000 		.4byte	.LASF19
+ 284 010e 01       		.byte	0x1
+ 285 010f 90       		.byte	0x90
+ 286 0110 6B000000 		.4byte	0x6b
+ 287 0114 00000000 		.4byte	.LFB3
+ 288 0118 10000000 		.4byte	.LFE3-.LFB3
+ 289 011c 01       		.uleb128 0x1
+ 290 011d 9C       		.byte	0x9c
+ 291 011e 00       		.byte	0
+ 292              		.section	.debug_abbrev,"",%progbits
+ 293              	.Ldebug_abbrev0:
+ 294 0000 01       		.uleb128 0x1
+ 295 0001 11       		.uleb128 0x11
+ 296 0002 01       		.byte	0x1
+ 297 0003 25       		.uleb128 0x25
+ 298 0004 0E       		.uleb128 0xe
+ 299 0005 13       		.uleb128 0x13
+ 300 0006 0B       		.uleb128 0xb
+ 301 0007 03       		.uleb128 0x3
+ 302 0008 0E       		.uleb128 0xe
+ 303 0009 1B       		.uleb128 0x1b
+ 304 000a 0E       		.uleb128 0xe
+ 305 000b 55       		.uleb128 0x55
+ 306 000c 17       		.uleb128 0x17
+ 307 000d 11       		.uleb128 0x11
+ 308 000e 01       		.uleb128 0x1
+ 309 000f 10       		.uleb128 0x10
+ARM GAS  C:\Users\Kotori\AppData\Local\Temp\ccoz1PtI.s 			page 9
+
+
+ 310 0010 17       		.uleb128 0x17
+ 311 0011 00       		.byte	0
+ 312 0012 00       		.byte	0
+ 313 0013 02       		.uleb128 0x2
+ 314 0014 24       		.uleb128 0x24
+ 315 0015 00       		.byte	0
+ 316 0016 0B       		.uleb128 0xb
+ 317 0017 0B       		.uleb128 0xb
+ 318 0018 3E       		.uleb128 0x3e
+ 319 0019 0B       		.uleb128 0xb
+ 320 001a 03       		.uleb128 0x3
+ 321 001b 0E       		.uleb128 0xe
+ 322 001c 00       		.byte	0
+ 323 001d 00       		.byte	0
+ 324 001e 03       		.uleb128 0x3
+ 325 001f 24       		.uleb128 0x24
+ 326 0020 00       		.byte	0
+ 327 0021 0B       		.uleb128 0xb
+ 328 0022 0B       		.uleb128 0xb
+ 329 0023 3E       		.uleb128 0x3e
+ 330 0024 0B       		.uleb128 0xb
+ 331 0025 03       		.uleb128 0x3
+ 332 0026 08       		.uleb128 0x8
+ 333 0027 00       		.byte	0
+ 334 0028 00       		.byte	0
+ 335 0029 04       		.uleb128 0x4
+ 336 002a 16       		.uleb128 0x16
+ 337 002b 00       		.byte	0
+ 338 002c 03       		.uleb128 0x3
+ 339 002d 0E       		.uleb128 0xe
+ 340 002e 3A       		.uleb128 0x3a
+ 341 002f 0B       		.uleb128 0xb
+ 342 0030 3B       		.uleb128 0x3b
+ 343 0031 05       		.uleb128 0x5
+ 344 0032 49       		.uleb128 0x49
+ 345 0033 13       		.uleb128 0x13
+ 346 0034 00       		.byte	0
+ 347 0035 00       		.byte	0
+ 348 0036 05       		.uleb128 0x5
+ 349 0037 35       		.uleb128 0x35
+ 350 0038 00       		.byte	0
+ 351 0039 49       		.uleb128 0x49
+ 352 003a 13       		.uleb128 0x13
+ 353 003b 00       		.byte	0
+ 354 003c 00       		.byte	0
+ 355 003d 06       		.uleb128 0x6
+ 356 003e 2E       		.uleb128 0x2e
+ 357 003f 01       		.byte	0x1
+ 358 0040 3F       		.uleb128 0x3f
+ 359 0041 19       		.uleb128 0x19
+ 360 0042 03       		.uleb128 0x3
+ 361 0043 0E       		.uleb128 0xe
+ 362 0044 3A       		.uleb128 0x3a
+ 363 0045 0B       		.uleb128 0xb
+ 364 0046 3B       		.uleb128 0x3b
+ 365 0047 0B       		.uleb128 0xb
+ 366 0048 27       		.uleb128 0x27
+ARM GAS  C:\Users\Kotori\AppData\Local\Temp\ccoz1PtI.s 			page 10
+
+
+ 367 0049 19       		.uleb128 0x19
+ 368 004a 11       		.uleb128 0x11
+ 369 004b 01       		.uleb128 0x1
+ 370 004c 12       		.uleb128 0x12
+ 371 004d 06       		.uleb128 0x6
+ 372 004e 40       		.uleb128 0x40
+ 373 004f 18       		.uleb128 0x18
+ 374 0050 9742     		.uleb128 0x2117
+ 375 0052 19       		.uleb128 0x19
+ 376 0053 01       		.uleb128 0x1
+ 377 0054 13       		.uleb128 0x13
+ 378 0055 00       		.byte	0
+ 379 0056 00       		.byte	0
+ 380 0057 07       		.uleb128 0x7
+ 381 0058 05       		.uleb128 0x5
+ 382 0059 00       		.byte	0
+ 383 005a 03       		.uleb128 0x3
+ 384 005b 0E       		.uleb128 0xe
+ 385 005c 3A       		.uleb128 0x3a
+ 386 005d 0B       		.uleb128 0xb
+ 387 005e 3B       		.uleb128 0x3b
+ 388 005f 0B       		.uleb128 0xb
+ 389 0060 49       		.uleb128 0x49
+ 390 0061 13       		.uleb128 0x13
+ 391 0062 02       		.uleb128 0x2
+ 392 0063 17       		.uleb128 0x17
+ 393 0064 00       		.byte	0
+ 394 0065 00       		.byte	0
+ 395 0066 08       		.uleb128 0x8
+ 396 0067 34       		.uleb128 0x34
+ 397 0068 00       		.byte	0
+ 398 0069 03       		.uleb128 0x3
+ 399 006a 0E       		.uleb128 0xe
+ 400 006b 3A       		.uleb128 0x3a
+ 401 006c 0B       		.uleb128 0xb
+ 402 006d 3B       		.uleb128 0x3b
+ 403 006e 0B       		.uleb128 0xb
+ 404 006f 49       		.uleb128 0x49
+ 405 0070 13       		.uleb128 0x13
+ 406 0071 02       		.uleb128 0x2
+ 407 0072 18       		.uleb128 0x18
+ 408 0073 00       		.byte	0
+ 409 0074 00       		.byte	0
+ 410 0075 09       		.uleb128 0x9
+ 411 0076 2E       		.uleb128 0x2e
+ 412 0077 00       		.byte	0
+ 413 0078 3F       		.uleb128 0x3f
+ 414 0079 19       		.uleb128 0x19
+ 415 007a 03       		.uleb128 0x3
+ 416 007b 0E       		.uleb128 0xe
+ 417 007c 3A       		.uleb128 0x3a
+ 418 007d 0B       		.uleb128 0xb
+ 419 007e 3B       		.uleb128 0x3b
+ 420 007f 0B       		.uleb128 0xb
+ 421 0080 27       		.uleb128 0x27
+ 422 0081 19       		.uleb128 0x19
+ 423 0082 49       		.uleb128 0x49
+ARM GAS  C:\Users\Kotori\AppData\Local\Temp\ccoz1PtI.s 			page 11
+
+
+ 424 0083 13       		.uleb128 0x13
+ 425 0084 11       		.uleb128 0x11
+ 426 0085 01       		.uleb128 0x1
+ 427 0086 12       		.uleb128 0x12
+ 428 0087 06       		.uleb128 0x6
+ 429 0088 40       		.uleb128 0x40
+ 430 0089 18       		.uleb128 0x18
+ 431 008a 9742     		.uleb128 0x2117
+ 432 008c 19       		.uleb128 0x19
+ 433 008d 00       		.byte	0
+ 434 008e 00       		.byte	0
+ 435 008f 00       		.byte	0
+ 436              		.section	.debug_loc,"",%progbits
+ 437              	.Ldebug_loc0:
+ 438              	.LLST0:
+ 439 0000 00000000 		.4byte	.LVL0
+ 440 0004 0A000000 		.4byte	.LVL2
+ 441 0008 0100     		.2byte	0x1
+ 442 000a 50       		.byte	0x50
+ 443 000b 0A000000 		.4byte	.LVL2
+ 444 000f 18000000 		.4byte	.LFE0
+ 445 0013 0400     		.2byte	0x4
+ 446 0015 F3       		.byte	0xf3
+ 447 0016 01       		.uleb128 0x1
+ 448 0017 50       		.byte	0x50
+ 449 0018 9F       		.byte	0x9f
+ 450 0019 00000000 		.4byte	0
+ 451 001d 00000000 		.4byte	0
+ 452              	.LLST1:
+ 453 0021 00000000 		.4byte	.LVL3
+ 454 0025 08000000 		.4byte	.LVL4
+ 455 0029 0100     		.2byte	0x1
+ 456 002b 50       		.byte	0x50
+ 457 002c 08000000 		.4byte	.LVL4
+ 458 0030 3C000000 		.4byte	.LFE1
+ 459 0034 0400     		.2byte	0x4
+ 460 0036 F3       		.byte	0xf3
+ 461 0037 01       		.uleb128 0x1
+ 462 0038 50       		.byte	0x50
+ 463 0039 9F       		.byte	0x9f
+ 464 003a 00000000 		.4byte	0
+ 465 003e 00000000 		.4byte	0
+ 466              		.section	.debug_aranges,"",%progbits
+ 467 0000 34000000 		.4byte	0x34
+ 468 0004 0200     		.2byte	0x2
+ 469 0006 00000000 		.4byte	.Ldebug_info0
+ 470 000a 04       		.byte	0x4
+ 471 000b 00       		.byte	0
+ 472 000c 0000     		.2byte	0
+ 473 000e 0000     		.2byte	0
+ 474 0010 00000000 		.4byte	.LFB0
+ 475 0014 18000000 		.4byte	.LFE0-.LFB0
+ 476 0018 00000000 		.4byte	.LFB1
+ 477 001c 3C000000 		.4byte	.LFE1-.LFB1
+ 478 0020 00000000 		.4byte	.LFB2
+ 479 0024 10000000 		.4byte	.LFE2-.LFB2
+ 480 0028 00000000 		.4byte	.LFB3
+ARM GAS  C:\Users\Kotori\AppData\Local\Temp\ccoz1PtI.s 			page 12
+
+
+ 481 002c 10000000 		.4byte	.LFE3-.LFB3
+ 482 0030 00000000 		.4byte	0
+ 483 0034 00000000 		.4byte	0
+ 484              		.section	.debug_ranges,"",%progbits
+ 485              	.Ldebug_ranges0:
+ 486 0000 00000000 		.4byte	.LFB0
+ 487 0004 18000000 		.4byte	.LFE0
+ 488 0008 00000000 		.4byte	.LFB1
+ 489 000c 3C000000 		.4byte	.LFE1
+ 490 0010 00000000 		.4byte	.LFB2
+ 491 0014 10000000 		.4byte	.LFE2
+ 492 0018 00000000 		.4byte	.LFB3
+ 493 001c 10000000 		.4byte	.LFE3
+ 494 0020 00000000 		.4byte	0
+ 495 0024 00000000 		.4byte	0
+ 496              		.section	.debug_line,"",%progbits
+ 497              	.Ldebug_line0:
+ 498 0000 93000000 		.section	.debug_str,"MS",%progbits,1
+ 498      02004400 
+ 498      00000201 
+ 498      FB0E0D00 
+ 498      01010101 
+ 499              	.LASF16:
+ 500 0000 76616C75 		.ascii	"value\000"
+ 500      6500
+ 501              	.LASF23:
+ 502 0006 73746174 		.ascii	"staticBits\000"
+ 502      69634269 
+ 502      747300
+ 503              	.LASF9:
+ 504 0011 666C6F61 		.ascii	"float\000"
+ 504      7400
+ 505              	.LASF1:
+ 506 0017 756E7369 		.ascii	"unsigned char\000"
+ 506      676E6564 
+ 506      20636861 
+ 506      7200
+ 507              	.LASF20:
+ 508 0025 474E5520 		.ascii	"GNU C11 5.4.1 20160609 (release) [ARM/embedded-5-br"
+ 508      43313120 
+ 508      352E342E 
+ 508      31203230 
+ 508      31363036 
+ 509 0058 616E6368 		.ascii	"anch revision 237715] -mcpu=cortex-m3 -mthumb -g -O"
+ 509      20726576 
+ 509      6973696F 
+ 509      6E203233 
+ 509      37373135 
+ 510 008b 67202D66 		.ascii	"g -ffunction-sections -ffat-lto-objects\000"
+ 510      66756E63 
+ 510      74696F6E 
+ 510      2D736563 
+ 510      74696F6E 
+ 511              	.LASF21:
+ 512 00b3 47656E65 		.ascii	"Generated_Source\\PSoC5\\RGB_OUT.c\000"
+ 512      72617465 
+ 512      645F536F 
+ARM GAS  C:\Users\Kotori\AppData\Local\Temp\ccoz1PtI.s 			page 13
+
+
+ 512      75726365 
+ 512      5C50536F 
+ 513              	.LASF13:
+ 514 00d4 72656738 		.ascii	"reg8\000"
+ 514      00
+ 515              	.LASF5:
+ 516 00d9 6C6F6E67 		.ascii	"long unsigned int\000"
+ 516      20756E73 
+ 516      69676E65 
+ 516      6420696E 
+ 516      7400
+ 517              	.LASF3:
+ 518 00eb 73686F72 		.ascii	"short unsigned int\000"
+ 518      7420756E 
+ 518      7369676E 
+ 518      65642069 
+ 518      6E7400
+ 519              	.LASF10:
+ 520 00fe 646F7562 		.ascii	"double\000"
+ 520      6C6500
+ 521              	.LASF22:
+ 522 0105 433A5C55 		.ascii	"C:\\Users\\Kotori\\Documents\\PSoC Creator\\Project"
+ 522      73657273 
+ 522      5C4B6F74 
+ 522      6F72695C 
+ 522      446F6375 
+ 523 0133 53484153 		.ascii	"SHAS_AreaController\\AreaController.cydsn\000"
+ 523      5F417265 
+ 523      61436F6E 
+ 523      74726F6C 
+ 523      6C65725C 
+ 524              	.LASF8:
+ 525 015c 756E7369 		.ascii	"unsigned int\000"
+ 525      676E6564 
+ 525      20696E74 
+ 525      00
+ 526              	.LASF7:
+ 527 0169 6C6F6E67 		.ascii	"long long unsigned int\000"
+ 527      206C6F6E 
+ 527      6720756E 
+ 527      7369676E 
+ 527      65642069 
+ 528              	.LASF17:
+ 529 0180 6D6F6465 		.ascii	"mode\000"
+ 529      00
+ 530              	.LASF6:
+ 531 0185 6C6F6E67 		.ascii	"long long int\000"
+ 531      206C6F6E 
+ 531      6720696E 
+ 531      7400
+ 532              	.LASF11:
+ 533 0193 63686172 		.ascii	"char\000"
+ 533      00
+ 534              	.LASF15:
+ 535 0198 5247425F 		.ascii	"RGB_OUT_SetDriveMode\000"
+ 535      4F55545F 
+ 535      53657444 
+ARM GAS  C:\Users\Kotori\AppData\Local\Temp\ccoz1PtI.s 			page 14
+
+
+ 535      72697665 
+ 535      4D6F6465 
+ 536              	.LASF2:
+ 537 01ad 73686F72 		.ascii	"short int\000"
+ 537      7420696E 
+ 537      7400
+ 538              	.LASF12:
+ 539 01b7 75696E74 		.ascii	"uint8\000"
+ 539      3800
+ 540              	.LASF4:
+ 541 01bd 6C6F6E67 		.ascii	"long int\000"
+ 541      20696E74 
+ 541      00
+ 542              	.LASF14:
+ 543 01c6 5247425F 		.ascii	"RGB_OUT_Write\000"
+ 543      4F55545F 
+ 543      57726974 
+ 543      6500
+ 544              	.LASF0:
+ 545 01d4 7369676E 		.ascii	"signed char\000"
+ 545      65642063 
+ 545      68617200 
+ 546              	.LASF18:
+ 547 01e0 5247425F 		.ascii	"RGB_OUT_Read\000"
+ 547      4F55545F 
+ 547      52656164 
+ 547      00
+ 548              	.LASF19:
+ 549 01ed 5247425F 		.ascii	"RGB_OUT_ReadDataReg\000"
+ 549      4F55545F 
+ 549      52656164 
+ 549      44617461 
+ 549      52656700 
+ 550              		.ident	"GCC: (GNU Tools for ARM Embedded Processors) 5.4.1 20160609 (release) [ARM/embedded-5-bran

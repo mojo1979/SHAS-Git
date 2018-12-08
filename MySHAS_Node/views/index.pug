@@ -1,0 +1,14 @@
+extends layout
+
+block content
+  #main_viewport.viewport
+    .viewport_content_wrapper
+      .blur
+      #portal_block.disp_block
+        #portal_block_title.block_title
+          #logo_wrapper
+          h1= pagetitle
+          p= pageMsg 
+        #portal_block_wrapper.wrapper
+          #portal_block_login_btn.button( onclick='window.open("login","_self")')
+            h1 Login 

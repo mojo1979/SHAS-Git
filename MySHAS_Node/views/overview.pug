@@ -1,0 +1,28 @@
+extends layout
+
+block content
+  #main_viewport.viewport
+    .viewport_content_wrapper
+      .blur
+      #overview_block.disp_block
+        #overview_block_title.block_title
+          #logo_wrapper
+          h1= pagetitle 
+        #overview_block_wrapper.wrapper
+          center
+            h1 Device Information:
+            br
+            br
+            h2 MySHAS ID:
+            p#myshas_id= MySHASId
+            br
+            h2 Control Hub Name:
+            p Capstone Control Hub Demo
+            br
+            h2 Control Hub ID:
+            p 2E3214E
+            br
+            #overview_block_controller_btn.button( onclick='controllerBtnHandler()')
+              h1 Controller Status
+            #overview_block_commands_btn.button( onclick='CommandsBtnHandler()')
+              h1 Send Commands

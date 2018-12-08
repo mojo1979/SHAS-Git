@@ -1,0 +1,25 @@
+extends layout
+
+block content
+  #main_viewport.viewport
+    .viewport_content_wrapper
+      .blur
+      #login_block.disp_block
+        #login_block_title.block_title
+          #logo_wrapper
+          h1= pagetitle 
+        #login_block_form
+          #login_form_message
+            h1= loginMsg
+          #login_form_wrapper.wrapper
+            form#myshas_login_form(method='POST')
+              br
+              br
+              input.input_field(placeholder='User ID' type='text' name='user_id')
+              br
+              br
+              input.input_field(placeholder='Password' type='password' name='user_pass')
+              br
+              br
+              center
+                input#submitButton(type='submit' value='Login')

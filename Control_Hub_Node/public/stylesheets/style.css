@@ -1,0 +1,240 @@
+/* SHAS Control Hub SytleSheet 
+ * Last Revisioned by: John Mo
+ * Last Revision Date: Aug. 10 2018
+ * Comments: Not sure on the colour scheme, might change later (Maybe the same as MySHAS)
+ * 2018 J2DW - SCFAST
+ * Hand-typed and debugged, with a web browser and text editor.
+ */
+
+/* STYLE RESET */
+
+html, body, div, span, applet, object, iframe,
+h1, h2, h3, h4, h5, h6, p, blockquote, pre,
+a, abbr, acronym, address, big, cite, code,
+del, dfn, em, img, ins, kbd, q, s, samp,
+small, strike, strong, sub, sup, tt, var,
+b, u, i, center,
+dl, dt, dd, ol, ul, li,
+fieldset, form, label, legend,
+table, caption, tbody, tfoot, thead, tr, th, td,
+article, aside, canvas, details, embed, 
+figure, figcaption, footer, header, hgroup, 
+menu, nav, output, ruby, section, summary,
+time, mark, audio, video {
+	margin: 0;
+	padding: 0;
+	border: 0;
+	font-size: 100%;
+	font: inherit;
+	vertical-align: baseline;
+}
+/* HTML5 display-role reset for older browsers */
+article, aside, details, figcaption, figure, 
+footer, header, hgroup, menu, nav, section {
+	display: block;
+}
+body {
+	line-height: 1;
+}
+ol, ul {
+	list-style: none;
+}
+blockquote, q {
+	quotes: none;
+}
+blockquote:before, blockquote:after,
+q:before, q:after {
+	content: '';
+	content: none;
+}
+table {
+	border-collapse: collapse;
+	border-spacing: 0;
+}
+
+/*RESET ENDS*/
+
+/* Main Layout Style */
+html {
+	height: 100%;
+	width: 100%;
+}
+
+body {
+ 	font: 14px "Lucida Grande", Helvetica, Arial, sans-serif;
+	height: 100%;
+	width: 100%;
+}
+
+a {
+	color: #00B7FF;
+}
+
+
+div.viewport {
+	position: absolute;
+	top: 0px;
+	left: 0px;
+	display: flex;
+	justify-content: center;
+	align-items: center;
+	z-index: 0;
+	background-color: rgba(30, 144, 255,1);
+	/*background-image: url('/images/hexa1.png');
+	background-position: center center;
+	background-repeat: repeat;*/
+	height: 100%;
+	width: 100%;
+}
+
+/* Menu Layout Style */
+
+div.menu_button {
+	position: absolute;
+	top: 0px;
+	left: 0px;
+	z-index: 2;
+	height: 50px;
+	width: 50px;
+	box-shadow: 0px 0px 15px #666;
+	border-bottom-right-radius: 15px;
+	background-color: rgba(120,160,220,1);
+	background-image: url('/images/chevron-right-white.png');
+	background-position: center center;
+	background-repeat: no-repeat;
+	background-size: 25px 25px;
+}
+
+div.menu {
+	position: absolute;
+	top: 0px;
+	z-index: 1;
+	height: 100%;
+	width: 350px;
+	left: -350px;
+	background-color: rgba(21,101,178,1);
+}
+
+div.menu_item_wrapper {
+	position: absolute;
+	top: -50px;
+	display: flex;
+	flex-direction: column;
+	height: 100%;
+	width: 350px;
+	align-items: center;
+	justify-content: center;
+}
+
+div.menu_item_button {
+	display: flex;
+	align-items: center;
+	justify-content: left;
+	width: 300px;
+	height: 50px;
+	color: #999;
+	box-shadow: 0px 0px 0px #fff;
+}
+
+div.menu_item_button:hover {
+	width: 300px;
+	height: 50px;
+	cursor: pointer;
+	color: #FFF;
+	transition: color 0.4s;
+	box-shadow: -2px 2px 2px #fff;
+}
+
+div.menu_item_button h2 {
+	font-size: 28px;
+	text-shadow: 2px 2px 2px #000;
+	padding-left: 5px;
+}
+
+div.menu_logo {
+	width: 350px;
+	height: 50px;
+	padding-right: 15px;
+	text-align: left;
+	box-shadow: 0px 0px 10px #666;
+	border-bottom-right-radius: 15px;
+	background-color: rgba(120,160,220,1);
+}
+
+div.menu_logo h1 {
+	padding-left: 65px;
+	padding-top: 5px;
+	font-size: 24pt;
+	color: #fff;
+	//text-shadow: 2px 2px 2px #222;
+}
+
+
+@keyframes open_menu {
+	0% {
+		left: -350px;
+	}
+	100% {
+		left: 0px;
+	}
+}
+
+@keyframes close_menu {
+	0% {
+		left: 0px;
+	}
+	100% {
+		left: -350px;
+	}
+}
+
+
+/* Homepage Layout Style */
+
+div.title_block {
+	width: 500px;
+	height: 300px;
+	background-color: rgba(245, 245, 245,0.7);
+	text-align: center;
+	box-shadow: 0px 0px 15px #666;
+	border-radius: 15px;
+}
+
+div.title_block h1 {
+	font-weight: bold;
+	font-size: 24pt;
+	padding-top: 100px;
+	text-shadow: 2px 2px 2px #222;
+	color: #fff;
+}
+div.title_block p {
+	font-size: 12pt;
+}
+
+/* Page Layout Style */
+
+div.page_block {
+	width: 90%;
+	height: 95%;
+	background-color: rgba(245, 245, 245,0.7);
+	text-align: center;
+	box-shadow: 0px 0px 15px #666;
+	border-radius: 15px;
+}
+
+div.page_block h1 {
+	font-weight: bold;
+	font-size: 24pt;
+	padding-top: 100px;
+	text-shadow: 2px 2px 2px #222;
+	color: #fff;
+}
+div.page_block p {
+	font-size: 12pt;
+}
+
+/* Device Page  Styling */
+
+input.input_field {
+	width: 500px;
+}

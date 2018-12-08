@@ -1,0 +1,23 @@
+doctype html
+html
+	head
+		title SHAS Control Hub | #{title}
+		link(rel='stylesheet', href='/stylesheets/style.css')
+	body
+		div(class='menu_button', id='display_menu_button')
+		div(class='menu', id='display_menu')
+			div(class='menu_logo')
+				h1= 'SHAS | Menu'
+			div(class='menu_item_wrapper')
+				div(class='menu_item_button', id='menu_item_home', onclick="window.location='/'")
+					h2= 'Home'
+				div(class='menu_item_button', id='menu_item_devices', onclick="window.location='/devices'")
+					h2= 'Devices'
+				div(class='menu_item_button', id='menu_item_conf', onclick="window.location='/conf'")
+					h2= 'Configuration'
+		div(class='viewport', id='display_viewport')
+			block content
+	script(src='/javascripts/layout.js')
+	script(src='/javascripts/command_handler.js')
+	script(src='/javascripts/configuration_handler.js')
+	script(src='https://code.jquery.com/jquery-3.3.1.min.js')

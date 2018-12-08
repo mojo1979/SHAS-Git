@@ -1,0 +1,2866 @@
+ARM GAS  C:\Users\Kotori\AppData\Local\Temp\cccAZwYP.s 			page 1
+
+
+   1              		.syntax unified
+   2              		.cpu cortex-m3
+   3              		.fpu softvfp
+   4              		.eabi_attribute 20, 1
+   5              		.eabi_attribute 21, 1
+   6              		.eabi_attribute 23, 3
+   7              		.eabi_attribute 24, 1
+   8              		.eabi_attribute 25, 1
+   9              		.eabi_attribute 26, 1
+  10              		.eabi_attribute 30, 1
+  11              		.eabi_attribute 34, 1
+  12              		.eabi_attribute 18, 4
+  13              		.thumb
+  14              		.syntax unified
+  15              		.file	"main.c"
+  16              		.text
+  17              	.Ltext0:
+  18              		.cfi_sections	.debug_frame
+  19              		.section	.text.Rx_ISR_Call,"ax",%progbits
+  20              		.align	2
+  21              		.global	Rx_ISR_Call
+  22              		.thumb
+  23              		.thumb_func
+  24              		.type	Rx_ISR_Call, %function
+  25              	Rx_ISR_Call:
+  26              	.LFB64:
+  27              		.file 1 "main.c"
+   1:main.c        **** /* ========================================
+   2:main.c        ****  *
+   3:main.c        ****  * Copyright J2DW, 2018
+   4:main.c        ****  * All Rights Reserved
+   5:main.c        ****  * UNPUBLISHED, LICENSED SOFTWARE.
+   6:main.c        ****  *
+   7:main.c        ****  * CONFIDENTIAL AND PROPRIETARY INFORMATION
+   8:main.c        ****  * WHICH IS THE PROPERTY OF J2DW.
+   9:main.c        ****  *
+  10:main.c        ****  * File: main.c
+  11:main.c        ****  * Description: SHAS Area Controller Main Firmware Template
+  12:main.c        ****  * Author(s): Jamie Doan, John Mo, Dallas Crus, William Vuong
+  13:main.c        ****  * Revision Date: 2018-11-04
+  14:main.c        ****  * ========================================
+  15:main.c        **** */
+  16:main.c        **** #include "project.h"   //Cypress Project Headers
+  17:main.c        **** #include "stdlib.h"    //Standard C Library
+  18:main.c        **** #include "stdio.h"     //Standard C I/O Library
+  19:main.c        **** #include "stepctrl.h"  //Stepper Motor Control Functions
+  20:main.c        **** #include "devstruct.h" //Peripheral Structure Initializers
+  21:main.c        **** #include "devdef.h"    //Device Definitions
+  22:main.c        **** 
+  23:main.c        **** 
+  24:main.c        **** //Global Variables & Struct Declarations
+  25:main.c        **** // Vars
+  26:main.c        **** char commandBytes[16] = "";
+  27:main.c        **** 
+  28:main.c        **** uint8 k,getDir = 0,curCount = 0,readyStatus = 0,wmode = 0;
+  29:main.c        **** int8 curAct = -1;
+  30:main.c        **** uint16 counterVal = 0;
+ARM GAS  C:\Users\Kotori\AppData\Local\Temp\cccAZwYP.s 			page 2
+
+
+  31:main.c        **** 
+  32:main.c        **** //Structs -> From devstructs.h
+  33:main.c        **** struct areacontroller mainAreacontroller;       //Initialize Area Controller ID Struct
+  34:main.c        **** struct actuators mainActuators[NUM_OF_ACTUATORS]; //Initialize Actuator Data Structs
+  35:main.c        **** struct sensors mainSensors[NUM_OF_SENSORS];
+  36:main.c        **** 
+  37:main.c        **** /* Function Prototypes */
+  38:main.c        **** void Area_Controller_Init( void );
+  39:main.c        **** void Check_Sens ( int id );
+  40:main.c        **** 
+  41:main.c        **** /* UART Interrupt Service Routine */
+  42:main.c        **** CY_ISR(Rx_ISR_Call) {
+  28              		.loc 1 42 0
+  29              		.cfi_startproc
+  30              		@ args = 0, pretend = 0, frame = 0
+  31              		@ frame_needed = 0, uses_anonymous_args = 0
+  32 0000 10B5     		push	{r4, lr}
+  33              		.cfi_def_cfa_offset 8
+  34              		.cfi_offset 4, -8
+  35              		.cfi_offset 14, -4
+  43:main.c        ****     char curChar = UART_GetChar();
+  36              		.loc 1 43 0
+  37 0002 FFF7FEFF 		bl	UART_GetChar
+  38              	.LVL0:
+  44:main.c        ****     if (curChar == '!') {
+  39              		.loc 1 44 0
+  40 0006 2128     		cmp	r0, #33
+  41 0008 05D1     		bne	.L2
+  45:main.c        ****         //UART_PutChar(curChar);
+  46:main.c        ****         wmode = 0;
+  42              		.loc 1 46 0
+  43 000a 434B     		ldr	r3, .L18
+  44 000c 0022     		movs	r2, #0
+  45 000e 1A70     		strb	r2, [r3]
+  47:main.c        ****         readyStatus = 1;
+  46              		.loc 1 47 0
+  47 0010 0122     		movs	r2, #1
+  48 0012 5A70     		strb	r2, [r3, #1]
+  49 0014 10BD     		pop	{r4, pc}
+  50              	.L2:
+  48:main.c        ****         //UART_PutString( commandBytes );
+  49:main.c        ****         //UART_PutString( "\r\n" );
+  50:main.c        ****     } else {
+  51:main.c        ****         if (curChar == 'W'){
+  51              		.loc 1 51 0
+  52 0016 5728     		cmp	r0, #87
+  53 0018 02D1     		bne	.L4
+  52:main.c        ****             wmode = 1;
+  54              		.loc 1 52 0
+  55 001a 0122     		movs	r2, #1
+  56 001c 3E4B     		ldr	r3, .L18
+  57 001e 1A70     		strb	r2, [r3]
+  58              	.L4:
+  53:main.c        ****         } 
+  54:main.c        ****         if (wmode == 1) {
+  59              		.loc 1 54 0
+  60 0020 3D4B     		ldr	r3, .L18
+ARM GAS  C:\Users\Kotori\AppData\Local\Temp\cccAZwYP.s 			page 3
+
+
+  61 0022 1B78     		ldrb	r3, [r3]	@ zero_extendqisi2
+  62 0024 012B     		cmp	r3, #1
+  63 0026 6AD1     		bne	.L5
+  55:main.c        ****             if (curChar == ',') {
+  64              		.loc 1 55 0
+  65 0028 2C28     		cmp	r0, #44
+  66 002a 23D1     		bne	.L6
+  56:main.c        ****                 mainActuators[curAct].val = atoi(commandBytes);
+  67              		.loc 1 56 0
+  68 002c 3B4B     		ldr	r3, .L18+4
+  69 002e 93F90040 		ldrsb	r4, [r3]
+  70 0032 3B48     		ldr	r0, .L18+8
+  71              	.LVL1:
+  72 0034 FFF7FEFF 		bl	atoi
+  73              	.LVL2:
+  74 0038 04EB4404 		add	r4, r4, r4, lsl #1
+  75 003c 6300     		lsls	r3, r4, #1
+  76 003e 394A     		ldr	r2, .L18+12
+  77 0040 1344     		add	r3, r3, r2
+  78 0042 5880     		strh	r0, [r3, #2]	@ movhi
+  57:main.c        ****                 for (k = 0; k < curCount;k++) {
+  79              		.loc 1 57 0
+  80 0044 0022     		movs	r2, #0
+  81 0046 384B     		ldr	r3, .L18+16
+  82 0048 1A70     		strb	r2, [r3]
+  83 004a 06E0     		b	.L7
+  84              	.L8:
+  58:main.c        ****                     commandBytes[k] = 0x00;
+  85              		.loc 1 58 0 discriminator 3
+  86 004c 324A     		ldr	r2, .L18
+  87 004e 1A44     		add	r2, r2, r3
+  88 0050 0021     		movs	r1, #0
+  89 0052 1171     		strb	r1, [r2, #4]
+  57:main.c        ****                 for (k = 0; k < curCount;k++) {
+  90              		.loc 1 57 0 discriminator 3
+  91 0054 0133     		adds	r3, r3, #1
+  92 0056 344A     		ldr	r2, .L18+16
+  93 0058 1370     		strb	r3, [r2]
+  94              	.L7:
+  57:main.c        ****                 for (k = 0; k < curCount;k++) {
+  95              		.loc 1 57 0 is_stmt 0 discriminator 1
+  96 005a 334B     		ldr	r3, .L18+16
+  97 005c 1B78     		ldrb	r3, [r3]	@ zero_extendqisi2
+  98 005e 2E4A     		ldr	r2, .L18
+  99 0060 127D     		ldrb	r2, [r2, #20]	@ zero_extendqisi2
+ 100 0062 9342     		cmp	r3, r2
+ 101 0064 F2D3     		bcc	.L8
+  59:main.c        ****                 }
+  60:main.c        ****                 curCount = 0;
+ 102              		.loc 1 60 0 is_stmt 1
+ 103 0066 0022     		movs	r2, #0
+ 104 0068 2B4B     		ldr	r3, .L18
+ 105 006a 1A75     		strb	r2, [r3, #20]
+  61:main.c        ****                 curAct = -1;
+ 106              		.loc 1 61 0
+ 107 006c FF22     		movs	r2, #255
+ 108 006e 2B4B     		ldr	r3, .L18+4
+ARM GAS  C:\Users\Kotori\AppData\Local\Temp\cccAZwYP.s 			page 4
+
+
+ 109 0070 1A70     		strb	r2, [r3]
+ 110 0072 10BD     		pop	{r4, pc}
+ 111              	.LVL3:
+ 112              	.L6:
+  62:main.c        ****             } else {
+  63:main.c        ****                 if (curAct == -1) {
+ 113              		.loc 1 63 0
+ 114 0074 294B     		ldr	r3, .L18+4
+ 115 0076 93F90030 		ldrsb	r3, [r3]
+ 116 007a B3F1FF3F 		cmp	r3, #-1
+ 117 007e 1ED1     		bne	.L9
+  64:main.c        ****                     for (k = 0; k < NUM_OF_ACTUATORS; k++) {
+ 118              		.loc 1 64 0
+ 119 0080 0022     		movs	r2, #0
+ 120 0082 294B     		ldr	r3, .L18+16
+ 121 0084 1A70     		strb	r2, [r3]
+ 122 0086 15E0     		b	.L10
+ 123              	.L12:
+  65:main.c        ****                         if (mainActuators[k].id == curChar) {
+ 124              		.loc 1 65 0
+ 125 0088 03EB4301 		add	r1, r3, r3, lsl #1
+ 126 008c 4A00     		lsls	r2, r1, #1
+ 127 008e 2549     		ldr	r1, .L18+12
+ 128 0090 8A5C     		ldrb	r2, [r1, r2]	@ zero_extendqisi2
+ 129 0092 9042     		cmp	r0, r2
+ 130 0094 0BD1     		bne	.L11
+  66:main.c        ****                             curAct = k;
+ 131              		.loc 1 66 0
+ 132 0096 214A     		ldr	r2, .L18+4
+ 133 0098 1370     		strb	r3, [r2]
+  67:main.c        ****                             if (mainActuators[k].type == 0x00) {
+ 134              		.loc 1 67 0
+ 135 009a 03EB4301 		add	r1, r3, r3, lsl #1
+ 136 009e 4A00     		lsls	r2, r1, #1
+ 137 00a0 2049     		ldr	r1, .L18+12
+ 138 00a2 0A44     		add	r2, r2, r1
+ 139 00a4 5278     		ldrb	r2, [r2, #1]	@ zero_extendqisi2
+ 140 00a6 12B9     		cbnz	r2, .L11
+  68:main.c        ****                                 getDir = 1;
+ 141              		.loc 1 68 0
+ 142 00a8 0121     		movs	r1, #1
+ 143 00aa 1B4A     		ldr	r2, .L18
+ 144 00ac 5175     		strb	r1, [r2, #21]
+ 145              	.L11:
+  64:main.c        ****                         if (mainActuators[k].id == curChar) {
+ 146              		.loc 1 64 0 discriminator 2
+ 147 00ae 0133     		adds	r3, r3, #1
+ 148 00b0 1D4A     		ldr	r2, .L18+16
+ 149 00b2 1370     		strb	r3, [r2]
+ 150              	.L10:
+  64:main.c        ****                         if (mainActuators[k].id == curChar) {
+ 151              		.loc 1 64 0 is_stmt 0 discriminator 1
+ 152 00b4 1C4B     		ldr	r3, .L18+16
+ 153 00b6 1B78     		ldrb	r3, [r3]	@ zero_extendqisi2
+ 154 00b8 012B     		cmp	r3, #1
+ 155 00ba E5D9     		bls	.L12
+ 156 00bc 10BD     		pop	{r4, pc}
+ARM GAS  C:\Users\Kotori\AppData\Local\Temp\cccAZwYP.s 			page 5
+
+
+ 157              	.L9:
+  69:main.c        ****                             }
+  70:main.c        ****                         }
+  71:main.c        ****                     }
+  72:main.c        ****                 } else {
+  73:main.c        ****                     if (getDir == 1) {
+ 158              		.loc 1 73 0 is_stmt 1
+ 159 00be 164A     		ldr	r2, .L18
+ 160 00c0 527D     		ldrb	r2, [r2, #21]	@ zero_extendqisi2
+ 161 00c2 012A     		cmp	r2, #1
+ 162 00c4 14D1     		bne	.L13
+  74:main.c        ****                         if (curChar == 'A') {
+ 163              		.loc 1 74 0
+ 164 00c6 4128     		cmp	r0, #65
+ 165 00c8 07D1     		bne	.L14
+  75:main.c        ****                             mainActuators[curAct].dir = 0x00;
+ 166              		.loc 1 75 0
+ 167 00ca 03EB4303 		add	r3, r3, r3, lsl #1
+ 168 00ce 5A00     		lsls	r2, r3, #1
+ 169 00d0 144B     		ldr	r3, .L18+12
+ 170 00d2 1A44     		add	r2, r2, r3
+ 171 00d4 0023     		movs	r3, #0
+ 172 00d6 1371     		strb	r3, [r2, #4]
+ 173 00d8 06E0     		b	.L15
+ 174              	.L14:
+  76:main.c        ****                         } else {
+  77:main.c        ****                             mainActuators[curAct].dir = 0x01;
+ 175              		.loc 1 77 0
+ 176 00da 03EB4303 		add	r3, r3, r3, lsl #1
+ 177 00de 5A00     		lsls	r2, r3, #1
+ 178 00e0 104B     		ldr	r3, .L18+12
+ 179 00e2 1A44     		add	r2, r2, r3
+ 180 00e4 0123     		movs	r3, #1
+ 181 00e6 1371     		strb	r3, [r2, #4]
+ 182              	.L15:
+  78:main.c        ****                         }
+  79:main.c        ****                         getDir = 0; 
+ 183              		.loc 1 79 0
+ 184 00e8 0022     		movs	r2, #0
+ 185 00ea 0B4B     		ldr	r3, .L18
+ 186 00ec 5A75     		strb	r2, [r3, #21]
+ 187 00ee 10BD     		pop	{r4, pc}
+ 188              	.L13:
+  80:main.c        ****                     } else {
+  81:main.c        ****                         commandBytes[curCount] = curChar;
+ 189              		.loc 1 81 0
+ 190 00f0 094A     		ldr	r2, .L18
+ 191 00f2 137D     		ldrb	r3, [r2, #20]	@ zero_extendqisi2
+ 192 00f4 D118     		adds	r1, r2, r3
+ 193 00f6 0871     		strb	r0, [r1, #4]
+  82:main.c        ****                         curCount++; 
+ 194              		.loc 1 82 0
+ 195 00f8 0133     		adds	r3, r3, #1
+ 196 00fa 1375     		strb	r3, [r2, #20]
+ 197 00fc 10BD     		pop	{r4, pc}
+ 198              	.L5:
+  83:main.c        ****                     }
+ARM GAS  C:\Users\Kotori\AppData\Local\Temp\cccAZwYP.s 			page 6
+
+
+  84:main.c        ****                 }
+  85:main.c        ****             }
+  86:main.c        ****         } else {
+  87:main.c        ****             if (curChar == 'R') {
+ 199              		.loc 1 87 0
+ 200 00fe 5228     		cmp	r0, #82
+ 201 0100 03D1     		bne	.L16
+  88:main.c        ****                 readyStatus = 2;   
+ 202              		.loc 1 88 0
+ 203 0102 0222     		movs	r2, #2
+ 204 0104 044B     		ldr	r3, .L18
+ 205 0106 5A70     		strb	r2, [r3, #1]
+ 206 0108 10BD     		pop	{r4, pc}
+ 207              	.L16:
+  89:main.c        ****             } else if (curChar == 'A') {
+ 208              		.loc 1 89 0
+ 209 010a 4128     		cmp	r0, #65
+ 210 010c 02D1     		bne	.L1
+  90:main.c        ****                 readyStatus = 3;
+ 211              		.loc 1 90 0
+ 212 010e 0322     		movs	r2, #3
+ 213 0110 014B     		ldr	r3, .L18
+ 214 0112 5A70     		strb	r2, [r3, #1]
+ 215              	.L1:
+ 216 0114 10BD     		pop	{r4, pc}
+ 217              	.L19:
+ 218 0116 00BF     		.align	2
+ 219              	.L18:
+ 220 0118 00000000 		.word	.LANCHOR0
+ 221 011c 00000000 		.word	.LANCHOR1
+ 222 0120 04000000 		.word	.LANCHOR0+4
+ 223 0124 00000000 		.word	mainActuators
+ 224 0128 00000000 		.word	k
+ 225              		.cfi_endproc
+ 226              	.LFE64:
+ 227              		.size	Rx_ISR_Call, .-Rx_ISR_Call
+ 228              		.section	.text.Area_Controller_Init,"ax",%progbits
+ 229              		.align	2
+ 230              		.global	Area_Controller_Init
+ 231              		.thumb
+ 232              		.thumb_func
+ 233              		.type	Area_Controller_Init, %function
+ 234              	Area_Controller_Init:
+ 235              	.LFB66:
+  91:main.c        ****             }
+  92:main.c        ****         }
+  93:main.c        ****     }
+  94:main.c        **** }
+  95:main.c        **** 
+  96:main.c        **** int main(void)
+  97:main.c        **** {
+  98:main.c        ****     /* Interrupt Inits */
+  99:main.c        ****     CyGlobalIntEnable; /* Enable global interrupts. */
+ 100:main.c        ****     RxISR_StartEx(Rx_ISR_Call); /* Start UART ISR */
+ 101:main.c        ****     
+ 102:main.c        ****     /* Device Init & Vars*/
+ 103:main.c        ****     Area_Controller_Init();
+ARM GAS  C:\Users\Kotori\AppData\Local\Temp\cccAZwYP.s 			page 7
+
+
+ 104:main.c        ****     ADC_Start();
+ 105:main.c        ****     UART_Start(); //Start UART
+ 106:main.c        ****     HCSR04_Start();
+ 107:main.c        ****     
+ 108:main.c        ****     
+ 109:main.c        ****     UART_PutString( "Starting: " );
+ 110:main.c        ****     UART_PutString( mainAreacontroller.description );
+ 111:main.c        ****     UART_PutCRLF(0x00);
+ 112:main.c        ****     RGB_OUT_Write(mainActuators[1].val);
+ 113:main.c        ****     
+ 114:main.c        ****     uint16 i= 0;
+ 115:main.c        ****     
+ 116:main.c        ****     /* Main Program Loop */
+ 117:main.c        ****     for(;;)
+ 118:main.c        ****     {
+ 119:main.c        ****         Check_Sens(0);
+ 120:main.c        ****         Check_Sens(1);
+ 121:main.c        ****         Check_Sens(2);
+ 122:main.c        ****         Check_Sens(3);
+ 123:main.c        ****         if (readyStatus == 1) {
+ 124:main.c        ****                
+ 125:main.c        ****             // Change LED States
+ 126:main.c        ****             RGB_OUT_Write(mainActuators[1].val);
+ 127:main.c        ****             
+ 128:main.c        ****             // Change Stepper State
+ 129:main.c        ****             STEP_EN(1);
+ 130:main.c        ****             STEP_DIR(mainActuators[0].dir);
+ 131:main.c        ****             for(i = 1; i<=mainActuators[0].val; i++) {
+ 132:main.c        ****                 STEP_RUN();
+ 133:main.c        ****                 CyDelay(15);
+ 134:main.c        ****             }
+ 135:main.c        ****             mainActuators[0].val = 0;
+ 136:main.c        ****             STEP_EN(0);
+ 137:main.c        ****             readyStatus = 0;
+ 138:main.c        ****         } else if (readyStatus == 2) {
+ 139:main.c        ****             char sensorOutput[100];
+ 140:main.c        ****             UART_PutChar('[');
+ 141:main.c        ****             for (int i = 0; i < NUM_OF_SENSORS; i++) {
+ 142:main.c        ****                 snprintf(sensorOutput,100,"{ \"SensId\" : %d, \"SensType\" : %d, \"SensVal\" : %d }
+ 143:main.c        ****                     mainSensors[i].id,
+ 144:main.c        ****                     mainSensors[i].type,
+ 145:main.c        ****                     mainSensors[i].val
+ 146:main.c        ****                 );
+ 147:main.c        ****                 UART_PutString( sensorOutput );
+ 148:main.c        ****                 if ( i != 3 ) {
+ 149:main.c        ****                     UART_PutChar(',');
+ 150:main.c        ****                 }
+ 151:main.c        ****                 UART_PutCRLF(0x00);
+ 152:main.c        ****             }
+ 153:main.c        ****             UART_PutChar(']');
+ 154:main.c        ****             readyStatus = 0;
+ 155:main.c        ****         } else if (readyStatus == 3) {
+ 156:main.c        ****             char ACOutput[100];
+ 157:main.c        ****             snprintf(ACOutput, 100, "{ \"ACId\" : %d, \"ACNumActs\" : %d, \"ACNumSens\" : %d, \"ACD
+ 158:main.c        ****                 mainAreacontroller.id,
+ 159:main.c        ****                 mainAreacontroller.numActs,
+ 160:main.c        ****                 mainAreacontroller.numSens,
+ARM GAS  C:\Users\Kotori\AppData\Local\Temp\cccAZwYP.s 			page 8
+
+
+ 161:main.c        ****                 mainAreacontroller.description
+ 162:main.c        ****             );
+ 163:main.c        ****             UART_PutString( ACOutput );
+ 164:main.c        ****             UART_PutCRLF(0x00);
+ 165:main.c        ****             readyStatus = 0;
+ 166:main.c        ****         }
+ 167:main.c        ****         CyDelay(1);
+ 168:main.c        ****     }
+ 169:main.c        **** }
+ 170:main.c        **** 
+ 171:main.c        **** void Area_Controller_Init ( void ) {
+ 236              		.loc 1 171 0
+ 237              		.cfi_startproc
+ 238              		@ args = 0, pretend = 0, frame = 0
+ 239              		@ frame_needed = 0, uses_anonymous_args = 0
+ 240              		@ link register save eliminated.
+ 241 0000 10B4     		push	{r4}
+ 242              		.cfi_def_cfa_offset 4
+ 243              		.cfi_offset 4, -4
+ 172:main.c        ****     //AreaController ID Init
+ 173:main.c        ****     mainAreacontroller.id = DEV_ID;
+ 244              		.loc 1 173 0
+ 245 0002 134B     		ldr	r3, .L22
+ 246 0004 AA22     		movs	r2, #170
+ 247 0006 1A70     		strb	r2, [r3]
+ 174:main.c        ****     mainAreacontroller.numActs = NUM_OF_ACTUATORS;
+ 248              		.loc 1 174 0
+ 249 0008 0221     		movs	r1, #2
+ 250 000a 5970     		strb	r1, [r3, #1]
+ 175:main.c        ****     mainAreacontroller.numSens = NUM_OF_SENSORS;
+ 251              		.loc 1 175 0
+ 252 000c 0422     		movs	r2, #4
+ 253 000e 9A70     		strb	r2, [r3, #2]
+ 176:main.c        ****     mainAreacontroller.description = DEV_DESC;
+ 254              		.loc 1 176 0
+ 255 0010 104A     		ldr	r2, .L22+4
+ 256 0012 5A60     		str	r2, [r3, #4]
+ 177:main.c        ****     
+ 178:main.c        ****     //Sensor Init Structs
+ 179:main.c        ****     //Light Sensor Init
+ 180:main.c        ****     mainSensors[0].id = 'A';
+ 257              		.loc 1 180 0
+ 258 0014 104B     		ldr	r3, .L22+8
+ 259 0016 4124     		movs	r4, #65
+ 260 0018 1C70     		strb	r4, [r3]
+ 181:main.c        ****     mainSensors[0].type = 0x00;
+ 261              		.loc 1 181 0
+ 262 001a 0022     		movs	r2, #0
+ 263 001c 5A70     		strb	r2, [r3, #1]
+ 182:main.c        ****     mainSensors[0].val = 0x00;
+ 264              		.loc 1 182 0
+ 265 001e 5A80     		strh	r2, [r3, #2]	@ movhi
+ 183:main.c        ****     
+ 184:main.c        ****     //SHARP Distance Sensor Init
+ 185:main.c        ****     mainSensors[1].id = 'B';
+ 266              		.loc 1 185 0
+ 267 0020 4220     		movs	r0, #66
+ARM GAS  C:\Users\Kotori\AppData\Local\Temp\cccAZwYP.s 			page 9
+
+
+ 268 0022 1871     		strb	r0, [r3, #4]
+ 186:main.c        ****     mainSensors[1].type = 0x02;
+ 269              		.loc 1 186 0
+ 270 0024 5971     		strb	r1, [r3, #5]
+ 187:main.c        ****     mainSensors[1].val = 0x00;
+ 271              		.loc 1 187 0
+ 272 0026 DA80     		strh	r2, [r3, #6]	@ movhi
+ 188:main.c        ****     
+ 189:main.c        ****     //TMP36 Sensor Init
+ 190:main.c        ****     mainSensors[2].id = 'C';
+ 273              		.loc 1 190 0
+ 274 0028 4321     		movs	r1, #67
+ 275 002a 1972     		strb	r1, [r3, #8]
+ 191:main.c        ****     mainSensors[2].type = 0x03;
+ 276              		.loc 1 191 0
+ 277 002c 0321     		movs	r1, #3
+ 278 002e 5972     		strb	r1, [r3, #9]
+ 192:main.c        ****     mainSensors[2].val = 0x00;
+ 279              		.loc 1 192 0
+ 280 0030 5A81     		strh	r2, [r3, #10]	@ movhi
+ 193:main.c        ****     
+ 194:main.c        ****     //ULTRASON Sensor Init
+ 195:main.c        ****     mainSensors[3].id = 'D';
+ 281              		.loc 1 195 0
+ 282 0032 4421     		movs	r1, #68
+ 283 0034 1973     		strb	r1, [r3, #12]
+ 196:main.c        ****     mainSensors[3].type = 0x01;
+ 284              		.loc 1 196 0
+ 285 0036 0121     		movs	r1, #1
+ 286 0038 5973     		strb	r1, [r3, #13]
+ 197:main.c        ****     mainSensors[3].val = 0x00;
+ 287              		.loc 1 197 0
+ 288 003a DA81     		strh	r2, [r3, #14]	@ movhi
+ 198:main.c        ****     
+ 199:main.c        ****     //Actuator Init Structs
+ 200:main.c        ****     //Stepper Init
+ 201:main.c        ****     mainActuators[0].id = 'A';
+ 289              		.loc 1 201 0
+ 290 003c 074B     		ldr	r3, .L22+12
+ 291 003e 1C70     		strb	r4, [r3]
+ 202:main.c        ****     mainActuators[0].type = 0x00;
+ 292              		.loc 1 202 0
+ 293 0040 5A70     		strb	r2, [r3, #1]
+ 203:main.c        ****     mainActuators[0].dir = 0x00;
+ 294              		.loc 1 203 0
+ 295 0042 1A71     		strb	r2, [r3, #4]
+ 204:main.c        ****     mainActuators[0].val = 0x00;
+ 296              		.loc 1 204 0
+ 297 0044 5A80     		strh	r2, [r3, #2]	@ movhi
+ 205:main.c        ****     
+ 206:main.c        ****     //RGBLED Init
+ 207:main.c        ****     mainActuators[1].id = 'B';
+ 298              		.loc 1 207 0
+ 299 0046 9871     		strb	r0, [r3, #6]
+ 208:main.c        ****     mainActuators[1].type = 0x01;
+ 300              		.loc 1 208 0
+ 301 0048 D971     		strb	r1, [r3, #7]
+ARM GAS  C:\Users\Kotori\AppData\Local\Temp\cccAZwYP.s 			page 10
+
+
+ 209:main.c        ****     mainActuators[1].val = 0x00;   
+ 302              		.loc 1 209 0
+ 303 004a 1A81     		strh	r2, [r3, #8]	@ movhi
+ 210:main.c        **** }
+ 304              		.loc 1 210 0
+ 305 004c 10BC     		pop	{r4}
+ 306              		.cfi_restore 4
+ 307              		.cfi_def_cfa_offset 0
+ 308 004e 7047     		bx	lr
+ 309              	.L23:
+ 310              		.align	2
+ 311              	.L22:
+ 312 0050 00000000 		.word	mainAreacontroller
+ 313 0054 00000000 		.word	.LC0
+ 314 0058 00000000 		.word	mainSensors
+ 315 005c 00000000 		.word	mainActuators
+ 316              		.cfi_endproc
+ 317              	.LFE66:
+ 318              		.size	Area_Controller_Init, .-Area_Controller_Init
+ 319              		.section	.text.Check_Sens,"ax",%progbits
+ 320              		.align	2
+ 321              		.global	Check_Sens
+ 322              		.thumb
+ 323              		.thumb_func
+ 324              		.type	Check_Sens, %function
+ 325              	Check_Sens:
+ 326              	.LFB67:
+ 211:main.c        **** 
+ 212:main.c        **** void Check_Sens( int id ) {
+ 327              		.loc 1 212 0
+ 328              		.cfi_startproc
+ 329              		@ args = 0, pretend = 0, frame = 0
+ 330              		@ frame_needed = 0, uses_anonymous_args = 0
+ 331              	.LVL4:
+ 332 0000 10B5     		push	{r4, lr}
+ 333              		.cfi_def_cfa_offset 8
+ 334              		.cfi_offset 4, -8
+ 335              		.cfi_offset 14, -4
+ 336 0002 0446     		mov	r4, r0
+ 213:main.c        ****     if (mainSensors[id].type == 0x01) {
+ 337              		.loc 1 213 0
+ 338 0004 174B     		ldr	r3, .L29
+ 339 0006 03EB8003 		add	r3, r3, r0, lsl #2
+ 340 000a 5B78     		ldrb	r3, [r3, #1]	@ zero_extendqisi2
+ 341 000c 012B     		cmp	r3, #1
+ 342 000e 17D1     		bne	.L25
+ 214:main.c        ****             TRIG_Write(1);
+ 343              		.loc 1 214 0
+ 344 0010 0120     		movs	r0, #1
+ 345              	.LVL5:
+ 346 0012 FFF7FEFF 		bl	TRIG_Write
+ 347              	.LVL6:
+ 215:main.c        ****             CyDelay(10u);
+ 348              		.loc 1 215 0
+ 349 0016 0A20     		movs	r0, #10
+ 350 0018 FFF7FEFF 		bl	CyDelay
+ 351              	.LVL7:
+ARM GAS  C:\Users\Kotori\AppData\Local\Temp\cccAZwYP.s 			page 11
+
+
+ 216:main.c        ****             TRIG_Write(0);
+ 352              		.loc 1 216 0
+ 353 001c 0020     		movs	r0, #0
+ 354 001e FFF7FEFF 		bl	TRIG_Write
+ 355              	.LVL8:
+ 217:main.c        ****             CyDelay(100);
+ 356              		.loc 1 217 0
+ 357 0022 6420     		movs	r0, #100
+ 358 0024 FFF7FEFF 		bl	CyDelay
+ 359              	.LVL9:
+ 360              	.L26:
+ 218:main.c        ****             while (ECHO_PIN_Read()){
+ 361              		.loc 1 218 0 discriminator 1
+ 362 0028 FFF7FEFF 		bl	ECHO_PIN_Read
+ 363              	.LVL10:
+ 364 002c 0028     		cmp	r0, #0
+ 365 002e FBD1     		bne	.L26
+ 219:main.c        ****                 //UART_PutString("in ECHO 1");
+ 220:main.c        ****                 //CyDelay(500);
+ 221:main.c        ****             }
+ 222:main.c        ****              mainSensors[id].val = 65536 - HCSR04_ReadCounter();
+ 366              		.loc 1 222 0
+ 367 0030 FFF7FEFF 		bl	HCSR04_ReadCounter
+ 368              	.LVL11:
+ 369 0034 0B4B     		ldr	r3, .L29
+ 370 0036 03EB8404 		add	r4, r3, r4, lsl #2
+ 371              	.LVL12:
+ 372 003a 4042     		negs	r0, r0
+ 373 003c 6080     		strh	r0, [r4, #2]	@ movhi
+ 374 003e 10BD     		pop	{r4, pc}
+ 375              	.LVL13:
+ 376              	.L25:
+ 223:main.c        ****     } else {
+ 224:main.c        ****         A_SENS_Select(id);
+ 377              		.loc 1 224 0
+ 378 0040 C0B2     		uxtb	r0, r0
+ 379              	.LVL14:
+ 380 0042 FFF7FEFF 		bl	A_SENS_Select
+ 381              	.LVL15:
+ 225:main.c        ****         ADC_StartConvert();
+ 382              		.loc 1 225 0
+ 383 0046 FFF7FEFF 		bl	ADC_StartConvert
+ 384              	.LVL16:
+ 226:main.c        ****         CyDelay(10);
+ 385              		.loc 1 226 0
+ 386 004a 0A20     		movs	r0, #10
+ 387 004c FFF7FEFF 		bl	CyDelay
+ 388              	.LVL17:
+ 227:main.c        ****         mainSensors[id].val = ADC_GetResult16();
+ 389              		.loc 1 227 0
+ 390 0050 FFF7FEFF 		bl	ADC_GetResult16
+ 391              	.LVL18:
+ 392 0054 034B     		ldr	r3, .L29
+ 393 0056 03EB8404 		add	r4, r3, r4, lsl #2
+ 394              	.LVL19:
+ 395 005a 6080     		strh	r0, [r4, #2]	@ movhi
+ 228:main.c        ****         ADC_StopConvert();
+ARM GAS  C:\Users\Kotori\AppData\Local\Temp\cccAZwYP.s 			page 12
+
+
+ 396              		.loc 1 228 0
+ 397 005c FFF7FEFF 		bl	ADC_StopConvert
+ 398              	.LVL20:
+ 399 0060 10BD     		pop	{r4, pc}
+ 400              	.L30:
+ 401 0062 00BF     		.align	2
+ 402              	.L29:
+ 403 0064 00000000 		.word	mainSensors
+ 404              		.cfi_endproc
+ 405              	.LFE67:
+ 406              		.size	Check_Sens, .-Check_Sens
+ 407              		.section	.text.main,"ax",%progbits
+ 408              		.align	2
+ 409              		.global	main
+ 410              		.thumb
+ 411              		.thumb_func
+ 412              		.type	main, %function
+ 413              	main:
+ 414              	.LFB65:
+  97:main.c        ****     /* Interrupt Inits */
+ 415              		.loc 1 97 0
+ 416              		.cfi_startproc
+ 417              		@ args = 0, pretend = 0, frame = 104
+ 418              		@ frame_needed = 0, uses_anonymous_args = 0
+ 419 0000 10B5     		push	{r4, lr}
+ 420              		.cfi_def_cfa_offset 8
+ 421              		.cfi_offset 4, -8
+ 422              		.cfi_offset 14, -4
+ 423 0002 9EB0     		sub	sp, sp, #120
+ 424              		.cfi_def_cfa_offset 128
+  99:main.c        ****     RxISR_StartEx(Rx_ISR_Call); /* Start UART ISR */
+ 425              		.loc 1 99 0
+ 426              		.syntax unified
+ 427              	@ 99 "main.c" 1
+ 428 0004 62B6     		CPSIE   i
+ 429              	@ 0 "" 2
+ 100:main.c        ****     
+ 430              		.loc 1 100 0
+ 431              		.thumb
+ 432              		.syntax unified
+ 433 0006 4748     		ldr	r0, .L42
+ 434 0008 FFF7FEFF 		bl	RxISR_StartEx
+ 435              	.LVL21:
+ 103:main.c        ****     ADC_Start();
+ 436              		.loc 1 103 0
+ 437 000c FFF7FEFF 		bl	Area_Controller_Init
+ 438              	.LVL22:
+ 104:main.c        ****     UART_Start(); //Start UART
+ 439              		.loc 1 104 0
+ 440 0010 FFF7FEFF 		bl	ADC_Start
+ 441              	.LVL23:
+ 105:main.c        ****     HCSR04_Start();
+ 442              		.loc 1 105 0
+ 443 0014 FFF7FEFF 		bl	UART_Start
+ 444              	.LVL24:
+ 106:main.c        ****     
+ 445              		.loc 1 106 0
+ARM GAS  C:\Users\Kotori\AppData\Local\Temp\cccAZwYP.s 			page 13
+
+
+ 446 0018 FFF7FEFF 		bl	HCSR04_Start
+ 447              	.LVL25:
+ 109:main.c        ****     UART_PutString( mainAreacontroller.description );
+ 448              		.loc 1 109 0
+ 449 001c 4248     		ldr	r0, .L42+4
+ 450 001e FFF7FEFF 		bl	UART_PutString
+ 451              	.LVL26:
+ 110:main.c        ****     UART_PutCRLF(0x00);
+ 452              		.loc 1 110 0
+ 453 0022 424B     		ldr	r3, .L42+8
+ 454 0024 5868     		ldr	r0, [r3, #4]
+ 455 0026 FFF7FEFF 		bl	UART_PutString
+ 456              	.LVL27:
+ 111:main.c        ****     RGB_OUT_Write(mainActuators[1].val);
+ 457              		.loc 1 111 0
+ 458 002a 0020     		movs	r0, #0
+ 459 002c FFF7FEFF 		bl	UART_PutCRLF
+ 460              	.LVL28:
+ 112:main.c        ****     
+ 461              		.loc 1 112 0
+ 462 0030 3F4B     		ldr	r3, .L42+12
+ 463 0032 187A     		ldrb	r0, [r3, #8]	@ zero_extendqisi2
+ 464 0034 FFF7FEFF 		bl	RGB_OUT_Write
+ 465              	.LVL29:
+ 466              	.L40:
+ 119:main.c        ****         Check_Sens(1);
+ 467              		.loc 1 119 0
+ 468 0038 0020     		movs	r0, #0
+ 469 003a FFF7FEFF 		bl	Check_Sens
+ 470              	.LVL30:
+ 120:main.c        ****         Check_Sens(2);
+ 471              		.loc 1 120 0
+ 472 003e 0120     		movs	r0, #1
+ 473 0040 FFF7FEFF 		bl	Check_Sens
+ 474              	.LVL31:
+ 121:main.c        ****         Check_Sens(3);
+ 475              		.loc 1 121 0
+ 476 0044 0220     		movs	r0, #2
+ 477 0046 FFF7FEFF 		bl	Check_Sens
+ 478              	.LVL32:
+ 122:main.c        ****         if (readyStatus == 1) {
+ 479              		.loc 1 122 0
+ 480 004a 0320     		movs	r0, #3
+ 481 004c FFF7FEFF 		bl	Check_Sens
+ 482              	.LVL33:
+ 123:main.c        ****                
+ 483              		.loc 1 123 0
+ 484 0050 384B     		ldr	r3, .L42+16
+ 485 0052 5B78     		ldrb	r3, [r3, #1]	@ zero_extendqisi2
+ 486 0054 012B     		cmp	r3, #1
+ 487 0056 1FD1     		bne	.L32
+ 126:main.c        ****             
+ 488              		.loc 1 126 0
+ 489 0058 354C     		ldr	r4, .L42+12
+ 490 005a 207A     		ldrb	r0, [r4, #8]	@ zero_extendqisi2
+ 491 005c FFF7FEFF 		bl	RGB_OUT_Write
+ 492              	.LVL34:
+ARM GAS  C:\Users\Kotori\AppData\Local\Temp\cccAZwYP.s 			page 14
+
+
+ 129:main.c        ****             STEP_DIR(mainActuators[0].dir);
+ 493              		.loc 1 129 0
+ 494 0060 0120     		movs	r0, #1
+ 495 0062 FFF7FEFF 		bl	STEP_EN
+ 496              	.LVL35:
+ 130:main.c        ****             for(i = 1; i<=mainActuators[0].val; i++) {
+ 497              		.loc 1 130 0
+ 498 0066 2079     		ldrb	r0, [r4, #4]	@ zero_extendqisi2
+ 499 0068 FFF7FEFF 		bl	STEP_DIR
+ 500              	.LVL36:
+ 131:main.c        ****                 STEP_RUN();
+ 501              		.loc 1 131 0
+ 502 006c 0124     		movs	r4, #1
+ 503 006e 06E0     		b	.L33
+ 504              	.LVL37:
+ 505              	.L34:
+ 132:main.c        ****                 CyDelay(15);
+ 506              		.loc 1 132 0 discriminator 3
+ 507 0070 FFF7FEFF 		bl	STEP_RUN
+ 508              	.LVL38:
+ 133:main.c        ****             }
+ 509              		.loc 1 133 0 discriminator 3
+ 510 0074 0F20     		movs	r0, #15
+ 511 0076 FFF7FEFF 		bl	CyDelay
+ 512              	.LVL39:
+ 131:main.c        ****                 STEP_RUN();
+ 513              		.loc 1 131 0 discriminator 3
+ 514 007a 0134     		adds	r4, r4, #1
+ 515              	.LVL40:
+ 516 007c A4B2     		uxth	r4, r4
+ 517              	.LVL41:
+ 518              	.L33:
+ 131:main.c        ****                 STEP_RUN();
+ 519              		.loc 1 131 0 is_stmt 0 discriminator 1
+ 520 007e 2C4B     		ldr	r3, .L42+12
+ 521 0080 5B88     		ldrh	r3, [r3, #2]
+ 522 0082 9C42     		cmp	r4, r3
+ 523 0084 F4D9     		bls	.L34
+ 135:main.c        ****             STEP_EN(0);
+ 524              		.loc 1 135 0 is_stmt 1
+ 525 0086 0024     		movs	r4, #0
+ 526              	.LVL42:
+ 527 0088 294B     		ldr	r3, .L42+12
+ 528 008a 5C80     		strh	r4, [r3, #2]	@ movhi
+ 136:main.c        ****             readyStatus = 0;
+ 529              		.loc 1 136 0
+ 530 008c 2046     		mov	r0, r4
+ 531 008e FFF7FEFF 		bl	STEP_EN
+ 532              	.LVL43:
+ 137:main.c        ****         } else if (readyStatus == 2) {
+ 533              		.loc 1 137 0
+ 534 0092 284B     		ldr	r3, .L42+16
+ 535 0094 5C70     		strb	r4, [r3, #1]
+ 536 0096 41E0     		b	.L35
+ 537              	.L32:
+ 138:main.c        ****             char sensorOutput[100];
+ 538              		.loc 1 138 0
+ARM GAS  C:\Users\Kotori\AppData\Local\Temp\cccAZwYP.s 			page 15
+
+
+ 539 0098 022B     		cmp	r3, #2
+ 540 009a 27D1     		bne	.L36
+ 541              	.LBB2:
+ 140:main.c        ****             for (int i = 0; i < NUM_OF_SENSORS; i++) {
+ 542              		.loc 1 140 0
+ 543 009c 5B20     		movs	r0, #91
+ 544 009e FFF7FEFF 		bl	UART_PutChar
+ 545              	.LVL44:
+ 546              	.LBB3:
+ 141:main.c        ****                 snprintf(sensorOutput,100,"{ \"SensId\" : %d, \"SensType\" : %d, \"SensVal\" : %d }
+ 547              		.loc 1 141 0
+ 548 00a2 0024     		movs	r4, #0
+ 549 00a4 19E0     		b	.L37
+ 550              	.LVL45:
+ 551              	.L39:
+ 143:main.c        ****                     mainSensors[i].type,
+ 552              		.loc 1 143 0
+ 553 00a6 244A     		ldr	r2, .L42+20
+ 554 00a8 12F82430 		ldrb	r3, [r2, r4, lsl #2]	@ zero_extendqisi2
+ 144:main.c        ****                     mainSensors[i].val
+ 555              		.loc 1 144 0
+ 556 00ac 02EB8402 		add	r2, r2, r4, lsl #2
+ 557 00b0 5178     		ldrb	r1, [r2, #1]	@ zero_extendqisi2
+ 145:main.c        ****                 );
+ 558              		.loc 1 145 0
+ 559 00b2 5288     		ldrh	r2, [r2, #2]
+ 142:main.c        ****                     mainSensors[i].id,
+ 560              		.loc 1 142 0
+ 561 00b4 0192     		str	r2, [sp, #4]
+ 562 00b6 0091     		str	r1, [sp]
+ 563 00b8 204A     		ldr	r2, .L42+24
+ 564 00ba 6421     		movs	r1, #100
+ 565 00bc 05A8     		add	r0, sp, #20
+ 566 00be FFF7FEFF 		bl	snprintf
+ 567              	.LVL46:
+ 147:main.c        ****                 if ( i != 3 ) {
+ 568              		.loc 1 147 0
+ 569 00c2 05A8     		add	r0, sp, #20
+ 570 00c4 FFF7FEFF 		bl	UART_PutString
+ 571              	.LVL47:
+ 148:main.c        ****                     UART_PutChar(',');
+ 572              		.loc 1 148 0
+ 573 00c8 032C     		cmp	r4, #3
+ 574 00ca 02D0     		beq	.L38
+ 149:main.c        ****                 }
+ 575              		.loc 1 149 0
+ 576 00cc 2C20     		movs	r0, #44
+ 577 00ce FFF7FEFF 		bl	UART_PutChar
+ 578              	.LVL48:
+ 579              	.L38:
+ 151:main.c        ****             }
+ 580              		.loc 1 151 0 discriminator 2
+ 581 00d2 0020     		movs	r0, #0
+ 582 00d4 FFF7FEFF 		bl	UART_PutCRLF
+ 583              	.LVL49:
+ 141:main.c        ****                 snprintf(sensorOutput,100,"{ \"SensId\" : %d, \"SensType\" : %d, \"SensVal\" : %d }
+ 584              		.loc 1 141 0 discriminator 2
+ARM GAS  C:\Users\Kotori\AppData\Local\Temp\cccAZwYP.s 			page 16
+
+
+ 585 00d8 0134     		adds	r4, r4, #1
+ 586              	.LVL50:
+ 587              	.L37:
+ 141:main.c        ****                 snprintf(sensorOutput,100,"{ \"SensId\" : %d, \"SensType\" : %d, \"SensVal\" : %d }
+ 588              		.loc 1 141 0 is_stmt 0 discriminator 1
+ 589 00da 032C     		cmp	r4, #3
+ 590 00dc E3DD     		ble	.L39
+ 591              	.LBE3:
+ 153:main.c        ****             readyStatus = 0;
+ 592              		.loc 1 153 0 is_stmt 1
+ 593 00de 5D20     		movs	r0, #93
+ 594 00e0 FFF7FEFF 		bl	UART_PutChar
+ 595              	.LVL51:
+ 154:main.c        ****         } else if (readyStatus == 3) {
+ 596              		.loc 1 154 0
+ 597 00e4 0022     		movs	r2, #0
+ 598 00e6 134B     		ldr	r3, .L42+16
+ 599 00e8 5A70     		strb	r2, [r3, #1]
+ 600              	.LBE2:
+ 601 00ea 17E0     		b	.L35
+ 602              	.LVL52:
+ 603              	.L36:
+ 155:main.c        ****             char ACOutput[100];
+ 604              		.loc 1 155 0
+ 605 00ec 032B     		cmp	r3, #3
+ 606 00ee 15D1     		bne	.L35
+ 607              	.LBB4:
+ 158:main.c        ****                 mainAreacontroller.numActs,
+ 608              		.loc 1 158 0
+ 609 00f0 0E4A     		ldr	r2, .L42+8
+ 610 00f2 1378     		ldrb	r3, [r2]	@ zero_extendqisi2
+ 159:main.c        ****                 mainAreacontroller.numSens,
+ 611              		.loc 1 159 0
+ 612 00f4 5178     		ldrb	r1, [r2, #1]	@ zero_extendqisi2
+ 160:main.c        ****                 mainAreacontroller.description
+ 613              		.loc 1 160 0
+ 614 00f6 9078     		ldrb	r0, [r2, #2]	@ zero_extendqisi2
+ 157:main.c        ****                 mainAreacontroller.id,
+ 615              		.loc 1 157 0
+ 616 00f8 5268     		ldr	r2, [r2, #4]
+ 617 00fa 0292     		str	r2, [sp, #8]
+ 618 00fc 0190     		str	r0, [sp, #4]
+ 619 00fe 0091     		str	r1, [sp]
+ 620 0100 0F4A     		ldr	r2, .L42+28
+ 621 0102 6421     		movs	r1, #100
+ 622 0104 05A8     		add	r0, sp, #20
+ 623 0106 FFF7FEFF 		bl	snprintf
+ 624              	.LVL53:
+ 163:main.c        ****             UART_PutCRLF(0x00);
+ 625              		.loc 1 163 0
+ 626 010a 05A8     		add	r0, sp, #20
+ 627 010c FFF7FEFF 		bl	UART_PutString
+ 628              	.LVL54:
+ 164:main.c        ****             readyStatus = 0;
+ 629              		.loc 1 164 0
+ 630 0110 0020     		movs	r0, #0
+ 631 0112 FFF7FEFF 		bl	UART_PutCRLF
+ARM GAS  C:\Users\Kotori\AppData\Local\Temp\cccAZwYP.s 			page 17
+
+
+ 632              	.LVL55:
+ 165:main.c        ****         }
+ 633              		.loc 1 165 0
+ 634 0116 0022     		movs	r2, #0
+ 635 0118 064B     		ldr	r3, .L42+16
+ 636 011a 5A70     		strb	r2, [r3, #1]
+ 637              	.L35:
+ 638              	.LBE4:
+ 167:main.c        ****     }
+ 639              		.loc 1 167 0
+ 640 011c 0120     		movs	r0, #1
+ 641 011e FFF7FEFF 		bl	CyDelay
+ 642              	.LVL56:
+ 168:main.c        **** }
+ 643              		.loc 1 168 0
+ 644 0122 89E7     		b	.L40
+ 645              	.L43:
+ 646              		.align	2
+ 647              	.L42:
+ 648 0124 00000000 		.word	Rx_ISR_Call
+ 649 0128 1C000000 		.word	.LC1
+ 650 012c 00000000 		.word	mainAreacontroller
+ 651 0130 00000000 		.word	mainActuators
+ 652 0134 00000000 		.word	.LANCHOR0
+ 653 0138 00000000 		.word	mainSensors
+ 654 013c 28000000 		.word	.LC2
+ 655 0140 5C000000 		.word	.LC3
+ 656              		.cfi_endproc
+ 657              	.LFE65:
+ 658              		.size	main, .-main
+ 659              		.comm	mainSensors,16,4
+ 660              		.comm	mainActuators,12,4
+ 661              		.comm	mainAreacontroller,8,4
+ 662              		.global	counterVal
+ 663              		.global	curAct
+ 664              		.global	wmode
+ 665              		.global	readyStatus
+ 666              		.global	curCount
+ 667              		.global	getDir
+ 668              		.comm	k,1,1
+ 669              		.global	commandBytes
+ 670              		.data
+ 671              		.set	.LANCHOR1,. + 0
+ 672              		.type	curAct, %object
+ 673              		.size	curAct, 1
+ 674              	curAct:
+ 675 0000 FF       		.byte	-1
+ 676              		.section	.rodata.str1.4,"aMS",%progbits,1
+ 677              		.align	2
+ 678              	.LC0:
+ 679 0000 2D4E414D 		.ascii	"-NAMEOF- Area Controller\000"
+ 679      454F462D 
+ 679      20417265 
+ 679      6120436F 
+ 679      6E74726F 
+ 680 0019 000000   		.space	3
+ 681              	.LC1:
+ARM GAS  C:\Users\Kotori\AppData\Local\Temp\cccAZwYP.s 			page 18
+
+
+ 682 001c 53746172 		.ascii	"Starting: \000"
+ 682      74696E67 
+ 682      3A2000
+ 683 0027 00       		.space	1
+ 684              	.LC2:
+ 685 0028 7B202253 		.ascii	"{ \"SensId\" : %d, \"SensType\" : %d, \"SensVal\" :"
+ 685      656E7349 
+ 685      6422203A 
+ 685      2025642C 
+ 685      20225365 
+ 686 0055 20256420 		.ascii	" %d }\000"
+ 686      7D00
+ 687 005b 00       		.space	1
+ 688              	.LC3:
+ 689 005c 7B202241 		.ascii	"{ \"ACId\" : %d, \"ACNumActs\" : %d, \"ACNumSens\" "
+ 689      43496422 
+ 689      203A2025 
+ 689      642C2022 
+ 689      41434E75 
+ 690 0089 3A202564 		.ascii	": %d, \"ACDesc\" : %s }\000"
+ 690      2C202241 
+ 690      43446573 
+ 690      6322203A 
+ 690      20257320 
+ 691              		.bss
+ 692              		.align	2
+ 693              		.set	.LANCHOR0,. + 0
+ 694              		.type	wmode, %object
+ 695              		.size	wmode, 1
+ 696              	wmode:
+ 697 0000 00       		.space	1
+ 698              		.type	readyStatus, %object
+ 699              		.size	readyStatus, 1
+ 700              	readyStatus:
+ 701 0001 00       		.space	1
+ 702 0002 0000     		.space	2
+ 703              		.type	commandBytes, %object
+ 704              		.size	commandBytes, 16
+ 705              	commandBytes:
+ 706 0004 00000000 		.space	16
+ 706      00000000 
+ 706      00000000 
+ 706      00000000 
+ 707              		.type	curCount, %object
+ 708              		.size	curCount, 1
+ 709              	curCount:
+ 710 0014 00       		.space	1
+ 711              		.type	getDir, %object
+ 712              		.size	getDir, 1
+ 713              	getDir:
+ 714 0015 00       		.space	1
+ 715              		.type	counterVal, %object
+ 716              		.size	counterVal, 2
+ 717              	counterVal:
+ 718 0016 0000     		.space	2
+ 719              		.text
+ 720              	.Letext0:
+ARM GAS  C:\Users\Kotori\AppData\Local\Temp\cccAZwYP.s 			page 19
+
+
+ 721              		.file 2 "c:\\program files (x86)\\cypress\\psoc creator\\4.2\\psoc creator\\import\\gnu\\arm\\5.4.
+ 722              		.file 3 "c:\\program files (x86)\\cypress\\psoc creator\\4.2\\psoc creator\\import\\gnu\\arm\\5.4.
+ 723              		.file 4 "Generated_Source\\PSoC5/cytypes.h"
+ 724              		.file 5 "devstruct.h"
+ 725              		.file 6 "Generated_Source\\PSoC5/core_cm3.h"
+ 726              		.file 7 "Generated_Source\\PSoC5/UART.h"
+ 727              		.file 8 "c:\\program files (x86)\\cypress\\psoc creator\\4.2\\psoc creator\\import\\gnu\\arm\\5.4.
+ 728              		.file 9 "Generated_Source\\PSoC5/TRIG.h"
+ 729              		.file 10 "Generated_Source\\PSoC5/CyLib.h"
+ 730              		.file 11 "Generated_Source\\PSoC5/ECHO_PIN.h"
+ 731              		.file 12 "Generated_Source\\PSoC5/HCSR04.h"
+ 732              		.file 13 "Generated_Source\\PSoC5/A_SENS.h"
+ 733              		.file 14 "Generated_Source\\PSoC5/ADC.h"
+ 734              		.file 15 "c:\\program files (x86)\\cypress\\psoc creator\\4.2\\psoc creator\\import\\gnu\\arm\\5.4
+ 735              		.file 16 "Generated_Source\\PSoC5/RxISR.h"
+ 736              		.file 17 "Generated_Source\\PSoC5/RGB_OUT.h"
+ 737              		.file 18 "stepctrl.h"
+ 738              		.section	.debug_info,"",%progbits
+ 739              	.Ldebug_info0:
+ 740 0000 E6060000 		.4byte	0x6e6
+ 741 0004 0400     		.2byte	0x4
+ 742 0006 00000000 		.4byte	.Ldebug_abbrev0
+ 743 000a 04       		.byte	0x4
+ 744 000b 01       		.uleb128 0x1
+ 745 000c 21030000 		.4byte	.LASF64
+ 746 0010 0C       		.byte	0xc
+ 747 0011 9E020000 		.4byte	.LASF65
+ 748 0015 0F010000 		.4byte	.LASF66
+ 749 0019 00000000 		.4byte	.Ldebug_ranges0+0
+ 750 001d 00000000 		.4byte	0
+ 751 0021 00000000 		.4byte	.Ldebug_line0
+ 752 0025 02       		.uleb128 0x2
+ 753 0026 01       		.byte	0x1
+ 754 0027 06       		.byte	0x6
+ 755 0028 EB010000 		.4byte	.LASF0
+ 756 002c 02       		.uleb128 0x2
+ 757 002d 01       		.byte	0x1
+ 758 002e 08       		.byte	0x8
+ 759 002f A6010000 		.4byte	.LASF1
+ 760 0033 02       		.uleb128 0x2
+ 761 0034 02       		.byte	0x2
+ 762 0035 05       		.byte	0x5
+ 763 0036 33000000 		.4byte	.LASF2
+ 764 003a 02       		.uleb128 0x2
+ 765 003b 02       		.byte	0x2
+ 766 003c 07       		.byte	0x7
+ 767 003d 58020000 		.4byte	.LASF3
+ 768 0041 03       		.uleb128 0x3
+ 769 0042 DF020000 		.4byte	.LASF9
+ 770 0046 02       		.byte	0x2
+ 771 0047 3F       		.byte	0x3f
+ 772 0048 4C000000 		.4byte	0x4c
+ 773 004c 02       		.uleb128 0x2
+ 774 004d 04       		.byte	0x4
+ 775 004e 05       		.byte	0x5
+ 776 004f 06010000 		.4byte	.LASF4
+ 777 0053 02       		.uleb128 0x2
+ARM GAS  C:\Users\Kotori\AppData\Local\Temp\cccAZwYP.s 			page 20
+
+
+ 778 0054 04       		.byte	0x4
+ 779 0055 07       		.byte	0x7
+ 780 0056 B2020000 		.4byte	.LASF5
+ 781 005a 02       		.uleb128 0x2
+ 782 005b 08       		.byte	0x8
+ 783 005c 05       		.byte	0x5
+ 784 005d D1000000 		.4byte	.LASF6
+ 785 0061 02       		.uleb128 0x2
+ 786 0062 08       		.byte	0x8
+ 787 0063 07       		.byte	0x7
+ 788 0064 F7010000 		.4byte	.LASF7
+ 789 0068 04       		.uleb128 0x4
+ 790 0069 04       		.byte	0x4
+ 791 006a 05       		.byte	0x5
+ 792 006b 696E7400 		.ascii	"int\000"
+ 793 006f 02       		.uleb128 0x2
+ 794 0070 04       		.byte	0x4
+ 795 0071 07       		.byte	0x7
+ 796 0072 1E020000 		.4byte	.LASF8
+ 797 0076 03       		.uleb128 0x3
+ 798 0077 8F020000 		.4byte	.LASF10
+ 799 007b 03       		.byte	0x3
+ 800 007c 2C       		.byte	0x2c
+ 801 007d 41000000 		.4byte	0x41
+ 802 0081 05       		.uleb128 0x5
+ 803 0082 AF000000 		.4byte	.LASF11
+ 804 0086 04       		.byte	0x4
+ 805 0087 E401     		.2byte	0x1e4
+ 806 0089 2C000000 		.4byte	0x2c
+ 807 008d 05       		.uleb128 0x5
+ 808 008e A8000000 		.4byte	.LASF12
+ 809 0092 04       		.byte	0x4
+ 810 0093 E501     		.2byte	0x1e5
+ 811 0095 3A000000 		.4byte	0x3a
+ 812 0099 05       		.uleb128 0x5
+ 813 009a DF000000 		.4byte	.LASF13
+ 814 009e 04       		.byte	0x4
+ 815 009f E701     		.2byte	0x1e7
+ 816 00a1 25000000 		.4byte	0x25
+ 817 00a5 02       		.uleb128 0x2
+ 818 00a6 04       		.byte	0x4
+ 819 00a7 04       		.byte	0x4
+ 820 00a8 CB000000 		.4byte	.LASF14
+ 821 00ac 02       		.uleb128 0x2
+ 822 00ad 08       		.byte	0x8
+ 823 00ae 04       		.byte	0x4
+ 824 00af C4020000 		.4byte	.LASF15
+ 825 00b3 02       		.uleb128 0x2
+ 826 00b4 01       		.byte	0x1
+ 827 00b5 08       		.byte	0x8
+ 828 00b6 F7000000 		.4byte	.LASF16
+ 829 00ba 02       		.uleb128 0x2
+ 830 00bb 08       		.byte	0x8
+ 831 00bc 04       		.byte	0x4
+ 832 00bd 62000000 		.4byte	.LASF17
+ 833 00c1 02       		.uleb128 0x2
+ 834 00c2 04       		.byte	0x4
+ARM GAS  C:\Users\Kotori\AppData\Local\Temp\cccAZwYP.s 			page 21
+
+
+ 835 00c3 07       		.byte	0x7
+ 836 00c4 3D000000 		.4byte	.LASF18
+ 837 00c8 06       		.uleb128 0x6
+ 838 00c9 04       		.byte	0x4
+ 839 00ca B3000000 		.4byte	0xb3
+ 840 00ce 07       		.uleb128 0x7
+ 841 00cf DC010000 		.4byte	.LASF22
+ 842 00d3 08       		.byte	0x8
+ 843 00d4 05       		.byte	0x5
+ 844 00d5 15       		.byte	0x15
+ 845 00d6 0A010000 		.4byte	0x10a
+ 846 00da 08       		.uleb128 0x8
+ 847 00db 696400   		.ascii	"id\000"
+ 848 00de 05       		.byte	0x5
+ 849 00df 16       		.byte	0x16
+ 850 00e0 81000000 		.4byte	0x81
+ 851 00e4 00       		.byte	0
+ 852 00e5 09       		.uleb128 0x9
+ 853 00e6 95010000 		.4byte	.LASF19
+ 854 00ea 05       		.byte	0x5
+ 855 00eb 17       		.byte	0x17
+ 856 00ec 81000000 		.4byte	0x81
+ 857 00f0 01       		.byte	0x1
+ 858 00f1 09       		.uleb128 0x9
+ 859 00f2 B5000000 		.4byte	.LASF20
+ 860 00f6 05       		.byte	0x5
+ 861 00f7 18       		.byte	0x18
+ 862 00f8 81000000 		.4byte	0x81
+ 863 00fc 02       		.byte	0x2
+ 864 00fd 09       		.uleb128 0x9
+ 865 00fe E9020000 		.4byte	.LASF21
+ 866 0102 05       		.byte	0x5
+ 867 0103 19       		.byte	0x19
+ 868 0104 C8000000 		.4byte	0xc8
+ 869 0108 04       		.byte	0x4
+ 870 0109 00       		.byte	0
+ 871 010a 07       		.uleb128 0x7
+ 872 010b 66010000 		.4byte	.LASF23
+ 873 010f 06       		.byte	0x6
+ 874 0110 05       		.byte	0x5
+ 875 0111 1C       		.byte	0x1c
+ 876 0112 46010000 		.4byte	0x146
+ 877 0116 08       		.uleb128 0x8
+ 878 0117 696400   		.ascii	"id\000"
+ 879 011a 05       		.byte	0x5
+ 880 011b 1D       		.byte	0x1d
+ 881 011c B3000000 		.4byte	0xb3
+ 882 0120 00       		.byte	0
+ 883 0121 09       		.uleb128 0x9
+ 884 0122 19020000 		.4byte	.LASF24
+ 885 0126 05       		.byte	0x5
+ 886 0127 1E       		.byte	0x1e
+ 887 0128 81000000 		.4byte	0x81
+ 888 012c 01       		.byte	0x1
+ 889 012d 08       		.uleb128 0x8
+ 890 012e 76616C00 		.ascii	"val\000"
+ 891 0132 05       		.byte	0x5
+ARM GAS  C:\Users\Kotori\AppData\Local\Temp\cccAZwYP.s 			page 22
+
+
+ 892 0133 1F       		.byte	0x1f
+ 893 0134 8D000000 		.4byte	0x8d
+ 894 0138 02       		.byte	0x2
+ 895 0139 08       		.uleb128 0x8
+ 896 013a 64697200 		.ascii	"dir\000"
+ 897 013e 05       		.byte	0x5
+ 898 013f 20       		.byte	0x20
+ 899 0140 81000000 		.4byte	0x81
+ 900 0144 04       		.byte	0x4
+ 901 0145 00       		.byte	0
+ 902 0146 07       		.uleb128 0x7
+ 903 0147 46000000 		.4byte	.LASF25
+ 904 014b 04       		.byte	0x4
+ 905 014c 05       		.byte	0x5
+ 906 014d 24       		.byte	0x24
+ 907 014e 76010000 		.4byte	0x176
+ 908 0152 08       		.uleb128 0x8
+ 909 0153 696400   		.ascii	"id\000"
+ 910 0156 05       		.byte	0x5
+ 911 0157 25       		.byte	0x25
+ 912 0158 B3000000 		.4byte	0xb3
+ 913 015c 00       		.byte	0
+ 914 015d 09       		.uleb128 0x9
+ 915 015e 19020000 		.4byte	.LASF24
+ 916 0162 05       		.byte	0x5
+ 917 0163 26       		.byte	0x26
+ 918 0164 81000000 		.4byte	0x81
+ 919 0168 01       		.byte	0x1
+ 920 0169 08       		.uleb128 0x8
+ 921 016a 76616C00 		.ascii	"val\000"
+ 922 016e 05       		.byte	0x5
+ 923 016f 27       		.byte	0x27
+ 924 0170 8D000000 		.4byte	0x8d
+ 925 0174 02       		.byte	0x2
+ 926 0175 00       		.byte	0
+ 927 0176 0A       		.uleb128 0xa
+ 928 0177 6B020000 		.4byte	.LASF26
+ 929 017b 01       		.byte	0x1
+ 930 017c 2A       		.byte	0x2a
+ 931 017d 00000000 		.4byte	.LFB64
+ 932 0181 2C010000 		.4byte	.LFE64-.LFB64
+ 933 0185 01       		.uleb128 0x1
+ 934 0186 9C       		.byte	0x9c
+ 935 0187 B7010000 		.4byte	0x1b7
+ 936 018b 0B       		.uleb128 0xb
+ 937 018c 3B020000 		.4byte	.LASF28
+ 938 0190 01       		.byte	0x1
+ 939 0191 2B       		.byte	0x2b
+ 940 0192 B3000000 		.4byte	0xb3
+ 941 0196 00000000 		.4byte	.LLST0
+ 942 019a 0C       		.uleb128 0xc
+ 943 019b 06000000 		.4byte	.LVL0
+ 944 019f F7050000 		.4byte	0x5f7
+ 945 01a3 0D       		.uleb128 0xd
+ 946 01a4 38000000 		.4byte	.LVL2
+ 947 01a8 02060000 		.4byte	0x602
+ 948 01ac 0E       		.uleb128 0xe
+ARM GAS  C:\Users\Kotori\AppData\Local\Temp\cccAZwYP.s 			page 23
+
+
+ 949 01ad 01       		.uleb128 0x1
+ 950 01ae 50       		.byte	0x50
+ 951 01af 05       		.uleb128 0x5
+ 952 01b0 03       		.byte	0x3
+ 953 01b1 04000000 		.4byte	.LANCHOR0+4
+ 954 01b5 00       		.byte	0
+ 955 01b6 00       		.byte	0
+ 956 01b7 0F       		.uleb128 0xf
+ 957 01b8 43020000 		.4byte	.LASF67
+ 958 01bc 01       		.byte	0x1
+ 959 01bd AB       		.byte	0xab
+ 960 01be 00000000 		.4byte	.LFB66
+ 961 01c2 60000000 		.4byte	.LFE66-.LFB66
+ 962 01c6 01       		.uleb128 0x1
+ 963 01c7 9C       		.byte	0x9c
+ 964 01c8 0A       		.uleb128 0xa
+ 965 01c9 0E020000 		.4byte	.LASF27
+ 966 01cd 01       		.byte	0x1
+ 967 01ce D4       		.byte	0xd4
+ 968 01cf 00000000 		.4byte	.LFB67
+ 969 01d3 68000000 		.4byte	.LFE67-.LFB67
+ 970 01d7 01       		.uleb128 0x1
+ 971 01d8 9C       		.byte	0x9c
+ 972 01d9 82020000 		.4byte	0x282
+ 973 01dd 10       		.uleb128 0x10
+ 974 01de 696400   		.ascii	"id\000"
+ 975 01e1 01       		.byte	0x1
+ 976 01e2 D4       		.byte	0xd4
+ 977 01e3 68000000 		.4byte	0x68
+ 978 01e7 1E000000 		.4byte	.LLST1
+ 979 01eb 11       		.uleb128 0x11
+ 980 01ec 16000000 		.4byte	.LVL6
+ 981 01f0 0D060000 		.4byte	0x60d
+ 982 01f4 FE010000 		.4byte	0x1fe
+ 983 01f8 0E       		.uleb128 0xe
+ 984 01f9 01       		.uleb128 0x1
+ 985 01fa 50       		.byte	0x50
+ 986 01fb 01       		.uleb128 0x1
+ 987 01fc 31       		.byte	0x31
+ 988 01fd 00       		.byte	0
+ 989 01fe 11       		.uleb128 0x11
+ 990 01ff 1C000000 		.4byte	.LVL7
+ 991 0203 18060000 		.4byte	0x618
+ 992 0207 11020000 		.4byte	0x211
+ 993 020b 0E       		.uleb128 0xe
+ 994 020c 01       		.uleb128 0x1
+ 995 020d 50       		.byte	0x50
+ 996 020e 01       		.uleb128 0x1
+ 997 020f 3A       		.byte	0x3a
+ 998 0210 00       		.byte	0
+ 999 0211 11       		.uleb128 0x11
+ 1000 0212 22000000 		.4byte	.LVL8
+ 1001 0216 0D060000 		.4byte	0x60d
+ 1002 021a 24020000 		.4byte	0x224
+ 1003 021e 0E       		.uleb128 0xe
+ 1004 021f 01       		.uleb128 0x1
+ 1005 0220 50       		.byte	0x50
+ARM GAS  C:\Users\Kotori\AppData\Local\Temp\cccAZwYP.s 			page 24
+
+
+ 1006 0221 01       		.uleb128 0x1
+ 1007 0222 30       		.byte	0x30
+ 1008 0223 00       		.byte	0
+ 1009 0224 11       		.uleb128 0x11
+ 1010 0225 28000000 		.4byte	.LVL9
+ 1011 0229 18060000 		.4byte	0x618
+ 1012 022d 38020000 		.4byte	0x238
+ 1013 0231 0E       		.uleb128 0xe
+ 1014 0232 01       		.uleb128 0x1
+ 1015 0233 50       		.byte	0x50
+ 1016 0234 02       		.uleb128 0x2
+ 1017 0235 08       		.byte	0x8
+ 1018 0236 64       		.byte	0x64
+ 1019 0237 00       		.byte	0
+ 1020 0238 0C       		.uleb128 0xc
+ 1021 0239 2C000000 		.4byte	.LVL10
+ 1022 023d 23060000 		.4byte	0x623
+ 1023 0241 0C       		.uleb128 0xc
+ 1024 0242 34000000 		.4byte	.LVL11
+ 1025 0246 2E060000 		.4byte	0x62e
+ 1026 024a 0C       		.uleb128 0xc
+ 1027 024b 46000000 		.4byte	.LVL15
+ 1028 024f 39060000 		.4byte	0x639
+ 1029 0253 0C       		.uleb128 0xc
+ 1030 0254 4A000000 		.4byte	.LVL16
+ 1031 0258 44060000 		.4byte	0x644
+ 1032 025c 11       		.uleb128 0x11
+ 1033 025d 50000000 		.4byte	.LVL17
+ 1034 0261 18060000 		.4byte	0x618
+ 1035 0265 6F020000 		.4byte	0x26f
+ 1036 0269 0E       		.uleb128 0xe
+ 1037 026a 01       		.uleb128 0x1
+ 1038 026b 50       		.byte	0x50
+ 1039 026c 01       		.uleb128 0x1
+ 1040 026d 3A       		.byte	0x3a
+ 1041 026e 00       		.byte	0
+ 1042 026f 0C       		.uleb128 0xc
+ 1043 0270 54000000 		.4byte	.LVL18
+ 1044 0274 4F060000 		.4byte	0x64f
+ 1045 0278 0C       		.uleb128 0xc
+ 1046 0279 60000000 		.4byte	.LVL20
+ 1047 027d 5A060000 		.4byte	0x65a
+ 1048 0281 00       		.byte	0
+ 1049 0282 12       		.uleb128 0x12
+ 1050 0283 7F020000 		.4byte	.LASF68
+ 1051 0287 01       		.byte	0x1
+ 1052 0288 60       		.byte	0x60
+ 1053 0289 68000000 		.4byte	0x68
+ 1054 028d 00000000 		.4byte	.LFB65
+ 1055 0291 44010000 		.4byte	.LFE65-.LFB65
+ 1056 0295 01       		.uleb128 0x1
+ 1057 0296 9C       		.byte	0x9c
+ 1058 0297 ED040000 		.4byte	0x4ed
+ 1059 029b 13       		.uleb128 0x13
+ 1060 029c 6900     		.ascii	"i\000"
+ 1061 029e 01       		.byte	0x1
+ 1062 029f 72       		.byte	0x72
+ARM GAS  C:\Users\Kotori\AppData\Local\Temp\cccAZwYP.s 			page 25
+
+
+ 1063 02a0 8D000000 		.4byte	0x8d
+ 1064 02a4 6E000000 		.4byte	.LLST2
+ 1065 02a8 14       		.uleb128 0x14
+ 1066 02a9 9C000000 		.4byte	.LBB2
+ 1067 02ad 4E000000 		.4byte	.LBE2-.LBB2
+ 1068 02b1 60030000 		.4byte	0x360
+ 1069 02b5 15       		.uleb128 0x15
+ 1070 02b6 10000000 		.4byte	.LASF29
+ 1071 02ba 01       		.byte	0x1
+ 1072 02bb 8B       		.byte	0x8b
+ 1073 02bc ED040000 		.4byte	0x4ed
+ 1074 02c0 03       		.uleb128 0x3
+ 1075 02c1 91       		.byte	0x91
+ 1076 02c2 947F     		.sleb128 -108
+ 1077 02c4 14       		.uleb128 0x14
+ 1078 02c5 A2000000 		.4byte	.LBB3
+ 1079 02c9 3C000000 		.4byte	.LBE3-.LBB3
+ 1080 02cd 3B030000 		.4byte	0x33b
+ 1081 02d1 13       		.uleb128 0x13
+ 1082 02d2 6900     		.ascii	"i\000"
+ 1083 02d4 01       		.byte	0x1
+ 1084 02d5 8D       		.byte	0x8d
+ 1085 02d6 68000000 		.4byte	0x68
+ 1086 02da 98000000 		.4byte	.LLST3
+ 1087 02de 11       		.uleb128 0x11
+ 1088 02df C2000000 		.4byte	.LVL46
+ 1089 02e3 65060000 		.4byte	0x665
+ 1090 02e7 02030000 		.4byte	0x302
+ 1091 02eb 0E       		.uleb128 0xe
+ 1092 02ec 01       		.uleb128 0x1
+ 1093 02ed 50       		.byte	0x50
+ 1094 02ee 03       		.uleb128 0x3
+ 1095 02ef 91       		.byte	0x91
+ 1096 02f0 947F     		.sleb128 -108
+ 1097 02f2 0E       		.uleb128 0xe
+ 1098 02f3 01       		.uleb128 0x1
+ 1099 02f4 51       		.byte	0x51
+ 1100 02f5 02       		.uleb128 0x2
+ 1101 02f6 08       		.byte	0x8
+ 1102 02f7 64       		.byte	0x64
+ 1103 02f8 0E       		.uleb128 0xe
+ 1104 02f9 01       		.uleb128 0x1
+ 1105 02fa 52       		.byte	0x52
+ 1106 02fb 05       		.uleb128 0x5
+ 1107 02fc 03       		.byte	0x3
+ 1108 02fd 28000000 		.4byte	.LC2
+ 1109 0301 00       		.byte	0
+ 1110 0302 11       		.uleb128 0x11
+ 1111 0303 C8000000 		.4byte	.LVL47
+ 1112 0307 70060000 		.4byte	0x670
+ 1113 030b 17030000 		.4byte	0x317
+ 1114 030f 0E       		.uleb128 0xe
+ 1115 0310 01       		.uleb128 0x1
+ 1116 0311 50       		.byte	0x50
+ 1117 0312 03       		.uleb128 0x3
+ 1118 0313 91       		.byte	0x91
+ 1119 0314 947F     		.sleb128 -108
+ARM GAS  C:\Users\Kotori\AppData\Local\Temp\cccAZwYP.s 			page 26
+
+
+ 1120 0316 00       		.byte	0
+ 1121 0317 11       		.uleb128 0x11
+ 1122 0318 D2000000 		.4byte	.LVL48
+ 1123 031c 7B060000 		.4byte	0x67b
+ 1124 0320 2B030000 		.4byte	0x32b
+ 1125 0324 0E       		.uleb128 0xe
+ 1126 0325 01       		.uleb128 0x1
+ 1127 0326 50       		.byte	0x50
+ 1128 0327 02       		.uleb128 0x2
+ 1129 0328 08       		.byte	0x8
+ 1130 0329 2C       		.byte	0x2c
+ 1131 032a 00       		.byte	0
+ 1132 032b 0D       		.uleb128 0xd
+ 1133 032c D8000000 		.4byte	.LVL49
+ 1134 0330 86060000 		.4byte	0x686
+ 1135 0334 0E       		.uleb128 0xe
+ 1136 0335 01       		.uleb128 0x1
+ 1137 0336 50       		.byte	0x50
+ 1138 0337 01       		.uleb128 0x1
+ 1139 0338 30       		.byte	0x30
+ 1140 0339 00       		.byte	0
+ 1141 033a 00       		.byte	0
+ 1142 033b 11       		.uleb128 0x11
+ 1143 033c A2000000 		.4byte	.LVL44
+ 1144 0340 7B060000 		.4byte	0x67b
+ 1145 0344 4F030000 		.4byte	0x34f
+ 1146 0348 0E       		.uleb128 0xe
+ 1147 0349 01       		.uleb128 0x1
+ 1148 034a 50       		.byte	0x50
+ 1149 034b 02       		.uleb128 0x2
+ 1150 034c 08       		.byte	0x8
+ 1151 034d 5B       		.byte	0x5b
+ 1152 034e 00       		.byte	0
+ 1153 034f 0D       		.uleb128 0xd
+ 1154 0350 E4000000 		.4byte	.LVL51
+ 1155 0354 7B060000 		.4byte	0x67b
+ 1156 0358 0E       		.uleb128 0xe
+ 1157 0359 01       		.uleb128 0x1
+ 1158 035a 50       		.byte	0x50
+ 1159 035b 02       		.uleb128 0x2
+ 1160 035c 08       		.byte	0x8
+ 1161 035d 5D       		.byte	0x5d
+ 1162 035e 00       		.byte	0
+ 1163 035f 00       		.byte	0
+ 1164 0360 14       		.uleb128 0x14
+ 1165 0361 F0000000 		.4byte	.LBB4
+ 1166 0365 2C000000 		.4byte	.LBE4-.LBB4
+ 1167 0369 C5030000 		.4byte	0x3c5
+ 1168 036d 15       		.uleb128 0x15
+ 1169 036e 4E000000 		.4byte	.LASF30
+ 1170 0372 01       		.byte	0x1
+ 1171 0373 9C       		.byte	0x9c
+ 1172 0374 ED040000 		.4byte	0x4ed
+ 1173 0378 03       		.uleb128 0x3
+ 1174 0379 91       		.byte	0x91
+ 1175 037a 947F     		.sleb128 -108
+ 1176 037c 11       		.uleb128 0x11
+ARM GAS  C:\Users\Kotori\AppData\Local\Temp\cccAZwYP.s 			page 27
+
+
+ 1177 037d 0A010000 		.4byte	.LVL53
+ 1178 0381 65060000 		.4byte	0x665
+ 1179 0385 A0030000 		.4byte	0x3a0
+ 1180 0389 0E       		.uleb128 0xe
+ 1181 038a 01       		.uleb128 0x1
+ 1182 038b 50       		.byte	0x50
+ 1183 038c 03       		.uleb128 0x3
+ 1184 038d 91       		.byte	0x91
+ 1185 038e 947F     		.sleb128 -108
+ 1186 0390 0E       		.uleb128 0xe
+ 1187 0391 01       		.uleb128 0x1
+ 1188 0392 51       		.byte	0x51
+ 1189 0393 02       		.uleb128 0x2
+ 1190 0394 08       		.byte	0x8
+ 1191 0395 64       		.byte	0x64
+ 1192 0396 0E       		.uleb128 0xe
+ 1193 0397 01       		.uleb128 0x1
+ 1194 0398 52       		.byte	0x52
+ 1195 0399 05       		.uleb128 0x5
+ 1196 039a 03       		.byte	0x3
+ 1197 039b 5C000000 		.4byte	.LC3
+ 1198 039f 00       		.byte	0
+ 1199 03a0 11       		.uleb128 0x11
+ 1200 03a1 10010000 		.4byte	.LVL54
+ 1201 03a5 70060000 		.4byte	0x670
+ 1202 03a9 B5030000 		.4byte	0x3b5
+ 1203 03ad 0E       		.uleb128 0xe
+ 1204 03ae 01       		.uleb128 0x1
+ 1205 03af 50       		.byte	0x50
+ 1206 03b0 03       		.uleb128 0x3
+ 1207 03b1 91       		.byte	0x91
+ 1208 03b2 947F     		.sleb128 -108
+ 1209 03b4 00       		.byte	0
+ 1210 03b5 0D       		.uleb128 0xd
+ 1211 03b6 16010000 		.4byte	.LVL55
+ 1212 03ba 86060000 		.4byte	0x686
+ 1213 03be 0E       		.uleb128 0xe
+ 1214 03bf 01       		.uleb128 0x1
+ 1215 03c0 50       		.byte	0x50
+ 1216 03c1 01       		.uleb128 0x1
+ 1217 03c2 30       		.byte	0x30
+ 1218 03c3 00       		.byte	0
+ 1219 03c4 00       		.byte	0
+ 1220 03c5 11       		.uleb128 0x11
+ 1221 03c6 0C000000 		.4byte	.LVL21
+ 1222 03ca 91060000 		.4byte	0x691
+ 1223 03ce DC030000 		.4byte	0x3dc
+ 1224 03d2 0E       		.uleb128 0xe
+ 1225 03d3 01       		.uleb128 0x1
+ 1226 03d4 50       		.byte	0x50
+ 1227 03d5 05       		.uleb128 0x5
+ 1228 03d6 03       		.byte	0x3
+ 1229 03d7 00000000 		.4byte	Rx_ISR_Call
+ 1230 03db 00       		.byte	0
+ 1231 03dc 0C       		.uleb128 0xc
+ 1232 03dd 10000000 		.4byte	.LVL22
+ 1233 03e1 B7010000 		.4byte	0x1b7
+ARM GAS  C:\Users\Kotori\AppData\Local\Temp\cccAZwYP.s 			page 28
+
+
+ 1234 03e5 0C       		.uleb128 0xc
+ 1235 03e6 14000000 		.4byte	.LVL23
+ 1236 03ea 9C060000 		.4byte	0x69c
+ 1237 03ee 0C       		.uleb128 0xc
+ 1238 03ef 18000000 		.4byte	.LVL24
+ 1239 03f3 A7060000 		.4byte	0x6a7
+ 1240 03f7 0C       		.uleb128 0xc
+ 1241 03f8 1C000000 		.4byte	.LVL25
+ 1242 03fc B2060000 		.4byte	0x6b2
+ 1243 0400 11       		.uleb128 0x11
+ 1244 0401 22000000 		.4byte	.LVL26
+ 1245 0405 70060000 		.4byte	0x670
+ 1246 0409 17040000 		.4byte	0x417
+ 1247 040d 0E       		.uleb128 0xe
+ 1248 040e 01       		.uleb128 0x1
+ 1249 040f 50       		.byte	0x50
+ 1250 0410 05       		.uleb128 0x5
+ 1251 0411 03       		.byte	0x3
+ 1252 0412 1C000000 		.4byte	.LC1
+ 1253 0416 00       		.byte	0
+ 1254 0417 0C       		.uleb128 0xc
+ 1255 0418 2A000000 		.4byte	.LVL27
+ 1256 041c 70060000 		.4byte	0x670
+ 1257 0420 11       		.uleb128 0x11
+ 1258 0421 30000000 		.4byte	.LVL28
+ 1259 0425 86060000 		.4byte	0x686
+ 1260 0429 33040000 		.4byte	0x433
+ 1261 042d 0E       		.uleb128 0xe
+ 1262 042e 01       		.uleb128 0x1
+ 1263 042f 50       		.byte	0x50
+ 1264 0430 01       		.uleb128 0x1
+ 1265 0431 30       		.byte	0x30
+ 1266 0432 00       		.byte	0
+ 1267 0433 0C       		.uleb128 0xc
+ 1268 0434 38000000 		.4byte	.LVL29
+ 1269 0438 BD060000 		.4byte	0x6bd
+ 1270 043c 11       		.uleb128 0x11
+ 1271 043d 3E000000 		.4byte	.LVL30
+ 1272 0441 C8010000 		.4byte	0x1c8
+ 1273 0445 4F040000 		.4byte	0x44f
+ 1274 0449 0E       		.uleb128 0xe
+ 1275 044a 01       		.uleb128 0x1
+ 1276 044b 50       		.byte	0x50
+ 1277 044c 01       		.uleb128 0x1
+ 1278 044d 30       		.byte	0x30
+ 1279 044e 00       		.byte	0
+ 1280 044f 11       		.uleb128 0x11
+ 1281 0450 44000000 		.4byte	.LVL31
+ 1282 0454 C8010000 		.4byte	0x1c8
+ 1283 0458 62040000 		.4byte	0x462
+ 1284 045c 0E       		.uleb128 0xe
+ 1285 045d 01       		.uleb128 0x1
+ 1286 045e 50       		.byte	0x50
+ 1287 045f 01       		.uleb128 0x1
+ 1288 0460 31       		.byte	0x31
+ 1289 0461 00       		.byte	0
+ 1290 0462 11       		.uleb128 0x11
+ARM GAS  C:\Users\Kotori\AppData\Local\Temp\cccAZwYP.s 			page 29
+
+
+ 1291 0463 4A000000 		.4byte	.LVL32
+ 1292 0467 C8010000 		.4byte	0x1c8
+ 1293 046b 75040000 		.4byte	0x475
+ 1294 046f 0E       		.uleb128 0xe
+ 1295 0470 01       		.uleb128 0x1
+ 1296 0471 50       		.byte	0x50
+ 1297 0472 01       		.uleb128 0x1
+ 1298 0473 32       		.byte	0x32
+ 1299 0474 00       		.byte	0
+ 1300 0475 11       		.uleb128 0x11
+ 1301 0476 50000000 		.4byte	.LVL33
+ 1302 047a C8010000 		.4byte	0x1c8
+ 1303 047e 88040000 		.4byte	0x488
+ 1304 0482 0E       		.uleb128 0xe
+ 1305 0483 01       		.uleb128 0x1
+ 1306 0484 50       		.byte	0x50
+ 1307 0485 01       		.uleb128 0x1
+ 1308 0486 33       		.byte	0x33
+ 1309 0487 00       		.byte	0
+ 1310 0488 0C       		.uleb128 0xc
+ 1311 0489 60000000 		.4byte	.LVL34
+ 1312 048d BD060000 		.4byte	0x6bd
+ 1313 0491 11       		.uleb128 0x11
+ 1314 0492 66000000 		.4byte	.LVL35
+ 1315 0496 C8060000 		.4byte	0x6c8
+ 1316 049a A4040000 		.4byte	0x4a4
+ 1317 049e 0E       		.uleb128 0xe
+ 1318 049f 01       		.uleb128 0x1
+ 1319 04a0 50       		.byte	0x50
+ 1320 04a1 01       		.uleb128 0x1
+ 1321 04a2 31       		.byte	0x31
+ 1322 04a3 00       		.byte	0
+ 1323 04a4 0C       		.uleb128 0xc
+ 1324 04a5 6C000000 		.4byte	.LVL36
+ 1325 04a9 D3060000 		.4byte	0x6d3
+ 1326 04ad 0C       		.uleb128 0xc
+ 1327 04ae 74000000 		.4byte	.LVL38
+ 1328 04b2 DE060000 		.4byte	0x6de
+ 1329 04b6 11       		.uleb128 0x11
+ 1330 04b7 7A000000 		.4byte	.LVL39
+ 1331 04bb 18060000 		.4byte	0x618
+ 1332 04bf C9040000 		.4byte	0x4c9
+ 1333 04c3 0E       		.uleb128 0xe
+ 1334 04c4 01       		.uleb128 0x1
+ 1335 04c5 50       		.byte	0x50
+ 1336 04c6 01       		.uleb128 0x1
+ 1337 04c7 3F       		.byte	0x3f
+ 1338 04c8 00       		.byte	0
+ 1339 04c9 11       		.uleb128 0x11
+ 1340 04ca 92000000 		.4byte	.LVL43
+ 1341 04ce C8060000 		.4byte	0x6c8
+ 1342 04d2 DD040000 		.4byte	0x4dd
+ 1343 04d6 0E       		.uleb128 0xe
+ 1344 04d7 01       		.uleb128 0x1
+ 1345 04d8 50       		.byte	0x50
+ 1346 04d9 02       		.uleb128 0x2
+ 1347 04da 74       		.byte	0x74
+ARM GAS  C:\Users\Kotori\AppData\Local\Temp\cccAZwYP.s 			page 30
+
+
+ 1348 04db 00       		.sleb128 0
+ 1349 04dc 00       		.byte	0
+ 1350 04dd 0D       		.uleb128 0xd
+ 1351 04de 22010000 		.4byte	.LVL56
+ 1352 04e2 18060000 		.4byte	0x618
+ 1353 04e6 0E       		.uleb128 0xe
+ 1354 04e7 01       		.uleb128 0x1
+ 1355 04e8 50       		.byte	0x50
+ 1356 04e9 01       		.uleb128 0x1
+ 1357 04ea 31       		.byte	0x31
+ 1358 04eb 00       		.byte	0
+ 1359 04ec 00       		.byte	0
+ 1360 04ed 16       		.uleb128 0x16
+ 1361 04ee B3000000 		.4byte	0xb3
+ 1362 04f2 FD040000 		.4byte	0x4fd
+ 1363 04f6 17       		.uleb128 0x17
+ 1364 04f7 C1000000 		.4byte	0xc1
+ 1365 04fb 63       		.byte	0x63
+ 1366 04fc 00       		.byte	0
+ 1367 04fd 18       		.uleb128 0x18
+ 1368 04fe 14030000 		.4byte	.LASF31
+ 1369 0502 06       		.byte	0x6
+ 1370 0503 1207     		.2byte	0x712
+ 1371 0505 09050000 		.4byte	0x509
+ 1372 0509 19       		.uleb128 0x19
+ 1373 050a 76000000 		.4byte	0x76
+ 1374 050e 16       		.uleb128 0x16
+ 1375 050f B3000000 		.4byte	0xb3
+ 1376 0513 1E050000 		.4byte	0x51e
+ 1377 0517 17       		.uleb128 0x17
+ 1378 0518 C1000000 		.4byte	0xc1
+ 1379 051c 0F       		.byte	0xf
+ 1380 051d 00       		.byte	0
+ 1381 051e 1A       		.uleb128 0x1a
+ 1382 051f C1010000 		.4byte	.LASF32
+ 1383 0523 01       		.byte	0x1
+ 1384 0524 1A       		.byte	0x1a
+ 1385 0525 0E050000 		.4byte	0x50e
+ 1386 0529 05       		.uleb128 0x5
+ 1387 052a 03       		.byte	0x3
+ 1388 052b 00000000 		.4byte	commandBytes
+ 1389 052f 1B       		.uleb128 0x1b
+ 1390 0530 6B00     		.ascii	"k\000"
+ 1391 0532 01       		.byte	0x1
+ 1392 0533 1C       		.byte	0x1c
+ 1393 0534 81000000 		.4byte	0x81
+ 1394 0538 05       		.uleb128 0x5
+ 1395 0539 03       		.byte	0x3
+ 1396 053a 00000000 		.4byte	k
+ 1397 053e 1A       		.uleb128 0x1a
+ 1398 053f 97020000 		.4byte	.LASF33
+ 1399 0543 01       		.byte	0x1
+ 1400 0544 1C       		.byte	0x1c
+ 1401 0545 81000000 		.4byte	0x81
+ 1402 0549 05       		.uleb128 0x5
+ 1403 054a 03       		.byte	0x3
+ 1404 054b 00000000 		.4byte	getDir
+ARM GAS  C:\Users\Kotori\AppData\Local\Temp\cccAZwYP.s 			page 31
+
+
+ 1405 054f 1A       		.uleb128 0x1a
+ 1406 0550 B7030000 		.4byte	.LASF34
+ 1407 0554 01       		.byte	0x1
+ 1408 0555 1C       		.byte	0x1c
+ 1409 0556 81000000 		.4byte	0x81
+ 1410 055a 05       		.uleb128 0x5
+ 1411 055b 03       		.byte	0x3
+ 1412 055c 00000000 		.4byte	curCount
+ 1413 0560 1A       		.uleb128 0x1a
+ 1414 0561 9C000000 		.4byte	.LASF35
+ 1415 0565 01       		.byte	0x1
+ 1416 0566 1C       		.byte	0x1c
+ 1417 0567 81000000 		.4byte	0x81
+ 1418 056b 05       		.uleb128 0x5
+ 1419 056c 03       		.byte	0x3
+ 1420 056d 00000000 		.4byte	readyStatus
+ 1421 0571 1A       		.uleb128 0x1a
+ 1422 0572 CB020000 		.4byte	.LASF36
+ 1423 0576 01       		.byte	0x1
+ 1424 0577 1C       		.byte	0x1c
+ 1425 0578 81000000 		.4byte	0x81
+ 1426 057c 05       		.uleb128 0x5
+ 1427 057d 03       		.byte	0x3
+ 1428 057e 00000000 		.4byte	wmode
+ 1429 0582 1A       		.uleb128 0x1a
+ 1430 0583 1D000000 		.4byte	.LASF37
+ 1431 0587 01       		.byte	0x1
+ 1432 0588 1D       		.byte	0x1d
+ 1433 0589 99000000 		.4byte	0x99
+ 1434 058d 05       		.uleb128 0x5
+ 1435 058e 03       		.byte	0x3
+ 1436 058f 00000000 		.4byte	curAct
+ 1437 0593 1A       		.uleb128 0x1a
+ 1438 0594 70010000 		.4byte	.LASF38
+ 1439 0598 01       		.byte	0x1
+ 1440 0599 1E       		.byte	0x1e
+ 1441 059a 8D000000 		.4byte	0x8d
+ 1442 059e 05       		.uleb128 0x5
+ 1443 059f 03       		.byte	0x3
+ 1444 05a0 00000000 		.4byte	counterVal
+ 1445 05a4 1A       		.uleb128 0x1a
+ 1446 05a5 6E000000 		.4byte	.LASF39
+ 1447 05a9 01       		.byte	0x1
+ 1448 05aa 21       		.byte	0x21
+ 1449 05ab CE000000 		.4byte	0xce
+ 1450 05af 05       		.uleb128 0x5
+ 1451 05b0 03       		.byte	0x3
+ 1452 05b1 00000000 		.4byte	mainAreacontroller
+ 1453 05b5 16       		.uleb128 0x16
+ 1454 05b6 0A010000 		.4byte	0x10a
+ 1455 05ba C5050000 		.4byte	0x5c5
+ 1456 05be 17       		.uleb128 0x17
+ 1457 05bf C1000000 		.4byte	0xc1
+ 1458 05c3 01       		.byte	0x1
+ 1459 05c4 00       		.byte	0
+ 1460 05c5 1A       		.uleb128 0x1a
+ 1461 05c6 81000000 		.4byte	.LASF40
+ARM GAS  C:\Users\Kotori\AppData\Local\Temp\cccAZwYP.s 			page 32
+
+
+ 1462 05ca 01       		.byte	0x1
+ 1463 05cb 22       		.byte	0x22
+ 1464 05cc B5050000 		.4byte	0x5b5
+ 1465 05d0 05       		.uleb128 0x5
+ 1466 05d1 03       		.byte	0x3
+ 1467 05d2 00000000 		.4byte	mainActuators
+ 1468 05d6 16       		.uleb128 0x16
+ 1469 05d7 46010000 		.4byte	0x146
+ 1470 05db E6050000 		.4byte	0x5e6
+ 1471 05df 17       		.uleb128 0x17
+ 1472 05e0 C1000000 		.4byte	0xc1
+ 1473 05e4 03       		.byte	0x3
+ 1474 05e5 00       		.byte	0
+ 1475 05e6 1A       		.uleb128 0x1a
+ 1476 05e7 84010000 		.4byte	.LASF41
+ 1477 05eb 01       		.byte	0x1
+ 1478 05ec 23       		.byte	0x23
+ 1479 05ed D6050000 		.4byte	0x5d6
+ 1480 05f1 05       		.uleb128 0x5
+ 1481 05f2 03       		.byte	0x3
+ 1482 05f3 00000000 		.4byte	mainSensors
+ 1483 05f7 1C       		.uleb128 0x1c
+ 1484 05f8 8F000000 		.4byte	.LASF42
+ 1485 05fc 8F000000 		.4byte	.LASF42
+ 1486 0600 07       		.byte	0x7
+ 1487 0601 71       		.byte	0x71
+ 1488 0602 1C       		.uleb128 0x1c
+ 1489 0603 90010000 		.4byte	.LASF43
+ 1490 0607 90010000 		.4byte	.LASF43
+ 1491 060b 08       		.byte	0x8
+ 1492 060c 4D       		.byte	0x4d
+ 1493 060d 1C       		.uleb128 0x1c
+ 1494 060e 57000000 		.4byte	.LASF44
+ 1495 0612 57000000 		.4byte	.LASF44
+ 1496 0616 09       		.byte	0x9
+ 1497 0617 2F       		.byte	0x2f
+ 1498 0618 1C       		.uleb128 0x1c
+ 1499 0619 AF030000 		.4byte	.LASF45
+ 1500 061d AF030000 		.4byte	.LASF45
+ 1501 0621 0A       		.byte	0xa
+ 1502 0622 76       		.byte	0x76
+ 1503 0623 1C       		.uleb128 0x1c
+ 1504 0624 D1020000 		.4byte	.LASF46
+ 1505 0628 D1020000 		.4byte	.LASF46
+ 1506 062c 0B       		.byte	0xb
+ 1507 062d 29       		.byte	0x29
+ 1508 062e 1C       		.uleb128 0x1c
+ 1509 062f E4000000 		.4byte	.LASF47
+ 1510 0633 E4000000 		.4byte	.LASF47
+ 1511 0637 0C       		.byte	0xc
+ 1512 0638 69       		.byte	0x69
+ 1513 0639 1C       		.uleb128 0x1c
+ 1514 063a F5020000 		.4byte	.LASF48
+ 1515 063e F5020000 		.4byte	.LASF48
+ 1516 0642 0D       		.byte	0xd
+ 1517 0643 57       		.byte	0x57
+ 1518 0644 1C       		.uleb128 0x1c
+ARM GAS  C:\Users\Kotori\AppData\Local\Temp\cccAZwYP.s 			page 33
+
+
+ 1519 0645 03030000 		.4byte	.LASF49
+ 1520 0649 03030000 		.4byte	.LASF49
+ 1521 064d 0E       		.byte	0xe
+ 1522 064e 3D       		.byte	0x3d
+ 1523 064f 1C       		.uleb128 0x1c
+ 1524 0650 00000000 		.4byte	.LASF50
+ 1525 0654 00000000 		.4byte	.LASF50
+ 1526 0658 0E       		.byte	0xe
+ 1527 0659 41       		.byte	0x41
+ 1528 065a 1C       		.uleb128 0x1c
+ 1529 065b 2B020000 		.4byte	.LASF51
+ 1530 065f 2B020000 		.4byte	.LASF51
+ 1531 0663 0E       		.byte	0xe
+ 1532 0664 3E       		.byte	0x3e
+ 1533 0665 1C       		.uleb128 0x1c
+ 1534 0666 9D010000 		.4byte	.LASF52
+ 1535 066a 9D010000 		.4byte	.LASF52
+ 1536 066e 0F       		.byte	0xf
+ 1537 066f FD       		.byte	0xfd
+ 1538 0670 1C       		.uleb128 0x1c
+ 1539 0671 24000000 		.4byte	.LASF53
+ 1540 0675 24000000 		.4byte	.LASF53
+ 1541 0679 07       		.byte	0x7
+ 1542 067a 8B       		.byte	0x8b
+ 1543 067b 1C       		.uleb128 0x1c
+ 1544 067c C9030000 		.4byte	.LASF54
+ 1545 0680 C9030000 		.4byte	.LASF54
+ 1546 0684 07       		.byte	0x7
+ 1547 0685 8A       		.byte	0x8a
+ 1548 0686 1C       		.uleb128 0x1c
+ 1549 0687 A5020000 		.4byte	.LASF55
+ 1550 068b A5020000 		.4byte	.LASF55
+ 1551 068f 07       		.byte	0x7
+ 1552 0690 8E       		.byte	0x8e
+ 1553 0691 1C       		.uleb128 0x1c
+ 1554 0692 BD000000 		.4byte	.LASF56
+ 1555 0696 BD000000 		.4byte	.LASF56
+ 1556 069a 10       		.byte	0x10
+ 1557 069b 18       		.byte	0x18
+ 1558 069c 1C       		.uleb128 0x1c
+ 1559 069d FC000000 		.4byte	.LASF57
+ 1560 06a1 FC000000 		.4byte	.LASF57
+ 1561 06a5 0E       		.byte	0xe
+ 1562 06a6 3A       		.byte	0x3a
+ 1563 06a7 1C       		.uleb128 0x1c
+ 1564 06a8 84020000 		.4byte	.LASF58
+ 1565 06ac 84020000 		.4byte	.LASF58
+ 1566 06b0 07       		.byte	0x7
+ 1567 06b1 54       		.byte	0x54
+ 1568 06b2 1C       		.uleb128 0x1c
+ 1569 06b3 B4010000 		.4byte	.LASF59
+ 1570 06b7 B4010000 		.4byte	.LASF59
+ 1571 06bb 0C       		.byte	0xc
+ 1572 06bc 5A       		.byte	0x5a
+ 1573 06bd 1C       		.uleb128 0x1c
+ 1574 06be CE010000 		.4byte	.LASF60
+ 1575 06c2 CE010000 		.4byte	.LASF60
+ARM GAS  C:\Users\Kotori\AppData\Local\Temp\cccAZwYP.s 			page 34
+
+
+ 1576 06c6 11       		.byte	0x11
+ 1577 06c7 26       		.byte	0x26
+ 1578 06c8 1C       		.uleb128 0x1c
+ 1579 06c9 77020000 		.4byte	.LASF61
+ 1580 06cd 77020000 		.4byte	.LASF61
+ 1581 06d1 12       		.byte	0x12
+ 1582 06d2 16       		.byte	0x16
+ 1583 06d3 1C       		.uleb128 0x1c
+ 1584 06d4 7B010000 		.4byte	.LASF62
+ 1585 06d8 7B010000 		.4byte	.LASF62
+ 1586 06dc 12       		.byte	0x12
+ 1587 06dd 18       		.byte	0x18
+ 1588 06de 1C       		.uleb128 0x1c
+ 1589 06df C0030000 		.4byte	.LASF63
+ 1590 06e3 C0030000 		.4byte	.LASF63
+ 1591 06e7 12       		.byte	0x12
+ 1592 06e8 1A       		.byte	0x1a
+ 1593 06e9 00       		.byte	0
+ 1594              		.section	.debug_abbrev,"",%progbits
+ 1595              	.Ldebug_abbrev0:
+ 1596 0000 01       		.uleb128 0x1
+ 1597 0001 11       		.uleb128 0x11
+ 1598 0002 01       		.byte	0x1
+ 1599 0003 25       		.uleb128 0x25
+ 1600 0004 0E       		.uleb128 0xe
+ 1601 0005 13       		.uleb128 0x13
+ 1602 0006 0B       		.uleb128 0xb
+ 1603 0007 03       		.uleb128 0x3
+ 1604 0008 0E       		.uleb128 0xe
+ 1605 0009 1B       		.uleb128 0x1b
+ 1606 000a 0E       		.uleb128 0xe
+ 1607 000b 55       		.uleb128 0x55
+ 1608 000c 17       		.uleb128 0x17
+ 1609 000d 11       		.uleb128 0x11
+ 1610 000e 01       		.uleb128 0x1
+ 1611 000f 10       		.uleb128 0x10
+ 1612 0010 17       		.uleb128 0x17
+ 1613 0011 00       		.byte	0
+ 1614 0012 00       		.byte	0
+ 1615 0013 02       		.uleb128 0x2
+ 1616 0014 24       		.uleb128 0x24
+ 1617 0015 00       		.byte	0
+ 1618 0016 0B       		.uleb128 0xb
+ 1619 0017 0B       		.uleb128 0xb
+ 1620 0018 3E       		.uleb128 0x3e
+ 1621 0019 0B       		.uleb128 0xb
+ 1622 001a 03       		.uleb128 0x3
+ 1623 001b 0E       		.uleb128 0xe
+ 1624 001c 00       		.byte	0
+ 1625 001d 00       		.byte	0
+ 1626 001e 03       		.uleb128 0x3
+ 1627 001f 16       		.uleb128 0x16
+ 1628 0020 00       		.byte	0
+ 1629 0021 03       		.uleb128 0x3
+ 1630 0022 0E       		.uleb128 0xe
+ 1631 0023 3A       		.uleb128 0x3a
+ 1632 0024 0B       		.uleb128 0xb
+ARM GAS  C:\Users\Kotori\AppData\Local\Temp\cccAZwYP.s 			page 35
+
+
+ 1633 0025 3B       		.uleb128 0x3b
+ 1634 0026 0B       		.uleb128 0xb
+ 1635 0027 49       		.uleb128 0x49
+ 1636 0028 13       		.uleb128 0x13
+ 1637 0029 00       		.byte	0
+ 1638 002a 00       		.byte	0
+ 1639 002b 04       		.uleb128 0x4
+ 1640 002c 24       		.uleb128 0x24
+ 1641 002d 00       		.byte	0
+ 1642 002e 0B       		.uleb128 0xb
+ 1643 002f 0B       		.uleb128 0xb
+ 1644 0030 3E       		.uleb128 0x3e
+ 1645 0031 0B       		.uleb128 0xb
+ 1646 0032 03       		.uleb128 0x3
+ 1647 0033 08       		.uleb128 0x8
+ 1648 0034 00       		.byte	0
+ 1649 0035 00       		.byte	0
+ 1650 0036 05       		.uleb128 0x5
+ 1651 0037 16       		.uleb128 0x16
+ 1652 0038 00       		.byte	0
+ 1653 0039 03       		.uleb128 0x3
+ 1654 003a 0E       		.uleb128 0xe
+ 1655 003b 3A       		.uleb128 0x3a
+ 1656 003c 0B       		.uleb128 0xb
+ 1657 003d 3B       		.uleb128 0x3b
+ 1658 003e 05       		.uleb128 0x5
+ 1659 003f 49       		.uleb128 0x49
+ 1660 0040 13       		.uleb128 0x13
+ 1661 0041 00       		.byte	0
+ 1662 0042 00       		.byte	0
+ 1663 0043 06       		.uleb128 0x6
+ 1664 0044 0F       		.uleb128 0xf
+ 1665 0045 00       		.byte	0
+ 1666 0046 0B       		.uleb128 0xb
+ 1667 0047 0B       		.uleb128 0xb
+ 1668 0048 49       		.uleb128 0x49
+ 1669 0049 13       		.uleb128 0x13
+ 1670 004a 00       		.byte	0
+ 1671 004b 00       		.byte	0
+ 1672 004c 07       		.uleb128 0x7
+ 1673 004d 13       		.uleb128 0x13
+ 1674 004e 01       		.byte	0x1
+ 1675 004f 03       		.uleb128 0x3
+ 1676 0050 0E       		.uleb128 0xe
+ 1677 0051 0B       		.uleb128 0xb
+ 1678 0052 0B       		.uleb128 0xb
+ 1679 0053 3A       		.uleb128 0x3a
+ 1680 0054 0B       		.uleb128 0xb
+ 1681 0055 3B       		.uleb128 0x3b
+ 1682 0056 0B       		.uleb128 0xb
+ 1683 0057 01       		.uleb128 0x1
+ 1684 0058 13       		.uleb128 0x13
+ 1685 0059 00       		.byte	0
+ 1686 005a 00       		.byte	0
+ 1687 005b 08       		.uleb128 0x8
+ 1688 005c 0D       		.uleb128 0xd
+ 1689 005d 00       		.byte	0
+ARM GAS  C:\Users\Kotori\AppData\Local\Temp\cccAZwYP.s 			page 36
+
+
+ 1690 005e 03       		.uleb128 0x3
+ 1691 005f 08       		.uleb128 0x8
+ 1692 0060 3A       		.uleb128 0x3a
+ 1693 0061 0B       		.uleb128 0xb
+ 1694 0062 3B       		.uleb128 0x3b
+ 1695 0063 0B       		.uleb128 0xb
+ 1696 0064 49       		.uleb128 0x49
+ 1697 0065 13       		.uleb128 0x13
+ 1698 0066 38       		.uleb128 0x38
+ 1699 0067 0B       		.uleb128 0xb
+ 1700 0068 00       		.byte	0
+ 1701 0069 00       		.byte	0
+ 1702 006a 09       		.uleb128 0x9
+ 1703 006b 0D       		.uleb128 0xd
+ 1704 006c 00       		.byte	0
+ 1705 006d 03       		.uleb128 0x3
+ 1706 006e 0E       		.uleb128 0xe
+ 1707 006f 3A       		.uleb128 0x3a
+ 1708 0070 0B       		.uleb128 0xb
+ 1709 0071 3B       		.uleb128 0x3b
+ 1710 0072 0B       		.uleb128 0xb
+ 1711 0073 49       		.uleb128 0x49
+ 1712 0074 13       		.uleb128 0x13
+ 1713 0075 38       		.uleb128 0x38
+ 1714 0076 0B       		.uleb128 0xb
+ 1715 0077 00       		.byte	0
+ 1716 0078 00       		.byte	0
+ 1717 0079 0A       		.uleb128 0xa
+ 1718 007a 2E       		.uleb128 0x2e
+ 1719 007b 01       		.byte	0x1
+ 1720 007c 3F       		.uleb128 0x3f
+ 1721 007d 19       		.uleb128 0x19
+ 1722 007e 03       		.uleb128 0x3
+ 1723 007f 0E       		.uleb128 0xe
+ 1724 0080 3A       		.uleb128 0x3a
+ 1725 0081 0B       		.uleb128 0xb
+ 1726 0082 3B       		.uleb128 0x3b
+ 1727 0083 0B       		.uleb128 0xb
+ 1728 0084 27       		.uleb128 0x27
+ 1729 0085 19       		.uleb128 0x19
+ 1730 0086 11       		.uleb128 0x11
+ 1731 0087 01       		.uleb128 0x1
+ 1732 0088 12       		.uleb128 0x12
+ 1733 0089 06       		.uleb128 0x6
+ 1734 008a 40       		.uleb128 0x40
+ 1735 008b 18       		.uleb128 0x18
+ 1736 008c 9742     		.uleb128 0x2117
+ 1737 008e 19       		.uleb128 0x19
+ 1738 008f 01       		.uleb128 0x1
+ 1739 0090 13       		.uleb128 0x13
+ 1740 0091 00       		.byte	0
+ 1741 0092 00       		.byte	0
+ 1742 0093 0B       		.uleb128 0xb
+ 1743 0094 34       		.uleb128 0x34
+ 1744 0095 00       		.byte	0
+ 1745 0096 03       		.uleb128 0x3
+ 1746 0097 0E       		.uleb128 0xe
+ARM GAS  C:\Users\Kotori\AppData\Local\Temp\cccAZwYP.s 			page 37
+
+
+ 1747 0098 3A       		.uleb128 0x3a
+ 1748 0099 0B       		.uleb128 0xb
+ 1749 009a 3B       		.uleb128 0x3b
+ 1750 009b 0B       		.uleb128 0xb
+ 1751 009c 49       		.uleb128 0x49
+ 1752 009d 13       		.uleb128 0x13
+ 1753 009e 02       		.uleb128 0x2
+ 1754 009f 17       		.uleb128 0x17
+ 1755 00a0 00       		.byte	0
+ 1756 00a1 00       		.byte	0
+ 1757 00a2 0C       		.uleb128 0xc
+ 1758 00a3 898201   		.uleb128 0x4109
+ 1759 00a6 00       		.byte	0
+ 1760 00a7 11       		.uleb128 0x11
+ 1761 00a8 01       		.uleb128 0x1
+ 1762 00a9 31       		.uleb128 0x31
+ 1763 00aa 13       		.uleb128 0x13
+ 1764 00ab 00       		.byte	0
+ 1765 00ac 00       		.byte	0
+ 1766 00ad 0D       		.uleb128 0xd
+ 1767 00ae 898201   		.uleb128 0x4109
+ 1768 00b1 01       		.byte	0x1
+ 1769 00b2 11       		.uleb128 0x11
+ 1770 00b3 01       		.uleb128 0x1
+ 1771 00b4 31       		.uleb128 0x31
+ 1772 00b5 13       		.uleb128 0x13
+ 1773 00b6 00       		.byte	0
+ 1774 00b7 00       		.byte	0
+ 1775 00b8 0E       		.uleb128 0xe
+ 1776 00b9 8A8201   		.uleb128 0x410a
+ 1777 00bc 00       		.byte	0
+ 1778 00bd 02       		.uleb128 0x2
+ 1779 00be 18       		.uleb128 0x18
+ 1780 00bf 9142     		.uleb128 0x2111
+ 1781 00c1 18       		.uleb128 0x18
+ 1782 00c2 00       		.byte	0
+ 1783 00c3 00       		.byte	0
+ 1784 00c4 0F       		.uleb128 0xf
+ 1785 00c5 2E       		.uleb128 0x2e
+ 1786 00c6 00       		.byte	0
+ 1787 00c7 3F       		.uleb128 0x3f
+ 1788 00c8 19       		.uleb128 0x19
+ 1789 00c9 03       		.uleb128 0x3
+ 1790 00ca 0E       		.uleb128 0xe
+ 1791 00cb 3A       		.uleb128 0x3a
+ 1792 00cc 0B       		.uleb128 0xb
+ 1793 00cd 3B       		.uleb128 0x3b
+ 1794 00ce 0B       		.uleb128 0xb
+ 1795 00cf 27       		.uleb128 0x27
+ 1796 00d0 19       		.uleb128 0x19
+ 1797 00d1 11       		.uleb128 0x11
+ 1798 00d2 01       		.uleb128 0x1
+ 1799 00d3 12       		.uleb128 0x12
+ 1800 00d4 06       		.uleb128 0x6
+ 1801 00d5 40       		.uleb128 0x40
+ 1802 00d6 18       		.uleb128 0x18
+ 1803 00d7 9742     		.uleb128 0x2117
+ARM GAS  C:\Users\Kotori\AppData\Local\Temp\cccAZwYP.s 			page 38
+
+
+ 1804 00d9 19       		.uleb128 0x19
+ 1805 00da 00       		.byte	0
+ 1806 00db 00       		.byte	0
+ 1807 00dc 10       		.uleb128 0x10
+ 1808 00dd 05       		.uleb128 0x5
+ 1809 00de 00       		.byte	0
+ 1810 00df 03       		.uleb128 0x3
+ 1811 00e0 08       		.uleb128 0x8
+ 1812 00e1 3A       		.uleb128 0x3a
+ 1813 00e2 0B       		.uleb128 0xb
+ 1814 00e3 3B       		.uleb128 0x3b
+ 1815 00e4 0B       		.uleb128 0xb
+ 1816 00e5 49       		.uleb128 0x49
+ 1817 00e6 13       		.uleb128 0x13
+ 1818 00e7 02       		.uleb128 0x2
+ 1819 00e8 17       		.uleb128 0x17
+ 1820 00e9 00       		.byte	0
+ 1821 00ea 00       		.byte	0
+ 1822 00eb 11       		.uleb128 0x11
+ 1823 00ec 898201   		.uleb128 0x4109
+ 1824 00ef 01       		.byte	0x1
+ 1825 00f0 11       		.uleb128 0x11
+ 1826 00f1 01       		.uleb128 0x1
+ 1827 00f2 31       		.uleb128 0x31
+ 1828 00f3 13       		.uleb128 0x13
+ 1829 00f4 01       		.uleb128 0x1
+ 1830 00f5 13       		.uleb128 0x13
+ 1831 00f6 00       		.byte	0
+ 1832 00f7 00       		.byte	0
+ 1833 00f8 12       		.uleb128 0x12
+ 1834 00f9 2E       		.uleb128 0x2e
+ 1835 00fa 01       		.byte	0x1
+ 1836 00fb 3F       		.uleb128 0x3f
+ 1837 00fc 19       		.uleb128 0x19
+ 1838 00fd 03       		.uleb128 0x3
+ 1839 00fe 0E       		.uleb128 0xe
+ 1840 00ff 3A       		.uleb128 0x3a
+ 1841 0100 0B       		.uleb128 0xb
+ 1842 0101 3B       		.uleb128 0x3b
+ 1843 0102 0B       		.uleb128 0xb
+ 1844 0103 27       		.uleb128 0x27
+ 1845 0104 19       		.uleb128 0x19
+ 1846 0105 49       		.uleb128 0x49
+ 1847 0106 13       		.uleb128 0x13
+ 1848 0107 8701     		.uleb128 0x87
+ 1849 0109 19       		.uleb128 0x19
+ 1850 010a 11       		.uleb128 0x11
+ 1851 010b 01       		.uleb128 0x1
+ 1852 010c 12       		.uleb128 0x12
+ 1853 010d 06       		.uleb128 0x6
+ 1854 010e 40       		.uleb128 0x40
+ 1855 010f 18       		.uleb128 0x18
+ 1856 0110 9742     		.uleb128 0x2117
+ 1857 0112 19       		.uleb128 0x19
+ 1858 0113 01       		.uleb128 0x1
+ 1859 0114 13       		.uleb128 0x13
+ 1860 0115 00       		.byte	0
+ARM GAS  C:\Users\Kotori\AppData\Local\Temp\cccAZwYP.s 			page 39
+
+
+ 1861 0116 00       		.byte	0
+ 1862 0117 13       		.uleb128 0x13
+ 1863 0118 34       		.uleb128 0x34
+ 1864 0119 00       		.byte	0
+ 1865 011a 03       		.uleb128 0x3
+ 1866 011b 08       		.uleb128 0x8
+ 1867 011c 3A       		.uleb128 0x3a
+ 1868 011d 0B       		.uleb128 0xb
+ 1869 011e 3B       		.uleb128 0x3b
+ 1870 011f 0B       		.uleb128 0xb
+ 1871 0120 49       		.uleb128 0x49
+ 1872 0121 13       		.uleb128 0x13
+ 1873 0122 02       		.uleb128 0x2
+ 1874 0123 17       		.uleb128 0x17
+ 1875 0124 00       		.byte	0
+ 1876 0125 00       		.byte	0
+ 1877 0126 14       		.uleb128 0x14
+ 1878 0127 0B       		.uleb128 0xb
+ 1879 0128 01       		.byte	0x1
+ 1880 0129 11       		.uleb128 0x11
+ 1881 012a 01       		.uleb128 0x1
+ 1882 012b 12       		.uleb128 0x12
+ 1883 012c 06       		.uleb128 0x6
+ 1884 012d 01       		.uleb128 0x1
+ 1885 012e 13       		.uleb128 0x13
+ 1886 012f 00       		.byte	0
+ 1887 0130 00       		.byte	0
+ 1888 0131 15       		.uleb128 0x15
+ 1889 0132 34       		.uleb128 0x34
+ 1890 0133 00       		.byte	0
+ 1891 0134 03       		.uleb128 0x3
+ 1892 0135 0E       		.uleb128 0xe
+ 1893 0136 3A       		.uleb128 0x3a
+ 1894 0137 0B       		.uleb128 0xb
+ 1895 0138 3B       		.uleb128 0x3b
+ 1896 0139 0B       		.uleb128 0xb
+ 1897 013a 49       		.uleb128 0x49
+ 1898 013b 13       		.uleb128 0x13
+ 1899 013c 02       		.uleb128 0x2
+ 1900 013d 18       		.uleb128 0x18
+ 1901 013e 00       		.byte	0
+ 1902 013f 00       		.byte	0
+ 1903 0140 16       		.uleb128 0x16
+ 1904 0141 01       		.uleb128 0x1
+ 1905 0142 01       		.byte	0x1
+ 1906 0143 49       		.uleb128 0x49
+ 1907 0144 13       		.uleb128 0x13
+ 1908 0145 01       		.uleb128 0x1
+ 1909 0146 13       		.uleb128 0x13
+ 1910 0147 00       		.byte	0
+ 1911 0148 00       		.byte	0
+ 1912 0149 17       		.uleb128 0x17
+ 1913 014a 21       		.uleb128 0x21
+ 1914 014b 00       		.byte	0
+ 1915 014c 49       		.uleb128 0x49
+ 1916 014d 13       		.uleb128 0x13
+ 1917 014e 2F       		.uleb128 0x2f
+ARM GAS  C:\Users\Kotori\AppData\Local\Temp\cccAZwYP.s 			page 40
+
+
+ 1918 014f 0B       		.uleb128 0xb
+ 1919 0150 00       		.byte	0
+ 1920 0151 00       		.byte	0
+ 1921 0152 18       		.uleb128 0x18
+ 1922 0153 34       		.uleb128 0x34
+ 1923 0154 00       		.byte	0
+ 1924 0155 03       		.uleb128 0x3
+ 1925 0156 0E       		.uleb128 0xe
+ 1926 0157 3A       		.uleb128 0x3a
+ 1927 0158 0B       		.uleb128 0xb
+ 1928 0159 3B       		.uleb128 0x3b
+ 1929 015a 05       		.uleb128 0x5
+ 1930 015b 49       		.uleb128 0x49
+ 1931 015c 13       		.uleb128 0x13
+ 1932 015d 3F       		.uleb128 0x3f
+ 1933 015e 19       		.uleb128 0x19
+ 1934 015f 3C       		.uleb128 0x3c
+ 1935 0160 19       		.uleb128 0x19
+ 1936 0161 00       		.byte	0
+ 1937 0162 00       		.byte	0
+ 1938 0163 19       		.uleb128 0x19
+ 1939 0164 35       		.uleb128 0x35
+ 1940 0165 00       		.byte	0
+ 1941 0166 49       		.uleb128 0x49
+ 1942 0167 13       		.uleb128 0x13
+ 1943 0168 00       		.byte	0
+ 1944 0169 00       		.byte	0
+ 1945 016a 1A       		.uleb128 0x1a
+ 1946 016b 34       		.uleb128 0x34
+ 1947 016c 00       		.byte	0
+ 1948 016d 03       		.uleb128 0x3
+ 1949 016e 0E       		.uleb128 0xe
+ 1950 016f 3A       		.uleb128 0x3a
+ 1951 0170 0B       		.uleb128 0xb
+ 1952 0171 3B       		.uleb128 0x3b
+ 1953 0172 0B       		.uleb128 0xb
+ 1954 0173 49       		.uleb128 0x49
+ 1955 0174 13       		.uleb128 0x13
+ 1956 0175 3F       		.uleb128 0x3f
+ 1957 0176 19       		.uleb128 0x19
+ 1958 0177 02       		.uleb128 0x2
+ 1959 0178 18       		.uleb128 0x18
+ 1960 0179 00       		.byte	0
+ 1961 017a 00       		.byte	0
+ 1962 017b 1B       		.uleb128 0x1b
+ 1963 017c 34       		.uleb128 0x34
+ 1964 017d 00       		.byte	0
+ 1965 017e 03       		.uleb128 0x3
+ 1966 017f 08       		.uleb128 0x8
+ 1967 0180 3A       		.uleb128 0x3a
+ 1968 0181 0B       		.uleb128 0xb
+ 1969 0182 3B       		.uleb128 0x3b
+ 1970 0183 0B       		.uleb128 0xb
+ 1971 0184 49       		.uleb128 0x49
+ 1972 0185 13       		.uleb128 0x13
+ 1973 0186 3F       		.uleb128 0x3f
+ 1974 0187 19       		.uleb128 0x19
+ARM GAS  C:\Users\Kotori\AppData\Local\Temp\cccAZwYP.s 			page 41
+
+
+ 1975 0188 02       		.uleb128 0x2
+ 1976 0189 18       		.uleb128 0x18
+ 1977 018a 00       		.byte	0
+ 1978 018b 00       		.byte	0
+ 1979 018c 1C       		.uleb128 0x1c
+ 1980 018d 2E       		.uleb128 0x2e
+ 1981 018e 00       		.byte	0
+ 1982 018f 3F       		.uleb128 0x3f
+ 1983 0190 19       		.uleb128 0x19
+ 1984 0191 3C       		.uleb128 0x3c
+ 1985 0192 19       		.uleb128 0x19
+ 1986 0193 6E       		.uleb128 0x6e
+ 1987 0194 0E       		.uleb128 0xe
+ 1988 0195 03       		.uleb128 0x3
+ 1989 0196 0E       		.uleb128 0xe
+ 1990 0197 3A       		.uleb128 0x3a
+ 1991 0198 0B       		.uleb128 0xb
+ 1992 0199 3B       		.uleb128 0x3b
+ 1993 019a 0B       		.uleb128 0xb
+ 1994 019b 00       		.byte	0
+ 1995 019c 00       		.byte	0
+ 1996 019d 00       		.byte	0
+ 1997              		.section	.debug_loc,"",%progbits
+ 1998              	.Ldebug_loc0:
+ 1999              	.LLST0:
+ 2000 0000 06000000 		.4byte	.LVL0
+ 2001 0004 34000000 		.4byte	.LVL1
+ 2002 0008 0100     		.2byte	0x1
+ 2003 000a 50       		.byte	0x50
+ 2004 000b 74000000 		.4byte	.LVL3
+ 2005 000f 2C010000 		.4byte	.LFE64
+ 2006 0013 0100     		.2byte	0x1
+ 2007 0015 50       		.byte	0x50
+ 2008 0016 00000000 		.4byte	0
+ 2009 001a 00000000 		.4byte	0
+ 2010              	.LLST1:
+ 2011 001e 00000000 		.4byte	.LVL4
+ 2012 0022 12000000 		.4byte	.LVL5
+ 2013 0026 0100     		.2byte	0x1
+ 2014 0028 50       		.byte	0x50
+ 2015 0029 12000000 		.4byte	.LVL5
+ 2016 002d 3A000000 		.4byte	.LVL12
+ 2017 0031 0100     		.2byte	0x1
+ 2018 0033 54       		.byte	0x54
+ 2019 0034 3A000000 		.4byte	.LVL12
+ 2020 0038 40000000 		.4byte	.LVL13
+ 2021 003c 0400     		.2byte	0x4
+ 2022 003e F3       		.byte	0xf3
+ 2023 003f 01       		.uleb128 0x1
+ 2024 0040 50       		.byte	0x50
+ 2025 0041 9F       		.byte	0x9f
+ 2026 0042 40000000 		.4byte	.LVL13
+ 2027 0046 42000000 		.4byte	.LVL14
+ 2028 004a 0100     		.2byte	0x1
+ 2029 004c 50       		.byte	0x50
+ 2030 004d 42000000 		.4byte	.LVL14
+ 2031 0051 5A000000 		.4byte	.LVL19
+ARM GAS  C:\Users\Kotori\AppData\Local\Temp\cccAZwYP.s 			page 42
+
+
+ 2032 0055 0100     		.2byte	0x1
+ 2033 0057 54       		.byte	0x54
+ 2034 0058 5A000000 		.4byte	.LVL19
+ 2035 005c 68000000 		.4byte	.LFE67
+ 2036 0060 0400     		.2byte	0x4
+ 2037 0062 F3       		.byte	0xf3
+ 2038 0063 01       		.uleb128 0x1
+ 2039 0064 50       		.byte	0x50
+ 2040 0065 9F       		.byte	0x9f
+ 2041 0066 00000000 		.4byte	0
+ 2042 006a 00000000 		.4byte	0
+ 2043              	.LLST2:
+ 2044 006e 6C000000 		.4byte	.LVL36
+ 2045 0072 70000000 		.4byte	.LVL37
+ 2046 0076 0200     		.2byte	0x2
+ 2047 0078 31       		.byte	0x31
+ 2048 0079 9F       		.byte	0x9f
+ 2049 007a 70000000 		.4byte	.LVL37
+ 2050 007e 7C000000 		.4byte	.LVL40
+ 2051 0082 0100     		.2byte	0x1
+ 2052 0084 54       		.byte	0x54
+ 2053 0085 7E000000 		.4byte	.LVL41
+ 2054 0089 88000000 		.4byte	.LVL42
+ 2055 008d 0100     		.2byte	0x1
+ 2056 008f 54       		.byte	0x54
+ 2057 0090 00000000 		.4byte	0
+ 2058 0094 00000000 		.4byte	0
+ 2059              	.LLST3:
+ 2060 0098 A2000000 		.4byte	.LVL44
+ 2061 009c A6000000 		.4byte	.LVL45
+ 2062 00a0 0200     		.2byte	0x2
+ 2063 00a2 30       		.byte	0x30
+ 2064 00a3 9F       		.byte	0x9f
+ 2065 00a4 A6000000 		.4byte	.LVL45
+ 2066 00a8 EC000000 		.4byte	.LVL52
+ 2067 00ac 0100     		.2byte	0x1
+ 2068 00ae 54       		.byte	0x54
+ 2069 00af 00000000 		.4byte	0
+ 2070 00b3 00000000 		.4byte	0
+ 2071              		.section	.debug_aranges,"",%progbits
+ 2072 0000 34000000 		.4byte	0x34
+ 2073 0004 0200     		.2byte	0x2
+ 2074 0006 00000000 		.4byte	.Ldebug_info0
+ 2075 000a 04       		.byte	0x4
+ 2076 000b 00       		.byte	0
+ 2077 000c 0000     		.2byte	0
+ 2078 000e 0000     		.2byte	0
+ 2079 0010 00000000 		.4byte	.LFB64
+ 2080 0014 2C010000 		.4byte	.LFE64-.LFB64
+ 2081 0018 00000000 		.4byte	.LFB66
+ 2082 001c 60000000 		.4byte	.LFE66-.LFB66
+ 2083 0020 00000000 		.4byte	.LFB67
+ 2084 0024 68000000 		.4byte	.LFE67-.LFB67
+ 2085 0028 00000000 		.4byte	.LFB65
+ 2086 002c 44010000 		.4byte	.LFE65-.LFB65
+ 2087 0030 00000000 		.4byte	0
+ 2088 0034 00000000 		.4byte	0
+ARM GAS  C:\Users\Kotori\AppData\Local\Temp\cccAZwYP.s 			page 43
+
+
+ 2089              		.section	.debug_ranges,"",%progbits
+ 2090              	.Ldebug_ranges0:
+ 2091 0000 00000000 		.4byte	.LFB64
+ 2092 0004 2C010000 		.4byte	.LFE64
+ 2093 0008 00000000 		.4byte	.LFB66
+ 2094 000c 60000000 		.4byte	.LFE66
+ 2095 0010 00000000 		.4byte	.LFB67
+ 2096 0014 68000000 		.4byte	.LFE67
+ 2097 0018 00000000 		.4byte	.LFB65
+ 2098 001c 44010000 		.4byte	.LFE65
+ 2099 0020 00000000 		.4byte	0
+ 2100 0024 00000000 		.4byte	0
+ 2101              		.section	.debug_line,"",%progbits
+ 2102              	.Ldebug_line0:
+ 2103 0000 4D030000 		.section	.debug_str,"MS",%progbits,1
+ 2103      02004E02 
+ 2103      00000201 
+ 2103      FB0E0D00 
+ 2103      01010101 
+ 2104              	.LASF50:
+ 2105 0000 4144435F 		.ascii	"ADC_GetResult16\000"
+ 2105      47657452 
+ 2105      6573756C 
+ 2105      74313600 
+ 2106              	.LASF29:
+ 2107 0010 73656E73 		.ascii	"sensorOutput\000"
+ 2107      6F724F75 
+ 2107      74707574 
+ 2107      00
+ 2108              	.LASF37:
+ 2109 001d 63757241 		.ascii	"curAct\000"
+ 2109      637400
+ 2110              	.LASF53:
+ 2111 0024 55415254 		.ascii	"UART_PutString\000"
+ 2111      5F507574 
+ 2111      53747269 
+ 2111      6E6700
+ 2112              	.LASF2:
+ 2113 0033 73686F72 		.ascii	"short int\000"
+ 2113      7420696E 
+ 2113      7400
+ 2114              	.LASF18:
+ 2115 003d 73697A65 		.ascii	"sizetype\000"
+ 2115      74797065 
+ 2115      00
+ 2116              	.LASF25:
+ 2117 0046 73656E73 		.ascii	"sensors\000"
+ 2117      6F727300 
+ 2118              	.LASF30:
+ 2119 004e 41434F75 		.ascii	"ACOutput\000"
+ 2119      74707574 
+ 2119      00
+ 2120              	.LASF44:
+ 2121 0057 54524947 		.ascii	"TRIG_Write\000"
+ 2121      5F577269 
+ 2121      746500
+ 2122              	.LASF17:
+ARM GAS  C:\Users\Kotori\AppData\Local\Temp\cccAZwYP.s 			page 44
+
+
+ 2123 0062 6C6F6E67 		.ascii	"long double\000"
+ 2123      20646F75 
+ 2123      626C6500 
+ 2124              	.LASF39:
+ 2125 006e 6D61696E 		.ascii	"mainAreacontroller\000"
+ 2125      41726561 
+ 2125      636F6E74 
+ 2125      726F6C6C 
+ 2125      657200
+ 2126              	.LASF40:
+ 2127 0081 6D61696E 		.ascii	"mainActuators\000"
+ 2127      41637475 
+ 2127      61746F72 
+ 2127      7300
+ 2128              	.LASF42:
+ 2129 008f 55415254 		.ascii	"UART_GetChar\000"
+ 2129      5F476574 
+ 2129      43686172 
+ 2129      00
+ 2130              	.LASF35:
+ 2131 009c 72656164 		.ascii	"readyStatus\000"
+ 2131      79537461 
+ 2131      74757300 
+ 2132              	.LASF12:
+ 2133 00a8 75696E74 		.ascii	"uint16\000"
+ 2133      313600
+ 2134              	.LASF11:
+ 2135 00af 75696E74 		.ascii	"uint8\000"
+ 2135      3800
+ 2136              	.LASF20:
+ 2137 00b5 6E756D53 		.ascii	"numSens\000"
+ 2137      656E7300 
+ 2138              	.LASF56:
+ 2139 00bd 52784953 		.ascii	"RxISR_StartEx\000"
+ 2139      525F5374 
+ 2139      61727445 
+ 2139      7800
+ 2140              	.LASF14:
+ 2141 00cb 666C6F61 		.ascii	"float\000"
+ 2141      7400
+ 2142              	.LASF6:
+ 2143 00d1 6C6F6E67 		.ascii	"long long int\000"
+ 2143      206C6F6E 
+ 2143      6720696E 
+ 2143      7400
+ 2144              	.LASF13:
+ 2145 00df 696E7438 		.ascii	"int8\000"
+ 2145      00
+ 2146              	.LASF47:
+ 2147 00e4 48435352 		.ascii	"HCSR04_ReadCounter\000"
+ 2147      30345F52 
+ 2147      65616443 
+ 2147      6F756E74 
+ 2147      657200
+ 2148              	.LASF16:
+ 2149 00f7 63686172 		.ascii	"char\000"
+ 2149      00
+ARM GAS  C:\Users\Kotori\AppData\Local\Temp\cccAZwYP.s 			page 45
+
+
+ 2150              	.LASF57:
+ 2151 00fc 4144435F 		.ascii	"ADC_Start\000"
+ 2151      53746172 
+ 2151      7400
+ 2152              	.LASF4:
+ 2153 0106 6C6F6E67 		.ascii	"long int\000"
+ 2153      20696E74 
+ 2153      00
+ 2154              	.LASF66:
+ 2155 010f 433A5C55 		.ascii	"C:\\Users\\Kotori\\Documents\\PSoC Creator\\Project"
+ 2155      73657273 
+ 2155      5C4B6F74 
+ 2155      6F72695C 
+ 2155      446F6375 
+ 2156 013d 53484153 		.ascii	"SHAS_AreaController\\AreaController.cydsn\000"
+ 2156      5F417265 
+ 2156      61436F6E 
+ 2156      74726F6C 
+ 2156      6C65725C 
+ 2157              	.LASF23:
+ 2158 0166 61637475 		.ascii	"actuators\000"
+ 2158      61746F72 
+ 2158      7300
+ 2159              	.LASF38:
+ 2160 0170 636F756E 		.ascii	"counterVal\000"
+ 2160      74657256 
+ 2160      616C00
+ 2161              	.LASF62:
+ 2162 017b 53544550 		.ascii	"STEP_DIR\000"
+ 2162      5F444952 
+ 2162      00
+ 2163              	.LASF41:
+ 2164 0184 6D61696E 		.ascii	"mainSensors\000"
+ 2164      53656E73 
+ 2164      6F727300 
+ 2165              	.LASF43:
+ 2166 0190 61746F69 		.ascii	"atoi\000"
+ 2166      00
+ 2167              	.LASF19:
+ 2168 0195 6E756D41 		.ascii	"numActs\000"
+ 2168      63747300 
+ 2169              	.LASF52:
+ 2170 019d 736E7072 		.ascii	"snprintf\000"
+ 2170      696E7466 
+ 2170      00
+ 2171              	.LASF1:
+ 2172 01a6 756E7369 		.ascii	"unsigned char\000"
+ 2172      676E6564 
+ 2172      20636861 
+ 2172      7200
+ 2173              	.LASF59:
+ 2174 01b4 48435352 		.ascii	"HCSR04_Start\000"
+ 2174      30345F53 
+ 2174      74617274 
+ 2174      00
+ 2175              	.LASF32:
+ 2176 01c1 636F6D6D 		.ascii	"commandBytes\000"
+ARM GAS  C:\Users\Kotori\AppData\Local\Temp\cccAZwYP.s 			page 46
+
+
+ 2176      616E6442 
+ 2176      79746573 
+ 2176      00
+ 2177              	.LASF60:
+ 2178 01ce 5247425F 		.ascii	"RGB_OUT_Write\000"
+ 2178      4F55545F 
+ 2178      57726974 
+ 2178      6500
+ 2179              	.LASF22:
+ 2180 01dc 61726561 		.ascii	"areacontroller\000"
+ 2180      636F6E74 
+ 2180      726F6C6C 
+ 2180      657200
+ 2181              	.LASF0:
+ 2182 01eb 7369676E 		.ascii	"signed char\000"
+ 2182      65642063 
+ 2182      68617200 
+ 2183              	.LASF7:
+ 2184 01f7 6C6F6E67 		.ascii	"long long unsigned int\000"
+ 2184      206C6F6E 
+ 2184      6720756E 
+ 2184      7369676E 
+ 2184      65642069 
+ 2185              	.LASF27:
+ 2186 020e 43686563 		.ascii	"Check_Sens\000"
+ 2186      6B5F5365 
+ 2186      6E7300
+ 2187              	.LASF24:
+ 2188 0219 74797065 		.ascii	"type\000"
+ 2188      00
+ 2189              	.LASF8:
+ 2190 021e 756E7369 		.ascii	"unsigned int\000"
+ 2190      676E6564 
+ 2190      20696E74 
+ 2190      00
+ 2191              	.LASF51:
+ 2192 022b 4144435F 		.ascii	"ADC_StopConvert\000"
+ 2192      53746F70 
+ 2192      436F6E76 
+ 2192      65727400 
+ 2193              	.LASF28:
+ 2194 023b 63757243 		.ascii	"curChar\000"
+ 2194      68617200 
+ 2195              	.LASF67:
+ 2196 0243 41726561 		.ascii	"Area_Controller_Init\000"
+ 2196      5F436F6E 
+ 2196      74726F6C 
+ 2196      6C65725F 
+ 2196      496E6974 
+ 2197              	.LASF3:
+ 2198 0258 73686F72 		.ascii	"short unsigned int\000"
+ 2198      7420756E 
+ 2198      7369676E 
+ 2198      65642069 
+ 2198      6E7400
+ 2199              	.LASF26:
+ 2200 026b 52785F49 		.ascii	"Rx_ISR_Call\000"
+ARM GAS  C:\Users\Kotori\AppData\Local\Temp\cccAZwYP.s 			page 47
+
+
+ 2200      53525F43 
+ 2200      616C6C00 
+ 2201              	.LASF61:
+ 2202 0277 53544550 		.ascii	"STEP_EN\000"
+ 2202      5F454E00 
+ 2203              	.LASF68:
+ 2204 027f 6D61696E 		.ascii	"main\000"
+ 2204      00
+ 2205              	.LASF58:
+ 2206 0284 55415254 		.ascii	"UART_Start\000"
+ 2206      5F537461 
+ 2206      727400
+ 2207              	.LASF10:
+ 2208 028f 696E7433 		.ascii	"int32_t\000"
+ 2208      325F7400 
+ 2209              	.LASF33:
+ 2210 0297 67657444 		.ascii	"getDir\000"
+ 2210      697200
+ 2211              	.LASF65:
+ 2212 029e 6D61696E 		.ascii	"main.c\000"
+ 2212      2E6300
+ 2213              	.LASF55:
+ 2214 02a5 55415254 		.ascii	"UART_PutCRLF\000"
+ 2214      5F507574 
+ 2214      43524C46 
+ 2214      00
+ 2215              	.LASF5:
+ 2216 02b2 6C6F6E67 		.ascii	"long unsigned int\000"
+ 2216      20756E73 
+ 2216      69676E65 
+ 2216      6420696E 
+ 2216      7400
+ 2217              	.LASF15:
+ 2218 02c4 646F7562 		.ascii	"double\000"
+ 2218      6C6500
+ 2219              	.LASF36:
+ 2220 02cb 776D6F64 		.ascii	"wmode\000"
+ 2220      6500
+ 2221              	.LASF46:
+ 2222 02d1 4543484F 		.ascii	"ECHO_PIN_Read\000"
+ 2222      5F50494E 
+ 2222      5F526561 
+ 2222      6400
+ 2223              	.LASF9:
+ 2224 02df 5F5F696E 		.ascii	"__int32_t\000"
+ 2224      7433325F 
+ 2224      7400
+ 2225              	.LASF21:
+ 2226 02e9 64657363 		.ascii	"description\000"
+ 2226      72697074 
+ 2226      696F6E00 
+ 2227              	.LASF48:
+ 2228 02f5 415F5345 		.ascii	"A_SENS_Select\000"
+ 2228      4E535F53 
+ 2228      656C6563 
+ 2228      7400
+ 2229              	.LASF49:
+ARM GAS  C:\Users\Kotori\AppData\Local\Temp\cccAZwYP.s 			page 48
+
+
+ 2230 0303 4144435F 		.ascii	"ADC_StartConvert\000"
+ 2230      53746172 
+ 2230      74436F6E 
+ 2230      76657274 
+ 2230      00
+ 2231              	.LASF31:
+ 2232 0314 49544D5F 		.ascii	"ITM_RxBuffer\000"
+ 2232      52784275 
+ 2232      66666572 
+ 2232      00
+ 2233              	.LASF64:
+ 2234 0321 474E5520 		.ascii	"GNU C11 5.4.1 20160609 (release) [ARM/embedded-5-br"
+ 2234      43313120 
+ 2234      352E342E 
+ 2234      31203230 
+ 2234      31363036 
+ 2235 0354 616E6368 		.ascii	"anch revision 237715] -mcpu=cortex-m3 -mthumb -g -O"
+ 2235      20726576 
+ 2235      6973696F 
+ 2235      6E203233 
+ 2235      37373135 
+ 2236 0387 67202D66 		.ascii	"g -ffunction-sections -ffat-lto-objects\000"
+ 2236      66756E63 
+ 2236      74696F6E 
+ 2236      2D736563 
+ 2236      74696F6E 
+ 2237              	.LASF45:
+ 2238 03af 43794465 		.ascii	"CyDelay\000"
+ 2238      6C617900 
+ 2239              	.LASF34:
+ 2240 03b7 63757243 		.ascii	"curCount\000"
+ 2240      6F756E74 
+ 2240      00
+ 2241              	.LASF63:
+ 2242 03c0 53544550 		.ascii	"STEP_RUN\000"
+ 2242      5F52554E 
+ 2242      00
+ 2243              	.LASF54:
+ 2244 03c9 55415254 		.ascii	"UART_PutChar\000"
+ 2244      5F507574 
+ 2244      43686172 
+ 2244      00
+ 2245              		.ident	"GCC: (GNU Tools for ARM Embedded Processors) 5.4.1 20160609 (release) [ARM/embedded-5-bran

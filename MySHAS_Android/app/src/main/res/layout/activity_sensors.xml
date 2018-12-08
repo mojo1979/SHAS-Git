@@ -1,0 +1,633 @@
+<?xml version="1.0" encoding="utf-8"?>
+<android.support.constraint.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    tools:context=".SensorActivity">
+
+    <TextView
+        android:id="@+id/textView9"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginStart="8dp"
+        android:layout_marginTop="8dp"
+        android:layout_marginEnd="8dp"
+        android:layout_marginBottom="8dp"
+        android:text="@string/AC_Title"
+        android:textAlignment="center"
+        android:textSize="24sp"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent"
+        app:layout_constraintVertical_bias="0.0" />
+
+    <ScrollView
+        android:layout_width="395dp"
+        android:layout_height="586dp"
+        android:layout_marginStart="8dp"
+        android:layout_marginTop="8dp"
+        android:layout_marginEnd="8dp"
+        android:layout_marginBottom="8dp"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintHorizontal_bias="1.0"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent"
+        app:layout_constraintVertical_bias="0.427">
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:orientation="vertical">
+
+            <TextView
+                android:id="@+id/textView5"
+                android:layout_width="match_parent"
+                android:layout_height="44dp"
+                android:text="@string/label_FD"
+                android:textAlignment="center"
+                android:textSize="18sp"
+                tools:layout_editor_absoluteX="161dp"
+                tools:layout_editor_absoluteY="57dp" />
+
+            <TableLayout
+                android:layout_width="match_parent"
+                android:layout_height="131dp">
+
+                <TableRow
+                    android:layout_width="match_parent"
+                    android:layout_height="match_parent">
+
+                    <TextView
+                        android:id="@+id/FACSensID"
+                        android:layout_width="138dp"
+                        android:layout_height="wrap_content"
+                        android:text="@string/SensID" />
+
+                    <TextView
+                        android:id="@+id/FACSensType"
+                        android:layout_width="130dp"
+                        android:layout_height="wrap_content"
+                        android:text="@string/SensTY"
+                        android:textAlignment="center" />
+
+                    <TextView
+                        android:id="@+id/FACSensVal"
+                        android:layout_width="122dp"
+                        android:layout_height="wrap_content"
+                        android:text="@string/SensVL"
+                        android:textAlignment="textEnd" />
+
+                </TableRow>
+
+                <TableRow
+                    android:layout_width="match_parent"
+                    android:layout_height="match_parent">
+
+                    <TextView
+                        android:id="@+id/T0R0C0"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:text="@string/tempstring" />
+
+                    <TextView
+                        android:id="@+id/T0R0C1"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:text="@string/tempstring"
+                        android:textAlignment="center" />
+
+                    <TextView
+                        android:id="@+id/T0R0C2"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:text="@string/tempstring"
+                        android:textAlignment="textEnd" />
+                </TableRow>
+
+                <TableRow
+                    android:layout_width="match_parent"
+                    android:layout_height="match_parent">
+
+                    <TextView
+                        android:id="@+id/T0R1C0"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:text="@string/tempstring" />
+
+                    <TextView
+                        android:id="@+id/T0R1C1"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:text="@string/tempstring"
+                        android:textAlignment="center" />
+
+                    <TextView
+                        android:id="@+id/T0R1C2"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:text="@string/tempstring"
+                        android:textAlignment="textEnd" />
+                </TableRow>
+
+                <TableRow
+                    android:layout_width="match_parent"
+                    android:layout_height="match_parent">
+
+                    <TextView
+                        android:id="@+id/T0R2C0"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:text="@string/tempstring" />
+
+                    <TextView
+                        android:id="@+id/T0R2C1"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:text="@string/tempstring"
+                        android:textAlignment="center" />
+
+                    <TextView
+                        android:id="@+id/T0R2C2"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:text="@string/tempstring"
+                        android:textAlignment="textEnd" />
+                </TableRow>
+
+                <TableRow
+                    android:layout_width="match_parent"
+                    android:layout_height="match_parent">
+
+                    <TextView
+                        android:id="@+id/T0R3C0"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:text="@string/tempstring" />
+
+                    <TextView
+                        android:id="@+id/T0R3C1"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:text="@string/tempstring"
+                        android:textAlignment="center" />
+
+                    <TextView
+                        android:id="@+id/T0R3C2"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:text="@string/tempstring"
+                        android:textAlignment="textEnd" />
+                </TableRow>
+
+            </TableLayout>
+
+            <TextView
+                android:id="@+id/textView6"
+                android:layout_width="match_parent"
+                android:layout_height="44dp"
+                android:text="@string/label_LR"
+                android:textAlignment="center"
+                android:textSize="18sp"
+                tools:layout_editor_absoluteX="161dp"
+                tools:layout_editor_absoluteY="159dp" />
+
+            <TableLayout
+                android:layout_width="match_parent"
+                android:layout_height="121dp">
+
+                <TableRow
+                    android:layout_width="match_parent"
+                    android:layout_height="match_parent">
+
+                    <TextView
+                        android:id="@+id/LACSensID"
+                        android:layout_width="138dp"
+                        android:layout_height="wrap_content"
+                        android:text="@string/SensID" />
+
+                    <TextView
+                        android:id="@+id/LACSensType"
+                        android:layout_width="130dp"
+                        android:layout_height="wrap_content"
+                        android:text="@string/SensTY"
+                        android:textAlignment="center" />
+
+                    <TextView
+                        android:id="@+id/LACSensVal"
+                        android:layout_width="124dp"
+                        android:layout_height="wrap_content"
+                        android:text="@string/SensVL"
+                        android:textAlignment="textEnd" />
+
+                </TableRow>
+
+                <TableRow
+                    android:layout_width="match_parent"
+                    android:layout_height="match_parent">
+
+                    <TextView
+                        android:id="@+id/T1R0C0"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:text="@string/tempstring" />
+
+                    <TextView
+                        android:id="@+id/T1R0C1"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:text="@string/tempstring"
+                        android:textAlignment="center" />
+
+                    <TextView
+                        android:id="@+id/T1R0C2"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:text="@string/tempstring"
+                        android:textAlignment="textEnd" />
+                </TableRow>
+
+                <TableRow
+                    android:layout_width="match_parent"
+                    android:layout_height="match_parent">
+
+                    <TextView
+                        android:id="@+id/T1R1C0"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:text="@string/tempstring" />
+
+                    <TextView
+                        android:id="@+id/T1R1C1"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:text="@string/tempstring"
+                        android:textAlignment="center" />
+
+                    <TextView
+                        android:id="@+id/T1R1C2"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:text="@string/tempstring"
+                        android:textAlignment="textEnd" />
+                </TableRow>
+
+                <TableRow
+                    android:layout_width="match_parent"
+                    android:layout_height="match_parent">
+
+                    <TextView
+                        android:id="@+id/T1R2C0"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:text="@string/tempstring" />
+
+                    <TextView
+                        android:id="@+id/T1R2C1"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:text="@string/tempstring"
+                        android:textAlignment="center" />
+
+                    <TextView
+                        android:id="@+id/T1R2C2"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:text="@string/tempstring"
+                        android:textAlignment="textEnd" />
+                </TableRow>
+
+                <TableRow
+                    android:layout_width="match_parent"
+                    android:layout_height="match_parent">
+
+                    <TextView
+                        android:id="@+id/T1R3C0"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:text="@string/tempstring" />
+
+                    <TextView
+                        android:id="@+id/T1R3C1"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:text="@string/tempstring"
+                        android:textAlignment="center" />
+
+                    <TextView
+                        android:id="@+id/T1R3C2"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:text="@string/tempstring"
+                        android:textAlignment="textEnd" />
+                </TableRow>
+
+            </TableLayout>
+
+            <TextView
+                android:id="@+id/textView7"
+                android:layout_width="match_parent"
+                android:layout_height="44dp"
+                android:text="@string/label_BD"
+                android:textAlignment="center"
+                android:textSize="18sp"
+                tools:layout_editor_absoluteX="162dp"
+                tools:layout_editor_absoluteY="302dp" />
+
+            <TableLayout
+                android:layout_width="match_parent"
+                android:layout_height="118dp">
+
+                <TableRow
+                    android:layout_width="match_parent"
+                    android:layout_height="match_parent">
+
+                    <TextView
+                        android:id="@+id/BEACSensID"
+                        android:layout_width="138dp"
+                        android:layout_height="wrap_content"
+                        android:text="@string/SensID" />
+
+                    <TextView
+                        android:id="@+id/BEACSensType"
+                        android:layout_width="130dp"
+                        android:layout_height="wrap_content"
+                        android:text="@string/SensTY"
+                        android:textAlignment="center" />
+
+                    <TextView
+                        android:id="@+id/BEACSensVal"
+                        android:layout_width="125dp"
+                        android:layout_height="wrap_content"
+                        android:text="@string/SensVL"
+                        android:textAlignment="textEnd" />
+
+                </TableRow>
+
+                <TableRow
+                    android:layout_width="match_parent"
+                    android:layout_height="match_parent">
+
+                    <TextView
+                        android:id="@+id/T2R0C0"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:text="@string/tempstring" />
+
+                    <TextView
+                        android:id="@+id/T2R0C1"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:text="@string/tempstring"
+                        android:textAlignment="center" />
+
+                    <TextView
+                        android:id="@+id/T2R0C2"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:text="@string/tempstring"
+                        android:textAlignment="textEnd" />
+                </TableRow>
+
+                <TableRow
+                    android:layout_width="match_parent"
+                    android:layout_height="match_parent">
+
+                    <TextView
+                        android:id="@+id/T2R1C0"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:text="@string/tempstring" />
+
+                    <TextView
+                        android:id="@+id/T2R1C1"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:text="@string/tempstring"
+                        android:textAlignment="center" />
+
+                    <TextView
+                        android:id="@+id/T2R1C2"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:text="@string/tempstring"
+                        android:textAlignment="textEnd" />
+                </TableRow>
+
+                <TableRow
+                    android:layout_width="match_parent"
+                    android:layout_height="match_parent">
+
+                    <TextView
+                        android:id="@+id/T2R2C0"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:text="@string/tempstring" />
+
+                    <TextView
+                        android:id="@+id/T2R2C1"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:text="@string/tempstring"
+                        android:textAlignment="center" />
+
+                    <TextView
+                        android:id="@+id/T2R2C2"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:text="@string/tempstring"
+                        android:textAlignment="textEnd" />
+                </TableRow>
+
+                <TableRow
+                    android:layout_width="match_parent"
+                    android:layout_height="match_parent">
+
+                    <TextView
+                        android:id="@+id/T2R3C0"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:text="@string/tempstring" />
+
+                    <TextView
+                        android:id="@+id/T2R3C1"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:text="@string/tempstring"
+                        android:textAlignment="center" />
+
+                    <TextView
+                        android:id="@+id/T2R3C2"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:text="@string/tempstring"
+                        android:textAlignment="textEnd" />
+                </TableRow>
+
+            </TableLayout>
+
+            <TextView
+                android:id="@+id/textView8"
+                android:layout_width="match_parent"
+                android:layout_height="45dp"
+                android:text="@string/label_BA"
+                android:textAlignment="center"
+                android:textSize="18sp"
+                tools:layout_editor_absoluteX="182dp"
+                tools:layout_editor_absoluteY="445dp" />
+
+            <TableLayout
+                android:layout_width="match_parent"
+                android:layout_height="125dp">
+
+                <TableRow
+                    android:layout_width="match_parent"
+                    android:layout_height="match_parent">
+
+                    <TextView
+                        android:id="@+id/BACSensID"
+                        android:layout_width="138dp"
+                        android:layout_height="wrap_content"
+                        android:text="@string/SensID" />
+
+                    <TextView
+                        android:id="@+id/BACSensType"
+                        android:layout_width="130dp"
+                        android:layout_height="wrap_content"
+                        android:text="@string/SensTY"
+                        android:textAlignment="center" />
+
+                    <TextView
+                        android:id="@+id/BACSensVal"
+                        android:layout_width="124dp"
+                        android:layout_height="wrap_content"
+                        android:text="@string/SensVL"
+                        android:textAlignment="textEnd" />
+
+                </TableRow>
+
+                <TableRow
+                    android:layout_width="match_parent"
+                    android:layout_height="match_parent">
+
+                    <TextView
+                        android:id="@+id/T3R0C0"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:text="@string/tempstring" />
+
+                    <TextView
+                        android:id="@+id/T3R0C1"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:text="@string/tempstring"
+                        android:textAlignment="center" />
+
+                    <TextView
+                        android:id="@+id/T3R0C2"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:text="@string/tempstring"
+                        android:textAlignment="textEnd" />
+                </TableRow>
+
+                <TableRow
+                    android:layout_width="match_parent"
+                    android:layout_height="match_parent">
+
+                    <TextView
+                        android:id="@+id/T3R1C0"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:text="@string/tempstring" />
+
+                    <TextView
+                        android:id="@+id/T3R1C1"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:text="@string/tempstring"
+                        android:textAlignment="center" />
+
+                    <TextView
+                        android:id="@+id/T3R1C2"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:text="@string/tempstring"
+                        android:textAlignment="textEnd" />
+                </TableRow>
+
+                <TableRow
+                    android:layout_width="match_parent"
+                    android:layout_height="match_parent">
+
+                    <TextView
+                        android:id="@+id/T3R2C0"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:text="@string/tempstring" />
+
+                    <TextView
+                        android:id="@+id/T3R2C1"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:text="@string/tempstring"
+                        android:textAlignment="center" />
+
+                    <TextView
+                        android:id="@+id/T3R2C2"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:text="@string/tempstring"
+                        android:textAlignment="textEnd" />
+                </TableRow>
+
+                <TableRow
+                    android:layout_width="match_parent"
+                    android:layout_height="match_parent">
+
+                    <TextView
+                        android:id="@+id/T3R3C0"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:text="@string/tempstring" />
+
+                    <TextView
+                        android:id="@+id/T3R3C1"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:text="@string/tempstring"
+                        android:textAlignment="center" />
+
+                    <TextView
+                        android:id="@+id/T3R3C2"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:text="@string/tempstring"
+                        android:textAlignment="textEnd" />
+                </TableRow>
+
+            </TableLayout>
+
+        </LinearLayout>
+    </ScrollView>
+
+    <Button
+        android:id="@+id/button7"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginStart="16dp"
+        android:layout_marginTop="8dp"
+        android:layout_marginEnd="8dp"
+        android:layout_marginBottom="8dp"
+        android:onClick="SwitchToMainActivity"
+        android:text="@string/button_home"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintHorizontal_bias="0.484"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent"
+        app:layout_constraintVertical_bias="1.0" />
+
+</android.support.constraint.ConstraintLayout>

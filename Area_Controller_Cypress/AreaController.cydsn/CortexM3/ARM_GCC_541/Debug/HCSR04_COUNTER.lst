@@ -1,0 +1,2212 @@
+ARM GAS  C:\Users\Kotori\AppData\Local\Temp\ccXgvHOk.s 			page 1
+
+
+   1              		.syntax unified
+   2              		.cpu cortex-m3
+   3              		.fpu softvfp
+   4              		.eabi_attribute 20, 1
+   5              		.eabi_attribute 21, 1
+   6              		.eabi_attribute 23, 3
+   7              		.eabi_attribute 24, 1
+   8              		.eabi_attribute 25, 1
+   9              		.eabi_attribute 26, 1
+  10              		.eabi_attribute 30, 1
+  11              		.eabi_attribute 34, 1
+  12              		.eabi_attribute 18, 4
+  13              		.thumb
+  14              		.syntax unified
+  15              		.file	"HCSR04_COUNTER.c"
+  16              		.text
+  17              	.Ltext0:
+  18              		.cfi_sections	.debug_frame
+  19              		.section	.text.HCSR04_COUNTER_Enable,"ax",%progbits
+  20              		.align	2
+  21              		.global	HCSR04_COUNTER_Enable
+  22              		.thumb
+  23              		.thumb_func
+  24              		.type	HCSR04_COUNTER_Enable, %function
+  25              	HCSR04_COUNTER_Enable:
+  26              	.LFB1:
+  27              		.file 1 "Generated_Source\\PSoC5\\HCSR04_COUNTER.c"
+   1:Generated_Source\PSoC5/HCSR04_COUNTER.c **** /*******************************************************************************
+   2:Generated_Source\PSoC5/HCSR04_COUNTER.c **** * File Name: HCSR04_COUNTER.c  
+   3:Generated_Source\PSoC5/HCSR04_COUNTER.c **** * Version 3.0
+   4:Generated_Source\PSoC5/HCSR04_COUNTER.c **** *
+   5:Generated_Source\PSoC5/HCSR04_COUNTER.c **** *  Description:
+   6:Generated_Source\PSoC5/HCSR04_COUNTER.c **** *     The Counter component consists of a 8, 16, 24 or 32-bit counter with
+   7:Generated_Source\PSoC5/HCSR04_COUNTER.c **** *     a selectable period between 2 and 2^Width - 1.  
+   8:Generated_Source\PSoC5/HCSR04_COUNTER.c **** *
+   9:Generated_Source\PSoC5/HCSR04_COUNTER.c **** *   Note:
+  10:Generated_Source\PSoC5/HCSR04_COUNTER.c **** *     None
+  11:Generated_Source\PSoC5/HCSR04_COUNTER.c **** *
+  12:Generated_Source\PSoC5/HCSR04_COUNTER.c **** ********************************************************************************
+  13:Generated_Source\PSoC5/HCSR04_COUNTER.c **** * Copyright 2008-2012, Cypress Semiconductor Corporation.  All rights reserved.
+  14:Generated_Source\PSoC5/HCSR04_COUNTER.c **** * You may use this file only in accordance with the license, terms, conditions, 
+  15:Generated_Source\PSoC5/HCSR04_COUNTER.c **** * disclaimers, and limitations in the end user license agreement accompanying 
+  16:Generated_Source\PSoC5/HCSR04_COUNTER.c **** * the software package with which this file was provided.
+  17:Generated_Source\PSoC5/HCSR04_COUNTER.c **** *******************************************************************************/
+  18:Generated_Source\PSoC5/HCSR04_COUNTER.c **** 
+  19:Generated_Source\PSoC5/HCSR04_COUNTER.c **** #include "HCSR04_COUNTER.h"
+  20:Generated_Source\PSoC5/HCSR04_COUNTER.c **** 
+  21:Generated_Source\PSoC5/HCSR04_COUNTER.c **** uint8 HCSR04_COUNTER_initVar = 0u;
+  22:Generated_Source\PSoC5/HCSR04_COUNTER.c **** 
+  23:Generated_Source\PSoC5/HCSR04_COUNTER.c **** 
+  24:Generated_Source\PSoC5/HCSR04_COUNTER.c **** /*******************************************************************************
+  25:Generated_Source\PSoC5/HCSR04_COUNTER.c **** * Function Name: HCSR04_COUNTER_Init
+  26:Generated_Source\PSoC5/HCSR04_COUNTER.c **** ********************************************************************************
+  27:Generated_Source\PSoC5/HCSR04_COUNTER.c **** * Summary:
+  28:Generated_Source\PSoC5/HCSR04_COUNTER.c **** *     Initialize to the schematic state
+  29:Generated_Source\PSoC5/HCSR04_COUNTER.c **** * 
+  30:Generated_Source\PSoC5/HCSR04_COUNTER.c **** * Parameters:  
+ARM GAS  C:\Users\Kotori\AppData\Local\Temp\ccXgvHOk.s 			page 2
+
+
+  31:Generated_Source\PSoC5/HCSR04_COUNTER.c **** *  void  
+  32:Generated_Source\PSoC5/HCSR04_COUNTER.c **** *
+  33:Generated_Source\PSoC5/HCSR04_COUNTER.c **** * Return: 
+  34:Generated_Source\PSoC5/HCSR04_COUNTER.c **** *  void
+  35:Generated_Source\PSoC5/HCSR04_COUNTER.c **** *
+  36:Generated_Source\PSoC5/HCSR04_COUNTER.c **** *******************************************************************************/
+  37:Generated_Source\PSoC5/HCSR04_COUNTER.c **** void HCSR04_COUNTER_Init(void) 
+  38:Generated_Source\PSoC5/HCSR04_COUNTER.c **** {
+  39:Generated_Source\PSoC5/HCSR04_COUNTER.c ****         #if (!HCSR04_COUNTER_UsingFixedFunction && !HCSR04_COUNTER_ControlRegRemoved)
+  40:Generated_Source\PSoC5/HCSR04_COUNTER.c ****             uint8 ctrl;
+  41:Generated_Source\PSoC5/HCSR04_COUNTER.c ****         #endif /* (!HCSR04_COUNTER_UsingFixedFunction && !HCSR04_COUNTER_ControlRegRemoved) */
+  42:Generated_Source\PSoC5/HCSR04_COUNTER.c ****         
+  43:Generated_Source\PSoC5/HCSR04_COUNTER.c ****         #if(!HCSR04_COUNTER_UsingFixedFunction) 
+  44:Generated_Source\PSoC5/HCSR04_COUNTER.c ****             /* Interrupt State Backup for Critical Region*/
+  45:Generated_Source\PSoC5/HCSR04_COUNTER.c ****             uint8 HCSR04_COUNTER_interruptState;
+  46:Generated_Source\PSoC5/HCSR04_COUNTER.c ****         #endif /* (!HCSR04_COUNTER_UsingFixedFunction) */
+  47:Generated_Source\PSoC5/HCSR04_COUNTER.c ****         
+  48:Generated_Source\PSoC5/HCSR04_COUNTER.c ****         #if (HCSR04_COUNTER_UsingFixedFunction)
+  49:Generated_Source\PSoC5/HCSR04_COUNTER.c ****             /* Clear all bits but the enable bit (if it's already set for Timer operation */
+  50:Generated_Source\PSoC5/HCSR04_COUNTER.c ****             HCSR04_COUNTER_CONTROL &= HCSR04_COUNTER_CTRL_ENABLE;
+  51:Generated_Source\PSoC5/HCSR04_COUNTER.c ****             
+  52:Generated_Source\PSoC5/HCSR04_COUNTER.c ****             /* Clear the mode bits for continuous run mode */
+  53:Generated_Source\PSoC5/HCSR04_COUNTER.c ****             #if (CY_PSOC5A)
+  54:Generated_Source\PSoC5/HCSR04_COUNTER.c ****                 HCSR04_COUNTER_CONTROL2 &= ((uint8)(~HCSR04_COUNTER_CTRL_MODE_MASK));
+  55:Generated_Source\PSoC5/HCSR04_COUNTER.c ****             #endif /* (CY_PSOC5A) */
+  56:Generated_Source\PSoC5/HCSR04_COUNTER.c ****             #if (CY_PSOC3 || CY_PSOC5LP)
+  57:Generated_Source\PSoC5/HCSR04_COUNTER.c ****                 HCSR04_COUNTER_CONTROL3 &= ((uint8)(~HCSR04_COUNTER_CTRL_MODE_MASK));              
+  58:Generated_Source\PSoC5/HCSR04_COUNTER.c ****             #endif /* (CY_PSOC3 || CY_PSOC5LP) */
+  59:Generated_Source\PSoC5/HCSR04_COUNTER.c ****             /* Check if One Shot mode is enabled i.e. RunMode !=0*/
+  60:Generated_Source\PSoC5/HCSR04_COUNTER.c ****             #if (HCSR04_COUNTER_RunModeUsed != 0x0u)
+  61:Generated_Source\PSoC5/HCSR04_COUNTER.c ****                 /* Set 3rd bit of Control register to enable one shot mode */
+  62:Generated_Source\PSoC5/HCSR04_COUNTER.c ****                 HCSR04_COUNTER_CONTROL |= HCSR04_COUNTER_ONESHOT;
+  63:Generated_Source\PSoC5/HCSR04_COUNTER.c ****             #endif /* (HCSR04_COUNTER_RunModeUsed != 0x0u) */
+  64:Generated_Source\PSoC5/HCSR04_COUNTER.c ****             
+  65:Generated_Source\PSoC5/HCSR04_COUNTER.c ****             /* Set the IRQ to use the status register interrupts */
+  66:Generated_Source\PSoC5/HCSR04_COUNTER.c ****             HCSR04_COUNTER_CONTROL2 |= HCSR04_COUNTER_CTRL2_IRQ_SEL;
+  67:Generated_Source\PSoC5/HCSR04_COUNTER.c ****             
+  68:Generated_Source\PSoC5/HCSR04_COUNTER.c ****             /* Clear and Set SYNCTC and SYNCCMP bits of RT1 register */
+  69:Generated_Source\PSoC5/HCSR04_COUNTER.c ****             HCSR04_COUNTER_RT1 &= ((uint8)(~HCSR04_COUNTER_RT1_MASK));
+  70:Generated_Source\PSoC5/HCSR04_COUNTER.c ****             HCSR04_COUNTER_RT1 |= HCSR04_COUNTER_SYNC;     
+  71:Generated_Source\PSoC5/HCSR04_COUNTER.c ****                     
+  72:Generated_Source\PSoC5/HCSR04_COUNTER.c ****             /*Enable DSI Sync all all inputs of the Timer*/
+  73:Generated_Source\PSoC5/HCSR04_COUNTER.c ****             HCSR04_COUNTER_RT1 &= ((uint8)(~HCSR04_COUNTER_SYNCDSI_MASK));
+  74:Generated_Source\PSoC5/HCSR04_COUNTER.c ****             HCSR04_COUNTER_RT1 |= HCSR04_COUNTER_SYNCDSI_EN;
+  75:Generated_Source\PSoC5/HCSR04_COUNTER.c **** 
+  76:Generated_Source\PSoC5/HCSR04_COUNTER.c ****         #else
+  77:Generated_Source\PSoC5/HCSR04_COUNTER.c ****             #if(!HCSR04_COUNTER_ControlRegRemoved)
+  78:Generated_Source\PSoC5/HCSR04_COUNTER.c ****             /* Set the default compare mode defined in the parameter */
+  79:Generated_Source\PSoC5/HCSR04_COUNTER.c ****             ctrl = HCSR04_COUNTER_CONTROL & ((uint8)(~HCSR04_COUNTER_CTRL_CMPMODE_MASK));
+  80:Generated_Source\PSoC5/HCSR04_COUNTER.c ****             HCSR04_COUNTER_CONTROL = ctrl | HCSR04_COUNTER_DEFAULT_COMPARE_MODE;
+  81:Generated_Source\PSoC5/HCSR04_COUNTER.c ****             
+  82:Generated_Source\PSoC5/HCSR04_COUNTER.c ****             /* Set the default capture mode defined in the parameter */
+  83:Generated_Source\PSoC5/HCSR04_COUNTER.c ****             ctrl = HCSR04_COUNTER_CONTROL & ((uint8)(~HCSR04_COUNTER_CTRL_CAPMODE_MASK));
+  84:Generated_Source\PSoC5/HCSR04_COUNTER.c ****             
+  85:Generated_Source\PSoC5/HCSR04_COUNTER.c ****             #if( 0 != HCSR04_COUNTER_CAPTURE_MODE_CONF)
+  86:Generated_Source\PSoC5/HCSR04_COUNTER.c ****                 HCSR04_COUNTER_CONTROL = ctrl | HCSR04_COUNTER_DEFAULT_CAPTURE_MODE;
+  87:Generated_Source\PSoC5/HCSR04_COUNTER.c ****             #else
+ARM GAS  C:\Users\Kotori\AppData\Local\Temp\ccXgvHOk.s 			page 3
+
+
+  88:Generated_Source\PSoC5/HCSR04_COUNTER.c ****                 HCSR04_COUNTER_CONTROL = ctrl;
+  89:Generated_Source\PSoC5/HCSR04_COUNTER.c ****             #endif /* 0 != HCSR04_COUNTER_CAPTURE_MODE */ 
+  90:Generated_Source\PSoC5/HCSR04_COUNTER.c ****             
+  91:Generated_Source\PSoC5/HCSR04_COUNTER.c ****             #endif /* (!HCSR04_COUNTER_ControlRegRemoved) */
+  92:Generated_Source\PSoC5/HCSR04_COUNTER.c ****         #endif /* (HCSR04_COUNTER_UsingFixedFunction) */
+  93:Generated_Source\PSoC5/HCSR04_COUNTER.c ****         
+  94:Generated_Source\PSoC5/HCSR04_COUNTER.c ****         /* Clear all data in the FIFO's */
+  95:Generated_Source\PSoC5/HCSR04_COUNTER.c ****         #if (!HCSR04_COUNTER_UsingFixedFunction)
+  96:Generated_Source\PSoC5/HCSR04_COUNTER.c ****             HCSR04_COUNTER_ClearFIFO();
+  97:Generated_Source\PSoC5/HCSR04_COUNTER.c ****         #endif /* (!HCSR04_COUNTER_UsingFixedFunction) */
+  98:Generated_Source\PSoC5/HCSR04_COUNTER.c ****         
+  99:Generated_Source\PSoC5/HCSR04_COUNTER.c ****         /* Set Initial values from Configuration */
+ 100:Generated_Source\PSoC5/HCSR04_COUNTER.c ****         HCSR04_COUNTER_WritePeriod(HCSR04_COUNTER_INIT_PERIOD_VALUE);
+ 101:Generated_Source\PSoC5/HCSR04_COUNTER.c ****         #if (!(HCSR04_COUNTER_UsingFixedFunction && (CY_PSOC5A)))
+ 102:Generated_Source\PSoC5/HCSR04_COUNTER.c ****             HCSR04_COUNTER_WriteCounter(HCSR04_COUNTER_INIT_COUNTER_VALUE);
+ 103:Generated_Source\PSoC5/HCSR04_COUNTER.c ****         #endif /* (!(HCSR04_COUNTER_UsingFixedFunction && (CY_PSOC5A))) */
+ 104:Generated_Source\PSoC5/HCSR04_COUNTER.c ****         HCSR04_COUNTER_SetInterruptMode(HCSR04_COUNTER_INIT_INTERRUPTS_MASK);
+ 105:Generated_Source\PSoC5/HCSR04_COUNTER.c ****         
+ 106:Generated_Source\PSoC5/HCSR04_COUNTER.c ****         #if (!HCSR04_COUNTER_UsingFixedFunction)
+ 107:Generated_Source\PSoC5/HCSR04_COUNTER.c ****             /* Read the status register to clear the unwanted interrupts */
+ 108:Generated_Source\PSoC5/HCSR04_COUNTER.c ****             (void)HCSR04_COUNTER_ReadStatusRegister();
+ 109:Generated_Source\PSoC5/HCSR04_COUNTER.c ****             /* Set the compare value (only available to non-fixed function implementation */
+ 110:Generated_Source\PSoC5/HCSR04_COUNTER.c ****             HCSR04_COUNTER_WriteCompare(HCSR04_COUNTER_INIT_COMPARE_VALUE);
+ 111:Generated_Source\PSoC5/HCSR04_COUNTER.c ****             /* Use the interrupt output of the status register for IRQ output */
+ 112:Generated_Source\PSoC5/HCSR04_COUNTER.c ****             
+ 113:Generated_Source\PSoC5/HCSR04_COUNTER.c ****             /* CyEnterCriticalRegion and CyExitCriticalRegion are used to mark following region cri
+ 114:Generated_Source\PSoC5/HCSR04_COUNTER.c ****             /* Enter Critical Region*/
+ 115:Generated_Source\PSoC5/HCSR04_COUNTER.c ****             HCSR04_COUNTER_interruptState = CyEnterCriticalSection();
+ 116:Generated_Source\PSoC5/HCSR04_COUNTER.c ****             
+ 117:Generated_Source\PSoC5/HCSR04_COUNTER.c ****             HCSR04_COUNTER_STATUS_AUX_CTRL |= HCSR04_COUNTER_STATUS_ACTL_INT_EN_MASK;
+ 118:Generated_Source\PSoC5/HCSR04_COUNTER.c ****             
+ 119:Generated_Source\PSoC5/HCSR04_COUNTER.c ****             /* Exit Critical Region*/
+ 120:Generated_Source\PSoC5/HCSR04_COUNTER.c ****             CyExitCriticalSection(HCSR04_COUNTER_interruptState);
+ 121:Generated_Source\PSoC5/HCSR04_COUNTER.c ****             
+ 122:Generated_Source\PSoC5/HCSR04_COUNTER.c ****         #endif /* (!HCSR04_COUNTER_UsingFixedFunction) */
+ 123:Generated_Source\PSoC5/HCSR04_COUNTER.c **** }
+ 124:Generated_Source\PSoC5/HCSR04_COUNTER.c **** 
+ 125:Generated_Source\PSoC5/HCSR04_COUNTER.c **** 
+ 126:Generated_Source\PSoC5/HCSR04_COUNTER.c **** /*******************************************************************************
+ 127:Generated_Source\PSoC5/HCSR04_COUNTER.c **** * Function Name: HCSR04_COUNTER_Enable
+ 128:Generated_Source\PSoC5/HCSR04_COUNTER.c **** ********************************************************************************
+ 129:Generated_Source\PSoC5/HCSR04_COUNTER.c **** * Summary:
+ 130:Generated_Source\PSoC5/HCSR04_COUNTER.c **** *     Enable the Counter
+ 131:Generated_Source\PSoC5/HCSR04_COUNTER.c **** * 
+ 132:Generated_Source\PSoC5/HCSR04_COUNTER.c **** * Parameters:  
+ 133:Generated_Source\PSoC5/HCSR04_COUNTER.c **** *  void  
+ 134:Generated_Source\PSoC5/HCSR04_COUNTER.c **** *
+ 135:Generated_Source\PSoC5/HCSR04_COUNTER.c **** * Return: 
+ 136:Generated_Source\PSoC5/HCSR04_COUNTER.c **** *  void
+ 137:Generated_Source\PSoC5/HCSR04_COUNTER.c **** *
+ 138:Generated_Source\PSoC5/HCSR04_COUNTER.c **** * Side Effects: 
+ 139:Generated_Source\PSoC5/HCSR04_COUNTER.c **** *   If the Enable mode is set to Hardware only then this function has no effect 
+ 140:Generated_Source\PSoC5/HCSR04_COUNTER.c **** *   on the operation of the counter.
+ 141:Generated_Source\PSoC5/HCSR04_COUNTER.c **** *
+ 142:Generated_Source\PSoC5/HCSR04_COUNTER.c **** *******************************************************************************/
+ 143:Generated_Source\PSoC5/HCSR04_COUNTER.c **** void HCSR04_COUNTER_Enable(void) 
+ 144:Generated_Source\PSoC5/HCSR04_COUNTER.c **** {
+ARM GAS  C:\Users\Kotori\AppData\Local\Temp\ccXgvHOk.s 			page 4
+
+
+  28              		.loc 1 144 0
+  29              		.cfi_startproc
+  30              		@ args = 0, pretend = 0, frame = 0
+  31              		@ frame_needed = 0, uses_anonymous_args = 0
+  32              		@ link register save eliminated.
+ 145:Generated_Source\PSoC5/HCSR04_COUNTER.c ****     /* Globally Enable the Fixed Function Block chosen */
+ 146:Generated_Source\PSoC5/HCSR04_COUNTER.c ****     #if (HCSR04_COUNTER_UsingFixedFunction)
+ 147:Generated_Source\PSoC5/HCSR04_COUNTER.c ****         HCSR04_COUNTER_GLOBAL_ENABLE |= HCSR04_COUNTER_BLOCK_EN_MASK;
+ 148:Generated_Source\PSoC5/HCSR04_COUNTER.c ****         HCSR04_COUNTER_GLOBAL_STBY_ENABLE |= HCSR04_COUNTER_BLOCK_STBY_EN_MASK;
+ 149:Generated_Source\PSoC5/HCSR04_COUNTER.c ****     #endif /* (HCSR04_COUNTER_UsingFixedFunction) */  
+ 150:Generated_Source\PSoC5/HCSR04_COUNTER.c ****         
+ 151:Generated_Source\PSoC5/HCSR04_COUNTER.c ****     /* Enable the counter from the control register  */
+ 152:Generated_Source\PSoC5/HCSR04_COUNTER.c ****     /* If Fixed Function then make sure Mode is set correctly */
+ 153:Generated_Source\PSoC5/HCSR04_COUNTER.c ****     /* else make sure reset is clear */
+ 154:Generated_Source\PSoC5/HCSR04_COUNTER.c ****     #if(!HCSR04_COUNTER_ControlRegRemoved || HCSR04_COUNTER_UsingFixedFunction)
+ 155:Generated_Source\PSoC5/HCSR04_COUNTER.c ****         HCSR04_COUNTER_CONTROL |= HCSR04_COUNTER_CTRL_ENABLE;                
+  33              		.loc 1 155 0
+  34 0000 024A     		ldr	r2, .L2
+  35 0002 1378     		ldrb	r3, [r2]	@ zero_extendqisi2
+  36 0004 43F08003 		orr	r3, r3, #128
+  37 0008 1370     		strb	r3, [r2]
+  38 000a 7047     		bx	lr
+  39              	.L3:
+  40              		.align	2
+  41              	.L2:
+  42 000c 7A650040 		.word	1073767802
+  43              		.cfi_endproc
+  44              	.LFE1:
+  45              		.size	HCSR04_COUNTER_Enable, .-HCSR04_COUNTER_Enable
+  46              		.section	.text.HCSR04_COUNTER_Stop,"ax",%progbits
+  47              		.align	2
+  48              		.global	HCSR04_COUNTER_Stop
+  49              		.thumb
+  50              		.thumb_func
+  51              		.type	HCSR04_COUNTER_Stop, %function
+  52              	HCSR04_COUNTER_Stop:
+  53              	.LFB3:
+ 156:Generated_Source\PSoC5/HCSR04_COUNTER.c ****     #endif /* (!HCSR04_COUNTER_ControlRegRemoved || HCSR04_COUNTER_UsingFixedFunction) */
+ 157:Generated_Source\PSoC5/HCSR04_COUNTER.c ****     
+ 158:Generated_Source\PSoC5/HCSR04_COUNTER.c **** }
+ 159:Generated_Source\PSoC5/HCSR04_COUNTER.c **** 
+ 160:Generated_Source\PSoC5/HCSR04_COUNTER.c **** 
+ 161:Generated_Source\PSoC5/HCSR04_COUNTER.c **** /*******************************************************************************
+ 162:Generated_Source\PSoC5/HCSR04_COUNTER.c **** * Function Name: HCSR04_COUNTER_Start
+ 163:Generated_Source\PSoC5/HCSR04_COUNTER.c **** ********************************************************************************
+ 164:Generated_Source\PSoC5/HCSR04_COUNTER.c **** * Summary:
+ 165:Generated_Source\PSoC5/HCSR04_COUNTER.c **** *  Enables the counter for operation 
+ 166:Generated_Source\PSoC5/HCSR04_COUNTER.c **** *
+ 167:Generated_Source\PSoC5/HCSR04_COUNTER.c **** * Parameters:  
+ 168:Generated_Source\PSoC5/HCSR04_COUNTER.c **** *  void  
+ 169:Generated_Source\PSoC5/HCSR04_COUNTER.c **** *
+ 170:Generated_Source\PSoC5/HCSR04_COUNTER.c **** * Return: 
+ 171:Generated_Source\PSoC5/HCSR04_COUNTER.c **** *  void
+ 172:Generated_Source\PSoC5/HCSR04_COUNTER.c **** *
+ 173:Generated_Source\PSoC5/HCSR04_COUNTER.c **** * Global variables:
+ 174:Generated_Source\PSoC5/HCSR04_COUNTER.c **** *  HCSR04_COUNTER_initVar: Is modified when this function is called for the  
+ 175:Generated_Source\PSoC5/HCSR04_COUNTER.c **** *   first time. Is used to ensure that initialization happens only once.
+ARM GAS  C:\Users\Kotori\AppData\Local\Temp\ccXgvHOk.s 			page 5
+
+
+ 176:Generated_Source\PSoC5/HCSR04_COUNTER.c **** *
+ 177:Generated_Source\PSoC5/HCSR04_COUNTER.c **** *******************************************************************************/
+ 178:Generated_Source\PSoC5/HCSR04_COUNTER.c **** void HCSR04_COUNTER_Start(void) 
+ 179:Generated_Source\PSoC5/HCSR04_COUNTER.c **** {
+ 180:Generated_Source\PSoC5/HCSR04_COUNTER.c ****     if(HCSR04_COUNTER_initVar == 0u)
+ 181:Generated_Source\PSoC5/HCSR04_COUNTER.c ****     {
+ 182:Generated_Source\PSoC5/HCSR04_COUNTER.c ****         HCSR04_COUNTER_Init();
+ 183:Generated_Source\PSoC5/HCSR04_COUNTER.c ****         
+ 184:Generated_Source\PSoC5/HCSR04_COUNTER.c ****         HCSR04_COUNTER_initVar = 1u; /* Clear this bit for Initialization */        
+ 185:Generated_Source\PSoC5/HCSR04_COUNTER.c ****     }
+ 186:Generated_Source\PSoC5/HCSR04_COUNTER.c ****     
+ 187:Generated_Source\PSoC5/HCSR04_COUNTER.c ****     /* Enable the Counter */
+ 188:Generated_Source\PSoC5/HCSR04_COUNTER.c ****     HCSR04_COUNTER_Enable();        
+ 189:Generated_Source\PSoC5/HCSR04_COUNTER.c **** }
+ 190:Generated_Source\PSoC5/HCSR04_COUNTER.c **** 
+ 191:Generated_Source\PSoC5/HCSR04_COUNTER.c **** 
+ 192:Generated_Source\PSoC5/HCSR04_COUNTER.c **** /*******************************************************************************
+ 193:Generated_Source\PSoC5/HCSR04_COUNTER.c **** * Function Name: HCSR04_COUNTER_Stop
+ 194:Generated_Source\PSoC5/HCSR04_COUNTER.c **** ********************************************************************************
+ 195:Generated_Source\PSoC5/HCSR04_COUNTER.c **** * Summary:
+ 196:Generated_Source\PSoC5/HCSR04_COUNTER.c **** * Halts the counter, but does not change any modes or disable interrupts.
+ 197:Generated_Source\PSoC5/HCSR04_COUNTER.c **** *
+ 198:Generated_Source\PSoC5/HCSR04_COUNTER.c **** * Parameters:  
+ 199:Generated_Source\PSoC5/HCSR04_COUNTER.c **** *  void  
+ 200:Generated_Source\PSoC5/HCSR04_COUNTER.c **** *
+ 201:Generated_Source\PSoC5/HCSR04_COUNTER.c **** * Return: 
+ 202:Generated_Source\PSoC5/HCSR04_COUNTER.c **** *  void
+ 203:Generated_Source\PSoC5/HCSR04_COUNTER.c **** *
+ 204:Generated_Source\PSoC5/HCSR04_COUNTER.c **** * Side Effects: If the Enable mode is set to Hardware only then this function
+ 205:Generated_Source\PSoC5/HCSR04_COUNTER.c **** *               has no effect on the operation of the counter.
+ 206:Generated_Source\PSoC5/HCSR04_COUNTER.c **** *
+ 207:Generated_Source\PSoC5/HCSR04_COUNTER.c **** *******************************************************************************/
+ 208:Generated_Source\PSoC5/HCSR04_COUNTER.c **** void HCSR04_COUNTER_Stop(void) 
+ 209:Generated_Source\PSoC5/HCSR04_COUNTER.c **** {
+  54              		.loc 1 209 0
+  55              		.cfi_startproc
+  56              		@ args = 0, pretend = 0, frame = 0
+  57              		@ frame_needed = 0, uses_anonymous_args = 0
+  58              		@ link register save eliminated.
+ 210:Generated_Source\PSoC5/HCSR04_COUNTER.c ****     /* Disable Counter */
+ 211:Generated_Source\PSoC5/HCSR04_COUNTER.c ****     #if(!HCSR04_COUNTER_ControlRegRemoved || HCSR04_COUNTER_UsingFixedFunction)
+ 212:Generated_Source\PSoC5/HCSR04_COUNTER.c ****         HCSR04_COUNTER_CONTROL &= ((uint8)(~HCSR04_COUNTER_CTRL_ENABLE));        
+  59              		.loc 1 212 0
+  60 0000 024A     		ldr	r2, .L5
+  61 0002 1378     		ldrb	r3, [r2]	@ zero_extendqisi2
+  62 0004 03F07F03 		and	r3, r3, #127
+  63 0008 1370     		strb	r3, [r2]
+  64 000a 7047     		bx	lr
+  65              	.L6:
+  66              		.align	2
+  67              	.L5:
+  68 000c 7A650040 		.word	1073767802
+  69              		.cfi_endproc
+  70              	.LFE3:
+  71              		.size	HCSR04_COUNTER_Stop, .-HCSR04_COUNTER_Stop
+  72              		.section	.text.HCSR04_COUNTER_SetInterruptMode,"ax",%progbits
+  73              		.align	2
+ARM GAS  C:\Users\Kotori\AppData\Local\Temp\ccXgvHOk.s 			page 6
+
+
+  74              		.global	HCSR04_COUNTER_SetInterruptMode
+  75              		.thumb
+  76              		.thumb_func
+  77              		.type	HCSR04_COUNTER_SetInterruptMode, %function
+  78              	HCSR04_COUNTER_SetInterruptMode:
+  79              	.LFB4:
+ 213:Generated_Source\PSoC5/HCSR04_COUNTER.c ****     #endif /* (!HCSR04_COUNTER_ControlRegRemoved || HCSR04_COUNTER_UsingFixedFunction) */
+ 214:Generated_Source\PSoC5/HCSR04_COUNTER.c ****     
+ 215:Generated_Source\PSoC5/HCSR04_COUNTER.c ****     /* Globally disable the Fixed Function Block chosen */
+ 216:Generated_Source\PSoC5/HCSR04_COUNTER.c ****     #if (HCSR04_COUNTER_UsingFixedFunction)
+ 217:Generated_Source\PSoC5/HCSR04_COUNTER.c ****         HCSR04_COUNTER_GLOBAL_ENABLE &= ((uint8)(~HCSR04_COUNTER_BLOCK_EN_MASK));
+ 218:Generated_Source\PSoC5/HCSR04_COUNTER.c ****         HCSR04_COUNTER_GLOBAL_STBY_ENABLE &= ((uint8)(~HCSR04_COUNTER_BLOCK_STBY_EN_MASK));
+ 219:Generated_Source\PSoC5/HCSR04_COUNTER.c ****     #endif /* (HCSR04_COUNTER_UsingFixedFunction) */
+ 220:Generated_Source\PSoC5/HCSR04_COUNTER.c **** }
+ 221:Generated_Source\PSoC5/HCSR04_COUNTER.c **** 
+ 222:Generated_Source\PSoC5/HCSR04_COUNTER.c **** 
+ 223:Generated_Source\PSoC5/HCSR04_COUNTER.c **** /*******************************************************************************
+ 224:Generated_Source\PSoC5/HCSR04_COUNTER.c **** * Function Name: HCSR04_COUNTER_SetInterruptMode
+ 225:Generated_Source\PSoC5/HCSR04_COUNTER.c **** ********************************************************************************
+ 226:Generated_Source\PSoC5/HCSR04_COUNTER.c **** * Summary:
+ 227:Generated_Source\PSoC5/HCSR04_COUNTER.c **** * Configures which interrupt sources are enabled to generate the final interrupt
+ 228:Generated_Source\PSoC5/HCSR04_COUNTER.c **** *
+ 229:Generated_Source\PSoC5/HCSR04_COUNTER.c **** * Parameters:  
+ 230:Generated_Source\PSoC5/HCSR04_COUNTER.c **** *  InterruptsMask: This parameter is an or'd collection of the status bits
+ 231:Generated_Source\PSoC5/HCSR04_COUNTER.c **** *                   which will be allowed to generate the counters interrupt.   
+ 232:Generated_Source\PSoC5/HCSR04_COUNTER.c **** *
+ 233:Generated_Source\PSoC5/HCSR04_COUNTER.c **** * Return: 
+ 234:Generated_Source\PSoC5/HCSR04_COUNTER.c **** *  void
+ 235:Generated_Source\PSoC5/HCSR04_COUNTER.c **** *
+ 236:Generated_Source\PSoC5/HCSR04_COUNTER.c **** *******************************************************************************/
+ 237:Generated_Source\PSoC5/HCSR04_COUNTER.c **** void HCSR04_COUNTER_SetInterruptMode(uint8 interruptsMask) 
+ 238:Generated_Source\PSoC5/HCSR04_COUNTER.c **** {
+  80              		.loc 1 238 0
+  81              		.cfi_startproc
+  82              		@ args = 0, pretend = 0, frame = 0
+  83              		@ frame_needed = 0, uses_anonymous_args = 0
+  84              		@ link register save eliminated.
+  85              	.LVL0:
+ 239:Generated_Source\PSoC5/HCSR04_COUNTER.c ****     HCSR04_COUNTER_STATUS_MASK = interruptsMask;
+  86              		.loc 1 239 0
+  87 0000 014B     		ldr	r3, .L8
+  88 0002 1870     		strb	r0, [r3]
+  89 0004 7047     		bx	lr
+  90              	.L9:
+  91 0006 00BF     		.align	2
+  92              	.L8:
+  93 0008 89650040 		.word	1073767817
+  94              		.cfi_endproc
+  95              	.LFE4:
+  96              		.size	HCSR04_COUNTER_SetInterruptMode, .-HCSR04_COUNTER_SetInterruptMode
+  97              		.section	.text.HCSR04_COUNTER_ReadStatusRegister,"ax",%progbits
+  98              		.align	2
+  99              		.global	HCSR04_COUNTER_ReadStatusRegister
+ 100              		.thumb
+ 101              		.thumb_func
+ 102              		.type	HCSR04_COUNTER_ReadStatusRegister, %function
+ 103              	HCSR04_COUNTER_ReadStatusRegister:
+ARM GAS  C:\Users\Kotori\AppData\Local\Temp\ccXgvHOk.s 			page 7
+
+
+ 104              	.LFB5:
+ 240:Generated_Source\PSoC5/HCSR04_COUNTER.c **** }
+ 241:Generated_Source\PSoC5/HCSR04_COUNTER.c **** 
+ 242:Generated_Source\PSoC5/HCSR04_COUNTER.c **** 
+ 243:Generated_Source\PSoC5/HCSR04_COUNTER.c **** /*******************************************************************************
+ 244:Generated_Source\PSoC5/HCSR04_COUNTER.c **** * Function Name: HCSR04_COUNTER_ReadStatusRegister
+ 245:Generated_Source\PSoC5/HCSR04_COUNTER.c **** ********************************************************************************
+ 246:Generated_Source\PSoC5/HCSR04_COUNTER.c **** * Summary:
+ 247:Generated_Source\PSoC5/HCSR04_COUNTER.c **** *   Reads the status register and returns it's state. This function should use
+ 248:Generated_Source\PSoC5/HCSR04_COUNTER.c **** *       defined types for the bit-field information as the bits in this
+ 249:Generated_Source\PSoC5/HCSR04_COUNTER.c **** *       register may be permuteable.
+ 250:Generated_Source\PSoC5/HCSR04_COUNTER.c **** *
+ 251:Generated_Source\PSoC5/HCSR04_COUNTER.c **** * Parameters:  
+ 252:Generated_Source\PSoC5/HCSR04_COUNTER.c **** *  void
+ 253:Generated_Source\PSoC5/HCSR04_COUNTER.c **** *
+ 254:Generated_Source\PSoC5/HCSR04_COUNTER.c **** * Return: 
+ 255:Generated_Source\PSoC5/HCSR04_COUNTER.c **** *  (uint8) The contents of the status register
+ 256:Generated_Source\PSoC5/HCSR04_COUNTER.c **** *
+ 257:Generated_Source\PSoC5/HCSR04_COUNTER.c **** * Side Effects:
+ 258:Generated_Source\PSoC5/HCSR04_COUNTER.c **** *   Status register bits may be clear on read. 
+ 259:Generated_Source\PSoC5/HCSR04_COUNTER.c **** *
+ 260:Generated_Source\PSoC5/HCSR04_COUNTER.c **** *******************************************************************************/
+ 261:Generated_Source\PSoC5/HCSR04_COUNTER.c **** uint8   HCSR04_COUNTER_ReadStatusRegister(void) 
+ 262:Generated_Source\PSoC5/HCSR04_COUNTER.c **** {
+ 105              		.loc 1 262 0
+ 106              		.cfi_startproc
+ 107              		@ args = 0, pretend = 0, frame = 0
+ 108              		@ frame_needed = 0, uses_anonymous_args = 0
+ 109              		@ link register save eliminated.
+ 263:Generated_Source\PSoC5/HCSR04_COUNTER.c ****     return HCSR04_COUNTER_STATUS;
+ 110              		.loc 1 263 0
+ 111 0000 014B     		ldr	r3, .L11
+ 112 0002 1878     		ldrb	r0, [r3]	@ zero_extendqisi2
+ 264:Generated_Source\PSoC5/HCSR04_COUNTER.c **** }
+ 113              		.loc 1 264 0
+ 114 0004 7047     		bx	lr
+ 115              	.L12:
+ 116 0006 00BF     		.align	2
+ 117              	.L11:
+ 118 0008 69650040 		.word	1073767785
+ 119              		.cfi_endproc
+ 120              	.LFE5:
+ 121              		.size	HCSR04_COUNTER_ReadStatusRegister, .-HCSR04_COUNTER_ReadStatusRegister
+ 122              		.section	.text.HCSR04_COUNTER_ReadControlRegister,"ax",%progbits
+ 123              		.align	2
+ 124              		.global	HCSR04_COUNTER_ReadControlRegister
+ 125              		.thumb
+ 126              		.thumb_func
+ 127              		.type	HCSR04_COUNTER_ReadControlRegister, %function
+ 128              	HCSR04_COUNTER_ReadControlRegister:
+ 129              	.LFB6:
+ 265:Generated_Source\PSoC5/HCSR04_COUNTER.c **** 
+ 266:Generated_Source\PSoC5/HCSR04_COUNTER.c **** 
+ 267:Generated_Source\PSoC5/HCSR04_COUNTER.c **** #if(!HCSR04_COUNTER_ControlRegRemoved)
+ 268:Generated_Source\PSoC5/HCSR04_COUNTER.c **** /*******************************************************************************
+ 269:Generated_Source\PSoC5/HCSR04_COUNTER.c **** * Function Name: HCSR04_COUNTER_ReadControlRegister
+ 270:Generated_Source\PSoC5/HCSR04_COUNTER.c **** ********************************************************************************
+ARM GAS  C:\Users\Kotori\AppData\Local\Temp\ccXgvHOk.s 			page 8
+
+
+ 271:Generated_Source\PSoC5/HCSR04_COUNTER.c **** * Summary:
+ 272:Generated_Source\PSoC5/HCSR04_COUNTER.c **** *   Reads the control register and returns it's state. This function should use
+ 273:Generated_Source\PSoC5/HCSR04_COUNTER.c **** *       defined types for the bit-field information as the bits in this
+ 274:Generated_Source\PSoC5/HCSR04_COUNTER.c **** *       register may be permuteable.
+ 275:Generated_Source\PSoC5/HCSR04_COUNTER.c **** *
+ 276:Generated_Source\PSoC5/HCSR04_COUNTER.c **** * Parameters:  
+ 277:Generated_Source\PSoC5/HCSR04_COUNTER.c **** *  void
+ 278:Generated_Source\PSoC5/HCSR04_COUNTER.c **** *
+ 279:Generated_Source\PSoC5/HCSR04_COUNTER.c **** * Return: 
+ 280:Generated_Source\PSoC5/HCSR04_COUNTER.c **** *  (uint8) The contents of the control register
+ 281:Generated_Source\PSoC5/HCSR04_COUNTER.c **** *
+ 282:Generated_Source\PSoC5/HCSR04_COUNTER.c **** *******************************************************************************/
+ 283:Generated_Source\PSoC5/HCSR04_COUNTER.c **** uint8   HCSR04_COUNTER_ReadControlRegister(void) 
+ 284:Generated_Source\PSoC5/HCSR04_COUNTER.c **** {
+ 130              		.loc 1 284 0
+ 131              		.cfi_startproc
+ 132              		@ args = 0, pretend = 0, frame = 0
+ 133              		@ frame_needed = 0, uses_anonymous_args = 0
+ 134              		@ link register save eliminated.
+ 285:Generated_Source\PSoC5/HCSR04_COUNTER.c ****     return HCSR04_COUNTER_CONTROL;
+ 135              		.loc 1 285 0
+ 136 0000 014B     		ldr	r3, .L14
+ 137 0002 1878     		ldrb	r0, [r3]	@ zero_extendqisi2
+ 286:Generated_Source\PSoC5/HCSR04_COUNTER.c **** }
+ 138              		.loc 1 286 0
+ 139 0004 7047     		bx	lr
+ 140              	.L15:
+ 141 0006 00BF     		.align	2
+ 142              	.L14:
+ 143 0008 7A650040 		.word	1073767802
+ 144              		.cfi_endproc
+ 145              	.LFE6:
+ 146              		.size	HCSR04_COUNTER_ReadControlRegister, .-HCSR04_COUNTER_ReadControlRegister
+ 147              		.section	.text.HCSR04_COUNTER_WriteControlRegister,"ax",%progbits
+ 148              		.align	2
+ 149              		.global	HCSR04_COUNTER_WriteControlRegister
+ 150              		.thumb
+ 151              		.thumb_func
+ 152              		.type	HCSR04_COUNTER_WriteControlRegister, %function
+ 153              	HCSR04_COUNTER_WriteControlRegister:
+ 154              	.LFB7:
+ 287:Generated_Source\PSoC5/HCSR04_COUNTER.c **** 
+ 288:Generated_Source\PSoC5/HCSR04_COUNTER.c **** 
+ 289:Generated_Source\PSoC5/HCSR04_COUNTER.c **** /*******************************************************************************
+ 290:Generated_Source\PSoC5/HCSR04_COUNTER.c **** * Function Name: HCSR04_COUNTER_WriteControlRegister
+ 291:Generated_Source\PSoC5/HCSR04_COUNTER.c **** ********************************************************************************
+ 292:Generated_Source\PSoC5/HCSR04_COUNTER.c **** * Summary:
+ 293:Generated_Source\PSoC5/HCSR04_COUNTER.c **** *   Sets the bit-field of the control register.  This function should use
+ 294:Generated_Source\PSoC5/HCSR04_COUNTER.c **** *       defined types for the bit-field information as the bits in this
+ 295:Generated_Source\PSoC5/HCSR04_COUNTER.c **** *       register may be permuteable.
+ 296:Generated_Source\PSoC5/HCSR04_COUNTER.c **** *
+ 297:Generated_Source\PSoC5/HCSR04_COUNTER.c **** * Parameters:  
+ 298:Generated_Source\PSoC5/HCSR04_COUNTER.c **** *  void
+ 299:Generated_Source\PSoC5/HCSR04_COUNTER.c **** *
+ 300:Generated_Source\PSoC5/HCSR04_COUNTER.c **** * Return: 
+ 301:Generated_Source\PSoC5/HCSR04_COUNTER.c **** *  (uint8) The contents of the control register
+ 302:Generated_Source\PSoC5/HCSR04_COUNTER.c **** *
+ARM GAS  C:\Users\Kotori\AppData\Local\Temp\ccXgvHOk.s 			page 9
+
+
+ 303:Generated_Source\PSoC5/HCSR04_COUNTER.c **** *******************************************************************************/
+ 304:Generated_Source\PSoC5/HCSR04_COUNTER.c **** void    HCSR04_COUNTER_WriteControlRegister(uint8 control) 
+ 305:Generated_Source\PSoC5/HCSR04_COUNTER.c **** {
+ 155              		.loc 1 305 0
+ 156              		.cfi_startproc
+ 157              		@ args = 0, pretend = 0, frame = 0
+ 158              		@ frame_needed = 0, uses_anonymous_args = 0
+ 159              		@ link register save eliminated.
+ 160              	.LVL1:
+ 306:Generated_Source\PSoC5/HCSR04_COUNTER.c ****     HCSR04_COUNTER_CONTROL = control;
+ 161              		.loc 1 306 0
+ 162 0000 014B     		ldr	r3, .L17
+ 163 0002 1870     		strb	r0, [r3]
+ 164 0004 7047     		bx	lr
+ 165              	.L18:
+ 166 0006 00BF     		.align	2
+ 167              	.L17:
+ 168 0008 7A650040 		.word	1073767802
+ 169              		.cfi_endproc
+ 170              	.LFE7:
+ 171              		.size	HCSR04_COUNTER_WriteControlRegister, .-HCSR04_COUNTER_WriteControlRegister
+ 172              		.section	.text.HCSR04_COUNTER_WriteCounter,"ax",%progbits
+ 173              		.align	2
+ 174              		.global	HCSR04_COUNTER_WriteCounter
+ 175              		.thumb
+ 176              		.thumb_func
+ 177              		.type	HCSR04_COUNTER_WriteCounter, %function
+ 178              	HCSR04_COUNTER_WriteCounter:
+ 179              	.LFB8:
+ 307:Generated_Source\PSoC5/HCSR04_COUNTER.c **** }
+ 308:Generated_Source\PSoC5/HCSR04_COUNTER.c **** 
+ 309:Generated_Source\PSoC5/HCSR04_COUNTER.c **** #endif  /* (!HCSR04_COUNTER_ControlRegRemoved) */
+ 310:Generated_Source\PSoC5/HCSR04_COUNTER.c **** 
+ 311:Generated_Source\PSoC5/HCSR04_COUNTER.c **** 
+ 312:Generated_Source\PSoC5/HCSR04_COUNTER.c **** #if (!(HCSR04_COUNTER_UsingFixedFunction && (CY_PSOC5A)))
+ 313:Generated_Source\PSoC5/HCSR04_COUNTER.c **** /*******************************************************************************
+ 314:Generated_Source\PSoC5/HCSR04_COUNTER.c **** * Function Name: HCSR04_COUNTER_WriteCounter
+ 315:Generated_Source\PSoC5/HCSR04_COUNTER.c **** ********************************************************************************
+ 316:Generated_Source\PSoC5/HCSR04_COUNTER.c **** * Summary:
+ 317:Generated_Source\PSoC5/HCSR04_COUNTER.c **** *   This funtion is used to set the counter to a specific value
+ 318:Generated_Source\PSoC5/HCSR04_COUNTER.c **** *
+ 319:Generated_Source\PSoC5/HCSR04_COUNTER.c **** * Parameters:  
+ 320:Generated_Source\PSoC5/HCSR04_COUNTER.c **** *  counter:  New counter value. 
+ 321:Generated_Source\PSoC5/HCSR04_COUNTER.c **** *
+ 322:Generated_Source\PSoC5/HCSR04_COUNTER.c **** * Return: 
+ 323:Generated_Source\PSoC5/HCSR04_COUNTER.c **** *  void 
+ 324:Generated_Source\PSoC5/HCSR04_COUNTER.c **** *
+ 325:Generated_Source\PSoC5/HCSR04_COUNTER.c **** *******************************************************************************/
+ 326:Generated_Source\PSoC5/HCSR04_COUNTER.c **** void HCSR04_COUNTER_WriteCounter(uint16 counter) \
+ 327:Generated_Source\PSoC5/HCSR04_COUNTER.c ****                                    
+ 328:Generated_Source\PSoC5/HCSR04_COUNTER.c **** {
+ 180              		.loc 1 328 0
+ 181              		.cfi_startproc
+ 182              		@ args = 0, pretend = 0, frame = 0
+ 183              		@ frame_needed = 0, uses_anonymous_args = 0
+ 184              		@ link register save eliminated.
+ 185              	.LVL2:
+ARM GAS  C:\Users\Kotori\AppData\Local\Temp\ccXgvHOk.s 			page 10
+
+
+ 329:Generated_Source\PSoC5/HCSR04_COUNTER.c ****     #if(HCSR04_COUNTER_UsingFixedFunction)
+ 330:Generated_Source\PSoC5/HCSR04_COUNTER.c ****         /* assert if block is already enabled */
+ 331:Generated_Source\PSoC5/HCSR04_COUNTER.c ****         CYASSERT (0u == (HCSR04_COUNTER_GLOBAL_ENABLE & HCSR04_COUNTER_BLOCK_EN_MASK));
+ 332:Generated_Source\PSoC5/HCSR04_COUNTER.c ****         /* If block is disabled, enable it and then write the counter */
+ 333:Generated_Source\PSoC5/HCSR04_COUNTER.c ****         HCSR04_COUNTER_GLOBAL_ENABLE |= HCSR04_COUNTER_BLOCK_EN_MASK;
+ 334:Generated_Source\PSoC5/HCSR04_COUNTER.c ****         CY_SET_REG16(HCSR04_COUNTER_COUNTER_LSB_PTR, (uint16)counter);
+ 335:Generated_Source\PSoC5/HCSR04_COUNTER.c ****         HCSR04_COUNTER_GLOBAL_ENABLE &= ((uint8)(~HCSR04_COUNTER_BLOCK_EN_MASK));
+ 336:Generated_Source\PSoC5/HCSR04_COUNTER.c ****     #else
+ 337:Generated_Source\PSoC5/HCSR04_COUNTER.c ****         CY_SET_REG16(HCSR04_COUNTER_COUNTER_LSB_PTR, counter);
+ 186              		.loc 1 337 0
+ 187 0000 014B     		ldr	r3, .L20
+ 188 0002 1880     		strh	r0, [r3]	@ movhi
+ 189 0004 7047     		bx	lr
+ 190              	.L21:
+ 191 0006 00BF     		.align	2
+ 192              	.L20:
+ 193 0008 106A0040 		.word	1073768976
+ 194              		.cfi_endproc
+ 195              	.LFE8:
+ 196              		.size	HCSR04_COUNTER_WriteCounter, .-HCSR04_COUNTER_WriteCounter
+ 197              		.section	.text.HCSR04_COUNTER_ReadCounter,"ax",%progbits
+ 198              		.align	2
+ 199              		.global	HCSR04_COUNTER_ReadCounter
+ 200              		.thumb
+ 201              		.thumb_func
+ 202              		.type	HCSR04_COUNTER_ReadCounter, %function
+ 203              	HCSR04_COUNTER_ReadCounter:
+ 204              	.LFB9:
+ 338:Generated_Source\PSoC5/HCSR04_COUNTER.c ****     #endif /* (HCSR04_COUNTER_UsingFixedFunction) */
+ 339:Generated_Source\PSoC5/HCSR04_COUNTER.c **** }
+ 340:Generated_Source\PSoC5/HCSR04_COUNTER.c **** #endif /* (!(HCSR04_COUNTER_UsingFixedFunction && (CY_PSOC5A))) */
+ 341:Generated_Source\PSoC5/HCSR04_COUNTER.c **** 
+ 342:Generated_Source\PSoC5/HCSR04_COUNTER.c **** 
+ 343:Generated_Source\PSoC5/HCSR04_COUNTER.c **** /*******************************************************************************
+ 344:Generated_Source\PSoC5/HCSR04_COUNTER.c **** * Function Name: HCSR04_COUNTER_ReadCounter
+ 345:Generated_Source\PSoC5/HCSR04_COUNTER.c **** ********************************************************************************
+ 346:Generated_Source\PSoC5/HCSR04_COUNTER.c **** * Summary:
+ 347:Generated_Source\PSoC5/HCSR04_COUNTER.c **** * Returns the current value of the counter.  It doesn't matter
+ 348:Generated_Source\PSoC5/HCSR04_COUNTER.c **** * if the counter is enabled or running.
+ 349:Generated_Source\PSoC5/HCSR04_COUNTER.c **** *
+ 350:Generated_Source\PSoC5/HCSR04_COUNTER.c **** * Parameters:  
+ 351:Generated_Source\PSoC5/HCSR04_COUNTER.c **** *  void:  
+ 352:Generated_Source\PSoC5/HCSR04_COUNTER.c **** *
+ 353:Generated_Source\PSoC5/HCSR04_COUNTER.c **** * Return: 
+ 354:Generated_Source\PSoC5/HCSR04_COUNTER.c **** *  (uint16) The present value of the counter.
+ 355:Generated_Source\PSoC5/HCSR04_COUNTER.c **** *
+ 356:Generated_Source\PSoC5/HCSR04_COUNTER.c **** *******************************************************************************/
+ 357:Generated_Source\PSoC5/HCSR04_COUNTER.c **** uint16 HCSR04_COUNTER_ReadCounter(void) 
+ 358:Generated_Source\PSoC5/HCSR04_COUNTER.c **** {
+ 205              		.loc 1 358 0
+ 206              		.cfi_startproc
+ 207              		@ args = 0, pretend = 0, frame = 0
+ 208              		@ frame_needed = 0, uses_anonymous_args = 0
+ 209              		@ link register save eliminated.
+ 359:Generated_Source\PSoC5/HCSR04_COUNTER.c ****     /* Force capture by reading Accumulator */
+ 360:Generated_Source\PSoC5/HCSR04_COUNTER.c ****     /* Must first do a software capture to be able to read the counter */
+ 361:Generated_Source\PSoC5/HCSR04_COUNTER.c ****     /* It is up to the user code to make sure there isn't already captured data in the FIFO */
+ARM GAS  C:\Users\Kotori\AppData\Local\Temp\ccXgvHOk.s 			page 11
+
+
+ 362:Generated_Source\PSoC5/HCSR04_COUNTER.c ****     #if(HCSR04_COUNTER_UsingFixedFunction)
+ 363:Generated_Source\PSoC5/HCSR04_COUNTER.c **** 		(void)CY_GET_REG16(HCSR04_COUNTER_COUNTER_LSB_PTR);
+ 364:Generated_Source\PSoC5/HCSR04_COUNTER.c **** 	#else
+ 365:Generated_Source\PSoC5/HCSR04_COUNTER.c **** 		(void)CY_GET_REG8(HCSR04_COUNTER_COUNTER_LSB_PTR_8BIT);
+ 210              		.loc 1 365 0
+ 211 0000 024B     		ldr	r3, .L23
+ 212 0002 1B78     		ldrb	r3, [r3]	@ zero_extendqisi2
+ 366:Generated_Source\PSoC5/HCSR04_COUNTER.c **** 	#endif/* (HCSR04_COUNTER_UsingFixedFunction) */
+ 367:Generated_Source\PSoC5/HCSR04_COUNTER.c ****     
+ 368:Generated_Source\PSoC5/HCSR04_COUNTER.c ****     /* Read the data from the FIFO (or capture register for Fixed Function)*/
+ 369:Generated_Source\PSoC5/HCSR04_COUNTER.c ****     #if(HCSR04_COUNTER_UsingFixedFunction)
+ 370:Generated_Source\PSoC5/HCSR04_COUNTER.c ****         return ((uint16)CY_GET_REG16(HCSR04_COUNTER_STATICCOUNT_LSB_PTR));
+ 371:Generated_Source\PSoC5/HCSR04_COUNTER.c ****     #else
+ 372:Generated_Source\PSoC5/HCSR04_COUNTER.c ****         return (CY_GET_REG16(HCSR04_COUNTER_STATICCOUNT_LSB_PTR));
+ 213              		.loc 1 372 0
+ 214 0004 024B     		ldr	r3, .L23+4
+ 215 0006 1888     		ldrh	r0, [r3]
+ 373:Generated_Source\PSoC5/HCSR04_COUNTER.c ****     #endif /* (HCSR04_COUNTER_UsingFixedFunction) */
+ 374:Generated_Source\PSoC5/HCSR04_COUNTER.c **** }
+ 216              		.loc 1 374 0
+ 217 0008 80B2     		uxth	r0, r0
+ 218 000a 7047     		bx	lr
+ 219              	.L24:
+ 220              		.align	2
+ 221              	.L23:
+ 222 000c 08650040 		.word	1073767688
+ 223 0010 906A0040 		.word	1073769104
+ 224              		.cfi_endproc
+ 225              	.LFE9:
+ 226              		.size	HCSR04_COUNTER_ReadCounter, .-HCSR04_COUNTER_ReadCounter
+ 227              		.section	.text.HCSR04_COUNTER_ReadCapture,"ax",%progbits
+ 228              		.align	2
+ 229              		.global	HCSR04_COUNTER_ReadCapture
+ 230              		.thumb
+ 231              		.thumb_func
+ 232              		.type	HCSR04_COUNTER_ReadCapture, %function
+ 233              	HCSR04_COUNTER_ReadCapture:
+ 234              	.LFB10:
+ 375:Generated_Source\PSoC5/HCSR04_COUNTER.c **** 
+ 376:Generated_Source\PSoC5/HCSR04_COUNTER.c **** 
+ 377:Generated_Source\PSoC5/HCSR04_COUNTER.c **** /*******************************************************************************
+ 378:Generated_Source\PSoC5/HCSR04_COUNTER.c **** * Function Name: HCSR04_COUNTER_ReadCapture
+ 379:Generated_Source\PSoC5/HCSR04_COUNTER.c **** ********************************************************************************
+ 380:Generated_Source\PSoC5/HCSR04_COUNTER.c **** * Summary:
+ 381:Generated_Source\PSoC5/HCSR04_COUNTER.c **** *   This function returns the last value captured.
+ 382:Generated_Source\PSoC5/HCSR04_COUNTER.c **** *
+ 383:Generated_Source\PSoC5/HCSR04_COUNTER.c **** * Parameters:  
+ 384:Generated_Source\PSoC5/HCSR04_COUNTER.c **** *  void
+ 385:Generated_Source\PSoC5/HCSR04_COUNTER.c **** *
+ 386:Generated_Source\PSoC5/HCSR04_COUNTER.c **** * Return: 
+ 387:Generated_Source\PSoC5/HCSR04_COUNTER.c **** *  (uint16) Present Capture value.
+ 388:Generated_Source\PSoC5/HCSR04_COUNTER.c **** *
+ 389:Generated_Source\PSoC5/HCSR04_COUNTER.c **** *******************************************************************************/
+ 390:Generated_Source\PSoC5/HCSR04_COUNTER.c **** uint16 HCSR04_COUNTER_ReadCapture(void) 
+ 391:Generated_Source\PSoC5/HCSR04_COUNTER.c **** {
+ 235              		.loc 1 391 0
+ 236              		.cfi_startproc
+ARM GAS  C:\Users\Kotori\AppData\Local\Temp\ccXgvHOk.s 			page 12
+
+
+ 237              		@ args = 0, pretend = 0, frame = 0
+ 238              		@ frame_needed = 0, uses_anonymous_args = 0
+ 239              		@ link register save eliminated.
+ 392:Generated_Source\PSoC5/HCSR04_COUNTER.c ****     #if(HCSR04_COUNTER_UsingFixedFunction)
+ 393:Generated_Source\PSoC5/HCSR04_COUNTER.c ****         return ((uint16)CY_GET_REG16(HCSR04_COUNTER_STATICCOUNT_LSB_PTR));
+ 394:Generated_Source\PSoC5/HCSR04_COUNTER.c ****     #else
+ 395:Generated_Source\PSoC5/HCSR04_COUNTER.c ****         return (CY_GET_REG16(HCSR04_COUNTER_STATICCOUNT_LSB_PTR));
+ 240              		.loc 1 395 0
+ 241 0000 014B     		ldr	r3, .L26
+ 242 0002 1888     		ldrh	r0, [r3]
+ 396:Generated_Source\PSoC5/HCSR04_COUNTER.c ****     #endif /* (HCSR04_COUNTER_UsingFixedFunction) */
+ 397:Generated_Source\PSoC5/HCSR04_COUNTER.c **** }
+ 243              		.loc 1 397 0
+ 244 0004 80B2     		uxth	r0, r0
+ 245 0006 7047     		bx	lr
+ 246              	.L27:
+ 247              		.align	2
+ 248              	.L26:
+ 249 0008 906A0040 		.word	1073769104
+ 250              		.cfi_endproc
+ 251              	.LFE10:
+ 252              		.size	HCSR04_COUNTER_ReadCapture, .-HCSR04_COUNTER_ReadCapture
+ 253              		.section	.text.HCSR04_COUNTER_WritePeriod,"ax",%progbits
+ 254              		.align	2
+ 255              		.global	HCSR04_COUNTER_WritePeriod
+ 256              		.thumb
+ 257              		.thumb_func
+ 258              		.type	HCSR04_COUNTER_WritePeriod, %function
+ 259              	HCSR04_COUNTER_WritePeriod:
+ 260              	.LFB11:
+ 398:Generated_Source\PSoC5/HCSR04_COUNTER.c **** 
+ 399:Generated_Source\PSoC5/HCSR04_COUNTER.c **** 
+ 400:Generated_Source\PSoC5/HCSR04_COUNTER.c **** /*******************************************************************************
+ 401:Generated_Source\PSoC5/HCSR04_COUNTER.c **** * Function Name: HCSR04_COUNTER_WritePeriod
+ 402:Generated_Source\PSoC5/HCSR04_COUNTER.c **** ********************************************************************************
+ 403:Generated_Source\PSoC5/HCSR04_COUNTER.c **** * Summary:
+ 404:Generated_Source\PSoC5/HCSR04_COUNTER.c **** * Changes the period of the counter.  The new period 
+ 405:Generated_Source\PSoC5/HCSR04_COUNTER.c **** * will be loaded the next time terminal count is detected.
+ 406:Generated_Source\PSoC5/HCSR04_COUNTER.c **** *
+ 407:Generated_Source\PSoC5/HCSR04_COUNTER.c **** * Parameters:  
+ 408:Generated_Source\PSoC5/HCSR04_COUNTER.c **** *  period: (uint16) A value of 0 will result in
+ 409:Generated_Source\PSoC5/HCSR04_COUNTER.c **** *         the counter remaining at zero.  
+ 410:Generated_Source\PSoC5/HCSR04_COUNTER.c **** *
+ 411:Generated_Source\PSoC5/HCSR04_COUNTER.c **** * Return: 
+ 412:Generated_Source\PSoC5/HCSR04_COUNTER.c **** *  void
+ 413:Generated_Source\PSoC5/HCSR04_COUNTER.c **** *
+ 414:Generated_Source\PSoC5/HCSR04_COUNTER.c **** *******************************************************************************/
+ 415:Generated_Source\PSoC5/HCSR04_COUNTER.c **** void HCSR04_COUNTER_WritePeriod(uint16 period) 
+ 416:Generated_Source\PSoC5/HCSR04_COUNTER.c **** {
+ 261              		.loc 1 416 0
+ 262              		.cfi_startproc
+ 263              		@ args = 0, pretend = 0, frame = 0
+ 264              		@ frame_needed = 0, uses_anonymous_args = 0
+ 265              		@ link register save eliminated.
+ 266              	.LVL3:
+ 417:Generated_Source\PSoC5/HCSR04_COUNTER.c ****     #if(HCSR04_COUNTER_UsingFixedFunction)
+ 418:Generated_Source\PSoC5/HCSR04_COUNTER.c ****         CY_SET_REG16(HCSR04_COUNTER_PERIOD_LSB_PTR,(uint16)period);
+ARM GAS  C:\Users\Kotori\AppData\Local\Temp\ccXgvHOk.s 			page 13
+
+
+ 419:Generated_Source\PSoC5/HCSR04_COUNTER.c ****     #else
+ 420:Generated_Source\PSoC5/HCSR04_COUNTER.c ****         CY_SET_REG16(HCSR04_COUNTER_PERIOD_LSB_PTR, period);
+ 267              		.loc 1 420 0
+ 268 0000 014B     		ldr	r3, .L29
+ 269 0002 1880     		strh	r0, [r3]	@ movhi
+ 270 0004 7047     		bx	lr
+ 271              	.L30:
+ 272 0006 00BF     		.align	2
+ 273              	.L29:
+ 274 0008 506A0040 		.word	1073769040
+ 275              		.cfi_endproc
+ 276              	.LFE11:
+ 277              		.size	HCSR04_COUNTER_WritePeriod, .-HCSR04_COUNTER_WritePeriod
+ 278              		.section	.text.HCSR04_COUNTER_ReadPeriod,"ax",%progbits
+ 279              		.align	2
+ 280              		.global	HCSR04_COUNTER_ReadPeriod
+ 281              		.thumb
+ 282              		.thumb_func
+ 283              		.type	HCSR04_COUNTER_ReadPeriod, %function
+ 284              	HCSR04_COUNTER_ReadPeriod:
+ 285              	.LFB12:
+ 421:Generated_Source\PSoC5/HCSR04_COUNTER.c ****     #endif /* (HCSR04_COUNTER_UsingFixedFunction) */
+ 422:Generated_Source\PSoC5/HCSR04_COUNTER.c **** }
+ 423:Generated_Source\PSoC5/HCSR04_COUNTER.c **** 
+ 424:Generated_Source\PSoC5/HCSR04_COUNTER.c **** 
+ 425:Generated_Source\PSoC5/HCSR04_COUNTER.c **** /*******************************************************************************
+ 426:Generated_Source\PSoC5/HCSR04_COUNTER.c **** * Function Name: HCSR04_COUNTER_ReadPeriod
+ 427:Generated_Source\PSoC5/HCSR04_COUNTER.c **** ********************************************************************************
+ 428:Generated_Source\PSoC5/HCSR04_COUNTER.c **** * Summary:
+ 429:Generated_Source\PSoC5/HCSR04_COUNTER.c **** * Reads the current period value without affecting counter operation.
+ 430:Generated_Source\PSoC5/HCSR04_COUNTER.c **** *
+ 431:Generated_Source\PSoC5/HCSR04_COUNTER.c **** * Parameters:  
+ 432:Generated_Source\PSoC5/HCSR04_COUNTER.c **** *  void:  
+ 433:Generated_Source\PSoC5/HCSR04_COUNTER.c **** *
+ 434:Generated_Source\PSoC5/HCSR04_COUNTER.c **** * Return: 
+ 435:Generated_Source\PSoC5/HCSR04_COUNTER.c **** *  (uint16) Present period value.
+ 436:Generated_Source\PSoC5/HCSR04_COUNTER.c **** *
+ 437:Generated_Source\PSoC5/HCSR04_COUNTER.c **** *******************************************************************************/
+ 438:Generated_Source\PSoC5/HCSR04_COUNTER.c **** uint16 HCSR04_COUNTER_ReadPeriod(void) 
+ 439:Generated_Source\PSoC5/HCSR04_COUNTER.c **** {
+ 286              		.loc 1 439 0
+ 287              		.cfi_startproc
+ 288              		@ args = 0, pretend = 0, frame = 0
+ 289              		@ frame_needed = 0, uses_anonymous_args = 0
+ 290              		@ link register save eliminated.
+ 440:Generated_Source\PSoC5/HCSR04_COUNTER.c ****     #if(HCSR04_COUNTER_UsingFixedFunction)
+ 441:Generated_Source\PSoC5/HCSR04_COUNTER.c ****         return ((uint16)CY_GET_REG16(HCSR04_COUNTER_PERIOD_LSB_PTR));
+ 442:Generated_Source\PSoC5/HCSR04_COUNTER.c ****     #else
+ 443:Generated_Source\PSoC5/HCSR04_COUNTER.c ****         return (CY_GET_REG16(HCSR04_COUNTER_PERIOD_LSB_PTR));
+ 291              		.loc 1 443 0
+ 292 0000 014B     		ldr	r3, .L32
+ 293 0002 1888     		ldrh	r0, [r3]
+ 444:Generated_Source\PSoC5/HCSR04_COUNTER.c ****     #endif /* (HCSR04_COUNTER_UsingFixedFunction) */
+ 445:Generated_Source\PSoC5/HCSR04_COUNTER.c **** }
+ 294              		.loc 1 445 0
+ 295 0004 80B2     		uxth	r0, r0
+ 296 0006 7047     		bx	lr
+ARM GAS  C:\Users\Kotori\AppData\Local\Temp\ccXgvHOk.s 			page 14
+
+
+ 297              	.L33:
+ 298              		.align	2
+ 299              	.L32:
+ 300 0008 506A0040 		.word	1073769040
+ 301              		.cfi_endproc
+ 302              	.LFE12:
+ 303              		.size	HCSR04_COUNTER_ReadPeriod, .-HCSR04_COUNTER_ReadPeriod
+ 304              		.section	.text.HCSR04_COUNTER_WriteCompare,"ax",%progbits
+ 305              		.align	2
+ 306              		.global	HCSR04_COUNTER_WriteCompare
+ 307              		.thumb
+ 308              		.thumb_func
+ 309              		.type	HCSR04_COUNTER_WriteCompare, %function
+ 310              	HCSR04_COUNTER_WriteCompare:
+ 311              	.LFB13:
+ 446:Generated_Source\PSoC5/HCSR04_COUNTER.c **** 
+ 447:Generated_Source\PSoC5/HCSR04_COUNTER.c **** 
+ 448:Generated_Source\PSoC5/HCSR04_COUNTER.c **** #if (!HCSR04_COUNTER_UsingFixedFunction)
+ 449:Generated_Source\PSoC5/HCSR04_COUNTER.c **** /*******************************************************************************
+ 450:Generated_Source\PSoC5/HCSR04_COUNTER.c **** * Function Name: HCSR04_COUNTER_WriteCompare
+ 451:Generated_Source\PSoC5/HCSR04_COUNTER.c **** ********************************************************************************
+ 452:Generated_Source\PSoC5/HCSR04_COUNTER.c **** * Summary:
+ 453:Generated_Source\PSoC5/HCSR04_COUNTER.c **** * Changes the compare value.  The compare output will 
+ 454:Generated_Source\PSoC5/HCSR04_COUNTER.c **** * reflect the new value on the next UDB clock.  The compare output will be 
+ 455:Generated_Source\PSoC5/HCSR04_COUNTER.c **** * driven high when the present counter value compares true based on the 
+ 456:Generated_Source\PSoC5/HCSR04_COUNTER.c **** * configured compare mode setting. 
+ 457:Generated_Source\PSoC5/HCSR04_COUNTER.c **** *
+ 458:Generated_Source\PSoC5/HCSR04_COUNTER.c **** * Parameters:  
+ 459:Generated_Source\PSoC5/HCSR04_COUNTER.c **** *  Compare:  New compare value. 
+ 460:Generated_Source\PSoC5/HCSR04_COUNTER.c **** *
+ 461:Generated_Source\PSoC5/HCSR04_COUNTER.c **** * Return: 
+ 462:Generated_Source\PSoC5/HCSR04_COUNTER.c **** *  void
+ 463:Generated_Source\PSoC5/HCSR04_COUNTER.c **** *
+ 464:Generated_Source\PSoC5/HCSR04_COUNTER.c **** *******************************************************************************/
+ 465:Generated_Source\PSoC5/HCSR04_COUNTER.c **** void HCSR04_COUNTER_WriteCompare(uint16 compare) \
+ 466:Generated_Source\PSoC5/HCSR04_COUNTER.c ****                                    
+ 467:Generated_Source\PSoC5/HCSR04_COUNTER.c **** {
+ 312              		.loc 1 467 0
+ 313              		.cfi_startproc
+ 314              		@ args = 0, pretend = 0, frame = 0
+ 315              		@ frame_needed = 0, uses_anonymous_args = 0
+ 316              		@ link register save eliminated.
+ 317              	.LVL4:
+ 468:Generated_Source\PSoC5/HCSR04_COUNTER.c ****     #if(HCSR04_COUNTER_UsingFixedFunction)
+ 469:Generated_Source\PSoC5/HCSR04_COUNTER.c ****         CY_SET_REG16(HCSR04_COUNTER_COMPARE_LSB_PTR, (uint16)compare);
+ 470:Generated_Source\PSoC5/HCSR04_COUNTER.c ****     #else
+ 471:Generated_Source\PSoC5/HCSR04_COUNTER.c ****         CY_SET_REG16(HCSR04_COUNTER_COMPARE_LSB_PTR, compare);
+ 318              		.loc 1 471 0
+ 319 0000 014B     		ldr	r3, .L35
+ 320 0002 1880     		strh	r0, [r3]	@ movhi
+ 321 0004 7047     		bx	lr
+ 322              	.L36:
+ 323 0006 00BF     		.align	2
+ 324              	.L35:
+ 325 0008 706A0040 		.word	1073769072
+ 326              		.cfi_endproc
+ 327              	.LFE13:
+ARM GAS  C:\Users\Kotori\AppData\Local\Temp\ccXgvHOk.s 			page 15
+
+
+ 328              		.size	HCSR04_COUNTER_WriteCompare, .-HCSR04_COUNTER_WriteCompare
+ 329              		.section	.text.HCSR04_COUNTER_ReadCompare,"ax",%progbits
+ 330              		.align	2
+ 331              		.global	HCSR04_COUNTER_ReadCompare
+ 332              		.thumb
+ 333              		.thumb_func
+ 334              		.type	HCSR04_COUNTER_ReadCompare, %function
+ 335              	HCSR04_COUNTER_ReadCompare:
+ 336              	.LFB14:
+ 472:Generated_Source\PSoC5/HCSR04_COUNTER.c ****     #endif /* (HCSR04_COUNTER_UsingFixedFunction) */
+ 473:Generated_Source\PSoC5/HCSR04_COUNTER.c **** }
+ 474:Generated_Source\PSoC5/HCSR04_COUNTER.c **** 
+ 475:Generated_Source\PSoC5/HCSR04_COUNTER.c **** 
+ 476:Generated_Source\PSoC5/HCSR04_COUNTER.c **** /*******************************************************************************
+ 477:Generated_Source\PSoC5/HCSR04_COUNTER.c **** * Function Name: HCSR04_COUNTER_ReadCompare
+ 478:Generated_Source\PSoC5/HCSR04_COUNTER.c **** ********************************************************************************
+ 479:Generated_Source\PSoC5/HCSR04_COUNTER.c **** * Summary:
+ 480:Generated_Source\PSoC5/HCSR04_COUNTER.c **** * Returns the compare value.
+ 481:Generated_Source\PSoC5/HCSR04_COUNTER.c **** *
+ 482:Generated_Source\PSoC5/HCSR04_COUNTER.c **** * Parameters:  
+ 483:Generated_Source\PSoC5/HCSR04_COUNTER.c **** *  void:
+ 484:Generated_Source\PSoC5/HCSR04_COUNTER.c **** *
+ 485:Generated_Source\PSoC5/HCSR04_COUNTER.c **** * Return: 
+ 486:Generated_Source\PSoC5/HCSR04_COUNTER.c **** *  (uint16) Present compare value.
+ 487:Generated_Source\PSoC5/HCSR04_COUNTER.c **** *
+ 488:Generated_Source\PSoC5/HCSR04_COUNTER.c **** *******************************************************************************/
+ 489:Generated_Source\PSoC5/HCSR04_COUNTER.c **** uint16 HCSR04_COUNTER_ReadCompare(void) 
+ 490:Generated_Source\PSoC5/HCSR04_COUNTER.c **** {
+ 337              		.loc 1 490 0
+ 338              		.cfi_startproc
+ 339              		@ args = 0, pretend = 0, frame = 0
+ 340              		@ frame_needed = 0, uses_anonymous_args = 0
+ 341              		@ link register save eliminated.
+ 491:Generated_Source\PSoC5/HCSR04_COUNTER.c ****     return (CY_GET_REG16(HCSR04_COUNTER_COMPARE_LSB_PTR));
+ 342              		.loc 1 491 0
+ 343 0000 014B     		ldr	r3, .L38
+ 344 0002 1888     		ldrh	r0, [r3]
+ 492:Generated_Source\PSoC5/HCSR04_COUNTER.c **** }
+ 345              		.loc 1 492 0
+ 346 0004 80B2     		uxth	r0, r0
+ 347 0006 7047     		bx	lr
+ 348              	.L39:
+ 349              		.align	2
+ 350              	.L38:
+ 351 0008 706A0040 		.word	1073769072
+ 352              		.cfi_endproc
+ 353              	.LFE14:
+ 354              		.size	HCSR04_COUNTER_ReadCompare, .-HCSR04_COUNTER_ReadCompare
+ 355              		.section	.text.HCSR04_COUNTER_ClearFIFO,"ax",%progbits
+ 356              		.align	2
+ 357              		.global	HCSR04_COUNTER_ClearFIFO
+ 358              		.thumb
+ 359              		.thumb_func
+ 360              		.type	HCSR04_COUNTER_ClearFIFO, %function
+ 361              	HCSR04_COUNTER_ClearFIFO:
+ 362              	.LFB15:
+ 493:Generated_Source\PSoC5/HCSR04_COUNTER.c **** 
+ARM GAS  C:\Users\Kotori\AppData\Local\Temp\ccXgvHOk.s 			page 16
+
+
+ 494:Generated_Source\PSoC5/HCSR04_COUNTER.c **** 
+ 495:Generated_Source\PSoC5/HCSR04_COUNTER.c **** #if (HCSR04_COUNTER_COMPARE_MODE_SOFTWARE)
+ 496:Generated_Source\PSoC5/HCSR04_COUNTER.c **** /*******************************************************************************
+ 497:Generated_Source\PSoC5/HCSR04_COUNTER.c **** * Function Name: HCSR04_COUNTER_SetCompareMode
+ 498:Generated_Source\PSoC5/HCSR04_COUNTER.c **** ********************************************************************************
+ 499:Generated_Source\PSoC5/HCSR04_COUNTER.c **** * Summary:
+ 500:Generated_Source\PSoC5/HCSR04_COUNTER.c **** *  Sets the software controlled Compare Mode.
+ 501:Generated_Source\PSoC5/HCSR04_COUNTER.c **** *
+ 502:Generated_Source\PSoC5/HCSR04_COUNTER.c **** * Parameters:
+ 503:Generated_Source\PSoC5/HCSR04_COUNTER.c **** *  compareMode:  Compare Mode Enumerated Type.
+ 504:Generated_Source\PSoC5/HCSR04_COUNTER.c **** *
+ 505:Generated_Source\PSoC5/HCSR04_COUNTER.c **** * Return:
+ 506:Generated_Source\PSoC5/HCSR04_COUNTER.c **** *  void
+ 507:Generated_Source\PSoC5/HCSR04_COUNTER.c **** *
+ 508:Generated_Source\PSoC5/HCSR04_COUNTER.c **** *******************************************************************************/
+ 509:Generated_Source\PSoC5/HCSR04_COUNTER.c **** void HCSR04_COUNTER_SetCompareMode(uint8 compareMode) 
+ 510:Generated_Source\PSoC5/HCSR04_COUNTER.c **** {
+ 511:Generated_Source\PSoC5/HCSR04_COUNTER.c ****     /* Clear the compare mode bits in the control register */
+ 512:Generated_Source\PSoC5/HCSR04_COUNTER.c ****     HCSR04_COUNTER_CONTROL &= ((uint8)(~HCSR04_COUNTER_CTRL_CMPMODE_MASK));
+ 513:Generated_Source\PSoC5/HCSR04_COUNTER.c ****     
+ 514:Generated_Source\PSoC5/HCSR04_COUNTER.c ****     /* Write the new setting */
+ 515:Generated_Source\PSoC5/HCSR04_COUNTER.c ****     HCSR04_COUNTER_CONTROL |= compareMode;
+ 516:Generated_Source\PSoC5/HCSR04_COUNTER.c **** }
+ 517:Generated_Source\PSoC5/HCSR04_COUNTER.c **** #endif  /* (HCSR04_COUNTER_COMPARE_MODE_SOFTWARE) */
+ 518:Generated_Source\PSoC5/HCSR04_COUNTER.c **** 
+ 519:Generated_Source\PSoC5/HCSR04_COUNTER.c **** 
+ 520:Generated_Source\PSoC5/HCSR04_COUNTER.c **** #if (HCSR04_COUNTER_CAPTURE_MODE_SOFTWARE)
+ 521:Generated_Source\PSoC5/HCSR04_COUNTER.c **** /*******************************************************************************
+ 522:Generated_Source\PSoC5/HCSR04_COUNTER.c **** * Function Name: HCSR04_COUNTER_SetCaptureMode
+ 523:Generated_Source\PSoC5/HCSR04_COUNTER.c **** ********************************************************************************
+ 524:Generated_Source\PSoC5/HCSR04_COUNTER.c **** * Summary:
+ 525:Generated_Source\PSoC5/HCSR04_COUNTER.c **** *  Sets the software controlled Capture Mode.
+ 526:Generated_Source\PSoC5/HCSR04_COUNTER.c **** *
+ 527:Generated_Source\PSoC5/HCSR04_COUNTER.c **** * Parameters:
+ 528:Generated_Source\PSoC5/HCSR04_COUNTER.c **** *  captureMode:  Capture Mode Enumerated Type.
+ 529:Generated_Source\PSoC5/HCSR04_COUNTER.c **** *
+ 530:Generated_Source\PSoC5/HCSR04_COUNTER.c **** * Return:
+ 531:Generated_Source\PSoC5/HCSR04_COUNTER.c **** *  void
+ 532:Generated_Source\PSoC5/HCSR04_COUNTER.c **** *
+ 533:Generated_Source\PSoC5/HCSR04_COUNTER.c **** *******************************************************************************/
+ 534:Generated_Source\PSoC5/HCSR04_COUNTER.c **** void HCSR04_COUNTER_SetCaptureMode(uint8 captureMode) 
+ 535:Generated_Source\PSoC5/HCSR04_COUNTER.c **** {
+ 536:Generated_Source\PSoC5/HCSR04_COUNTER.c ****     /* Clear the capture mode bits in the control register */
+ 537:Generated_Source\PSoC5/HCSR04_COUNTER.c ****     HCSR04_COUNTER_CONTROL &= ((uint8)(~HCSR04_COUNTER_CTRL_CAPMODE_MASK));
+ 538:Generated_Source\PSoC5/HCSR04_COUNTER.c ****     
+ 539:Generated_Source\PSoC5/HCSR04_COUNTER.c ****     /* Write the new setting */
+ 540:Generated_Source\PSoC5/HCSR04_COUNTER.c ****     HCSR04_COUNTER_CONTROL |= ((uint8)((uint8)captureMode << HCSR04_COUNTER_CTRL_CAPMODE0_SHIFT));
+ 541:Generated_Source\PSoC5/HCSR04_COUNTER.c **** }
+ 542:Generated_Source\PSoC5/HCSR04_COUNTER.c **** #endif  /* (HCSR04_COUNTER_CAPTURE_MODE_SOFTWARE) */
+ 543:Generated_Source\PSoC5/HCSR04_COUNTER.c **** 
+ 544:Generated_Source\PSoC5/HCSR04_COUNTER.c **** 
+ 545:Generated_Source\PSoC5/HCSR04_COUNTER.c **** /*******************************************************************************
+ 546:Generated_Source\PSoC5/HCSR04_COUNTER.c **** * Function Name: HCSR04_COUNTER_ClearFIFO
+ 547:Generated_Source\PSoC5/HCSR04_COUNTER.c **** ********************************************************************************
+ 548:Generated_Source\PSoC5/HCSR04_COUNTER.c **** * Summary:
+ 549:Generated_Source\PSoC5/HCSR04_COUNTER.c **** *   This function clears all capture data from the capture FIFO
+ 550:Generated_Source\PSoC5/HCSR04_COUNTER.c **** *
+ARM GAS  C:\Users\Kotori\AppData\Local\Temp\ccXgvHOk.s 			page 17
+
+
+ 551:Generated_Source\PSoC5/HCSR04_COUNTER.c **** * Parameters:  
+ 552:Generated_Source\PSoC5/HCSR04_COUNTER.c **** *  void:
+ 553:Generated_Source\PSoC5/HCSR04_COUNTER.c **** *
+ 554:Generated_Source\PSoC5/HCSR04_COUNTER.c **** * Return: 
+ 555:Generated_Source\PSoC5/HCSR04_COUNTER.c **** *  None
+ 556:Generated_Source\PSoC5/HCSR04_COUNTER.c **** *
+ 557:Generated_Source\PSoC5/HCSR04_COUNTER.c **** *******************************************************************************/
+ 558:Generated_Source\PSoC5/HCSR04_COUNTER.c **** void HCSR04_COUNTER_ClearFIFO(void) 
+ 559:Generated_Source\PSoC5/HCSR04_COUNTER.c **** {
+ 363              		.loc 1 559 0
+ 364              		.cfi_startproc
+ 365              		@ args = 0, pretend = 0, frame = 0
+ 366              		@ frame_needed = 0, uses_anonymous_args = 0
+ 367 0000 08B5     		push	{r3, lr}
+ 368              		.cfi_def_cfa_offset 8
+ 369              		.cfi_offset 3, -8
+ 370              		.cfi_offset 14, -4
+ 560:Generated_Source\PSoC5/HCSR04_COUNTER.c **** 
+ 561:Generated_Source\PSoC5/HCSR04_COUNTER.c ****     while(0u != (HCSR04_COUNTER_ReadStatusRegister() & HCSR04_COUNTER_STATUS_FIFONEMP))
+ 371              		.loc 1 561 0
+ 372 0002 01E0     		b	.L41
+ 373              	.L42:
+ 562:Generated_Source\PSoC5/HCSR04_COUNTER.c ****     {
+ 563:Generated_Source\PSoC5/HCSR04_COUNTER.c ****         (void)HCSR04_COUNTER_ReadCapture();
+ 374              		.loc 1 563 0
+ 375 0004 FFF7FEFF 		bl	HCSR04_COUNTER_ReadCapture
+ 376              	.LVL5:
+ 377              	.L41:
+ 561:Generated_Source\PSoC5/HCSR04_COUNTER.c ****     {
+ 378              		.loc 1 561 0
+ 379 0008 FFF7FEFF 		bl	HCSR04_COUNTER_ReadStatusRegister
+ 380              	.LVL6:
+ 381 000c 10F0400F 		tst	r0, #64
+ 382 0010 F8D1     		bne	.L42
+ 564:Generated_Source\PSoC5/HCSR04_COUNTER.c ****     }
+ 565:Generated_Source\PSoC5/HCSR04_COUNTER.c **** 
+ 566:Generated_Source\PSoC5/HCSR04_COUNTER.c **** }
+ 383              		.loc 1 566 0
+ 384 0012 08BD     		pop	{r3, pc}
+ 385              		.cfi_endproc
+ 386              	.LFE15:
+ 387              		.size	HCSR04_COUNTER_ClearFIFO, .-HCSR04_COUNTER_ClearFIFO
+ 388              		.section	.text.HCSR04_COUNTER_Init,"ax",%progbits
+ 389              		.align	2
+ 390              		.global	HCSR04_COUNTER_Init
+ 391              		.thumb
+ 392              		.thumb_func
+ 393              		.type	HCSR04_COUNTER_Init, %function
+ 394              	HCSR04_COUNTER_Init:
+ 395              	.LFB0:
+  38:Generated_Source\PSoC5/HCSR04_COUNTER.c ****         #if (!HCSR04_COUNTER_UsingFixedFunction && !HCSR04_COUNTER_ControlRegRemoved)
+ 396              		.loc 1 38 0
+ 397              		.cfi_startproc
+ 398              		@ args = 0, pretend = 0, frame = 0
+ 399              		@ frame_needed = 0, uses_anonymous_args = 0
+ 400 0000 08B5     		push	{r3, lr}
+ 401              		.cfi_def_cfa_offset 8
+ARM GAS  C:\Users\Kotori\AppData\Local\Temp\ccXgvHOk.s 			page 18
+
+
+ 402              		.cfi_offset 3, -8
+ 403              		.cfi_offset 14, -4
+  79:Generated_Source\PSoC5/HCSR04_COUNTER.c ****             HCSR04_COUNTER_CONTROL = ctrl | HCSR04_COUNTER_DEFAULT_COMPARE_MODE;
+ 404              		.loc 1 79 0
+ 405 0002 144A     		ldr	r2, .L46
+ 406 0004 1378     		ldrb	r3, [r2]	@ zero_extendqisi2
+ 407 0006 03F0F803 		and	r3, r3, #248
+ 408              	.LVL7:
+  80:Generated_Source\PSoC5/HCSR04_COUNTER.c ****             
+ 409              		.loc 1 80 0
+ 410 000a 43F00103 		orr	r3, r3, #1
+ 411              	.LVL8:
+ 412 000e 1370     		strb	r3, [r2]
+  83:Generated_Source\PSoC5/HCSR04_COUNTER.c ****             
+ 413              		.loc 1 83 0
+ 414 0010 1378     		ldrb	r3, [r2]	@ zero_extendqisi2
+ 415 0012 03F0FC03 		and	r3, r3, #252
+ 416              	.LVL9:
+  86:Generated_Source\PSoC5/HCSR04_COUNTER.c ****             #else
+ 417              		.loc 1 86 0
+ 418 0016 43F01003 		orr	r3, r3, #16
+ 419              	.LVL10:
+ 420 001a 1370     		strb	r3, [r2]
+  96:Generated_Source\PSoC5/HCSR04_COUNTER.c ****         #endif /* (!HCSR04_COUNTER_UsingFixedFunction) */
+ 421              		.loc 1 96 0
+ 422 001c FFF7FEFF 		bl	HCSR04_COUNTER_ClearFIFO
+ 423              	.LVL11:
+ 100:Generated_Source\PSoC5/HCSR04_COUNTER.c ****         #if (!(HCSR04_COUNTER_UsingFixedFunction && (CY_PSOC5A)))
+ 424              		.loc 1 100 0
+ 425 0020 4FF6FE70 		movw	r0, #65534
+ 426 0024 FFF7FEFF 		bl	HCSR04_COUNTER_WritePeriod
+ 427              	.LVL12:
+ 102:Generated_Source\PSoC5/HCSR04_COUNTER.c ****         #endif /* (!(HCSR04_COUNTER_UsingFixedFunction && (CY_PSOC5A))) */
+ 428              		.loc 1 102 0
+ 429 0028 0020     		movs	r0, #0
+ 430 002a FFF7FEFF 		bl	HCSR04_COUNTER_WriteCounter
+ 431              	.LVL13:
+ 104:Generated_Source\PSoC5/HCSR04_COUNTER.c ****         
+ 432              		.loc 1 104 0
+ 433 002e 1020     		movs	r0, #16
+ 434 0030 FFF7FEFF 		bl	HCSR04_COUNTER_SetInterruptMode
+ 435              	.LVL14:
+ 108:Generated_Source\PSoC5/HCSR04_COUNTER.c ****             /* Set the compare value (only available to non-fixed function implementation */
+ 436              		.loc 1 108 0
+ 437 0034 FFF7FEFF 		bl	HCSR04_COUNTER_ReadStatusRegister
+ 438              	.LVL15:
+ 110:Generated_Source\PSoC5/HCSR04_COUNTER.c ****             /* Use the interrupt output of the status register for IRQ output */
+ 439              		.loc 1 110 0
+ 440 0038 4FF6FD70 		movw	r0, #65533
+ 441 003c FFF7FEFF 		bl	HCSR04_COUNTER_WriteCompare
+ 442              	.LVL16:
+ 115:Generated_Source\PSoC5/HCSR04_COUNTER.c ****             
+ 443              		.loc 1 115 0
+ 444 0040 FFF7FEFF 		bl	CyEnterCriticalSection
+ 445              	.LVL17:
+ 117:Generated_Source\PSoC5/HCSR04_COUNTER.c ****             
+ 446              		.loc 1 117 0
+ARM GAS  C:\Users\Kotori\AppData\Local\Temp\ccXgvHOk.s 			page 19
+
+
+ 447 0044 044A     		ldr	r2, .L46+4
+ 448 0046 1378     		ldrb	r3, [r2]	@ zero_extendqisi2
+ 449 0048 43F01003 		orr	r3, r3, #16
+ 450 004c 1370     		strb	r3, [r2]
+ 120:Generated_Source\PSoC5/HCSR04_COUNTER.c ****             
+ 451              		.loc 1 120 0
+ 452 004e FFF7FEFF 		bl	CyExitCriticalSection
+ 453              	.LVL18:
+ 454 0052 08BD     		pop	{r3, pc}
+ 455              	.L47:
+ 456              		.align	2
+ 457              	.L46:
+ 458 0054 7A650040 		.word	1073767802
+ 459 0058 99650040 		.word	1073767833
+ 460              		.cfi_endproc
+ 461              	.LFE0:
+ 462              		.size	HCSR04_COUNTER_Init, .-HCSR04_COUNTER_Init
+ 463              		.section	.text.HCSR04_COUNTER_Start,"ax",%progbits
+ 464              		.align	2
+ 465              		.global	HCSR04_COUNTER_Start
+ 466              		.thumb
+ 467              		.thumb_func
+ 468              		.type	HCSR04_COUNTER_Start, %function
+ 469              	HCSR04_COUNTER_Start:
+ 470              	.LFB2:
+ 179:Generated_Source\PSoC5/HCSR04_COUNTER.c ****     if(HCSR04_COUNTER_initVar == 0u)
+ 471              		.loc 1 179 0
+ 472              		.cfi_startproc
+ 473              		@ args = 0, pretend = 0, frame = 0
+ 474              		@ frame_needed = 0, uses_anonymous_args = 0
+ 475 0000 08B5     		push	{r3, lr}
+ 476              		.cfi_def_cfa_offset 8
+ 477              		.cfi_offset 3, -8
+ 478              		.cfi_offset 14, -4
+ 180:Generated_Source\PSoC5/HCSR04_COUNTER.c ****     {
+ 479              		.loc 1 180 0
+ 480 0002 054B     		ldr	r3, .L51
+ 481 0004 1B78     		ldrb	r3, [r3]	@ zero_extendqisi2
+ 482 0006 23B9     		cbnz	r3, .L49
+ 182:Generated_Source\PSoC5/HCSR04_COUNTER.c ****         
+ 483              		.loc 1 182 0
+ 484 0008 FFF7FEFF 		bl	HCSR04_COUNTER_Init
+ 485              	.LVL19:
+ 184:Generated_Source\PSoC5/HCSR04_COUNTER.c ****     }
+ 486              		.loc 1 184 0
+ 487 000c 0122     		movs	r2, #1
+ 488 000e 024B     		ldr	r3, .L51
+ 489 0010 1A70     		strb	r2, [r3]
+ 490              	.L49:
+ 188:Generated_Source\PSoC5/HCSR04_COUNTER.c **** }
+ 491              		.loc 1 188 0
+ 492 0012 FFF7FEFF 		bl	HCSR04_COUNTER_Enable
+ 493              	.LVL20:
+ 494 0016 08BD     		pop	{r3, pc}
+ 495              	.L52:
+ 496              		.align	2
+ 497              	.L51:
+ARM GAS  C:\Users\Kotori\AppData\Local\Temp\ccXgvHOk.s 			page 20
+
+
+ 498 0018 00000000 		.word	.LANCHOR0
+ 499              		.cfi_endproc
+ 500              	.LFE2:
+ 501              		.size	HCSR04_COUNTER_Start, .-HCSR04_COUNTER_Start
+ 502              		.global	HCSR04_COUNTER_initVar
+ 503              		.bss
+ 504              		.set	.LANCHOR0,. + 0
+ 505              		.type	HCSR04_COUNTER_initVar, %object
+ 506              		.size	HCSR04_COUNTER_initVar, 1
+ 507              	HCSR04_COUNTER_initVar:
+ 508 0000 00       		.space	1
+ 509              		.text
+ 510              	.Letext0:
+ 511              		.file 2 "Generated_Source\\PSoC5\\cytypes.h"
+ 512              		.file 3 "Generated_Source\\PSoC5\\CyLib.h"
+ 513              		.section	.debug_info,"",%progbits
+ 514              	.Ldebug_info0:
+ 515 0000 40030000 		.4byte	0x340
+ 516 0004 0400     		.2byte	0x4
+ 517 0006 00000000 		.4byte	.Ldebug_abbrev0
+ 518 000a 04       		.byte	0x4
+ 519 000b 01       		.uleb128 0x1
+ 520 000c E5000000 		.4byte	.LASF43
+ 521 0010 0C       		.byte	0xc
+ 522 0011 43030000 		.4byte	.LASF44
+ 523 0015 1D020000 		.4byte	.LASF45
+ 524 0019 00000000 		.4byte	.Ldebug_ranges0+0
+ 525 001d 00000000 		.4byte	0
+ 526 0021 00000000 		.4byte	.Ldebug_line0
+ 527 0025 02       		.uleb128 0x2
+ 528 0026 01       		.byte	0x1
+ 529 0027 06       		.byte	0x6
+ 530 0028 BA030000 		.4byte	.LASF0
+ 531 002c 02       		.uleb128 0x2
+ 532 002d 01       		.byte	0x1
+ 533 002e 08       		.byte	0x8
+ 534 002f D7000000 		.4byte	.LASF1
+ 535 0033 02       		.uleb128 0x2
+ 536 0034 02       		.byte	0x2
+ 537 0035 05       		.byte	0x5
+ 538 0036 6B030000 		.4byte	.LASF2
+ 539 003a 02       		.uleb128 0x2
+ 540 003b 02       		.byte	0x2
+ 541 003c 07       		.byte	0x7
+ 542 003d CE030000 		.4byte	.LASF3
+ 543 0041 02       		.uleb128 0x2
+ 544 0042 04       		.byte	0x4
+ 545 0043 05       		.byte	0x5
+ 546 0044 A5030000 		.4byte	.LASF4
+ 547 0048 02       		.uleb128 0x2
+ 548 0049 04       		.byte	0x4
+ 549 004a 07       		.byte	0x7
+ 550 004b 78010000 		.4byte	.LASF5
+ 551 004f 02       		.uleb128 0x2
+ 552 0050 08       		.byte	0x8
+ 553 0051 05       		.byte	0x5
+ 554 0052 DF020000 		.4byte	.LASF6
+ARM GAS  C:\Users\Kotori\AppData\Local\Temp\ccXgvHOk.s 			page 21
+
+
+ 555 0056 02       		.uleb128 0x2
+ 556 0057 08       		.byte	0x8
+ 557 0058 07       		.byte	0x7
+ 558 0059 A5000000 		.4byte	.LASF7
+ 559 005d 03       		.uleb128 0x3
+ 560 005e 04       		.byte	0x4
+ 561 005f 05       		.byte	0x5
+ 562 0060 696E7400 		.ascii	"int\000"
+ 563 0064 02       		.uleb128 0x2
+ 564 0065 04       		.byte	0x4
+ 565 0066 07       		.byte	0x7
+ 566 0067 3A000000 		.4byte	.LASF8
+ 567 006b 04       		.uleb128 0x4
+ 568 006c A5010000 		.4byte	.LASF9
+ 569 0070 02       		.byte	0x2
+ 570 0071 E401     		.2byte	0x1e4
+ 571 0073 2C000000 		.4byte	0x2c
+ 572 0077 04       		.uleb128 0x4
+ 573 0078 E5010000 		.4byte	.LASF10
+ 574 007c 02       		.byte	0x2
+ 575 007d E501     		.2byte	0x1e5
+ 576 007f 3A000000 		.4byte	0x3a
+ 577 0083 02       		.uleb128 0x2
+ 578 0084 04       		.byte	0x4
+ 579 0085 04       		.byte	0x4
+ 580 0086 97000000 		.4byte	.LASF11
+ 581 008a 02       		.uleb128 0x2
+ 582 008b 08       		.byte	0x8
+ 583 008c 04       		.byte	0x4
+ 584 008d C2010000 		.4byte	.LASF12
+ 585 0091 02       		.uleb128 0x2
+ 586 0092 01       		.byte	0x1
+ 587 0093 08       		.byte	0x8
+ 588 0094 03030000 		.4byte	.LASF13
+ 589 0098 04       		.uleb128 0x4
+ 590 0099 73010000 		.4byte	.LASF14
+ 591 009d 02       		.byte	0x2
+ 592 009e 8E02     		.2byte	0x28e
+ 593 00a0 A4000000 		.4byte	0xa4
+ 594 00a4 05       		.uleb128 0x5
+ 595 00a5 6B000000 		.4byte	0x6b
+ 596 00a9 04       		.uleb128 0x4
+ 597 00aa 00000000 		.4byte	.LASF15
+ 598 00ae 02       		.byte	0x2
+ 599 00af 8F02     		.2byte	0x28f
+ 600 00b1 B5000000 		.4byte	0xb5
+ 601 00b5 05       		.uleb128 0x5
+ 602 00b6 77000000 		.4byte	0x77
+ 603 00ba 02       		.uleb128 0x2
+ 604 00bb 08       		.byte	0x8
+ 605 00bc 04       		.byte	0x4
+ 606 00bd AE030000 		.4byte	.LASF16
+ 607 00c1 02       		.uleb128 0x2
+ 608 00c2 04       		.byte	0x4
+ 609 00c3 07       		.byte	0x7
+ 610 00c4 D6020000 		.4byte	.LASF17
+ 611 00c8 06       		.uleb128 0x6
+ARM GAS  C:\Users\Kotori\AppData\Local\Temp\ccXgvHOk.s 			page 22
+
+
+ 612 00c9 ED020000 		.4byte	.LASF18
+ 613 00cd 01       		.byte	0x1
+ 614 00ce 8F       		.byte	0x8f
+ 615 00cf 00000000 		.4byte	.LFB1
+ 616 00d3 10000000 		.4byte	.LFE1-.LFB1
+ 617 00d7 01       		.uleb128 0x1
+ 618 00d8 9C       		.byte	0x9c
+ 619 00d9 06       		.uleb128 0x6
+ 620 00da 06000000 		.4byte	.LASF19
+ 621 00de 01       		.byte	0x1
+ 622 00df D0       		.byte	0xd0
+ 623 00e0 00000000 		.4byte	.LFB3
+ 624 00e4 10000000 		.4byte	.LFE3-.LFB3
+ 625 00e8 01       		.uleb128 0x1
+ 626 00e9 9C       		.byte	0x9c
+ 627 00ea 07       		.uleb128 0x7
+ 628 00eb 08030000 		.4byte	.LASF22
+ 629 00ef 01       		.byte	0x1
+ 630 00f0 ED       		.byte	0xed
+ 631 00f1 00000000 		.4byte	.LFB4
+ 632 00f5 0C000000 		.4byte	.LFE4-.LFB4
+ 633 00f9 01       		.uleb128 0x1
+ 634 00fa 9C       		.byte	0x9c
+ 635 00fb 0D010000 		.4byte	0x10d
+ 636 00ff 08       		.uleb128 0x8
+ 637 0100 B3010000 		.4byte	.LASF24
+ 638 0104 01       		.byte	0x1
+ 639 0105 ED       		.byte	0xed
+ 640 0106 6B000000 		.4byte	0x6b
+ 641 010a 01       		.uleb128 0x1
+ 642 010b 50       		.byte	0x50
+ 643 010c 00       		.byte	0
+ 644 010d 09       		.uleb128 0x9
+ 645 010e F6030000 		.4byte	.LASF20
+ 646 0112 01       		.byte	0x1
+ 647 0113 0501     		.2byte	0x105
+ 648 0115 6B000000 		.4byte	0x6b
+ 649 0119 00000000 		.4byte	.LFB5
+ 650 011d 0C000000 		.4byte	.LFE5-.LFB5
+ 651 0121 01       		.uleb128 0x1
+ 652 0122 9C       		.byte	0x9c
+ 653 0123 09       		.uleb128 0x9
+ 654 0124 8A020000 		.4byte	.LASF21
+ 655 0128 01       		.byte	0x1
+ 656 0129 1B01     		.2byte	0x11b
+ 657 012b 6B000000 		.4byte	0x6b
+ 658 012f 00000000 		.4byte	.LFB6
+ 659 0133 0C000000 		.4byte	.LFE6-.LFB6
+ 660 0137 01       		.uleb128 0x1
+ 661 0138 9C       		.byte	0x9c
+ 662 0139 0A       		.uleb128 0xa
+ 663 013a B2020000 		.4byte	.LASF23
+ 664 013e 01       		.byte	0x1
+ 665 013f 3001     		.2byte	0x130
+ 666 0141 00000000 		.4byte	.LFB7
+ 667 0145 0C000000 		.4byte	.LFE7-.LFB7
+ 668 0149 01       		.uleb128 0x1
+ARM GAS  C:\Users\Kotori\AppData\Local\Temp\ccXgvHOk.s 			page 23
+
+
+ 669 014a 9C       		.byte	0x9c
+ 670 014b 5E010000 		.4byte	0x15e
+ 671 014f 0B       		.uleb128 0xb
+ 672 0150 AB010000 		.4byte	.LASF25
+ 673 0154 01       		.byte	0x1
+ 674 0155 3001     		.2byte	0x130
+ 675 0157 6B000000 		.4byte	0x6b
+ 676 015b 01       		.uleb128 0x1
+ 677 015c 50       		.byte	0x50
+ 678 015d 00       		.byte	0
+ 679 015e 0A       		.uleb128 0xa
+ 680 015f 89030000 		.4byte	.LASF26
+ 681 0163 01       		.byte	0x1
+ 682 0164 4601     		.2byte	0x146
+ 683 0166 00000000 		.4byte	.LFB8
+ 684 016a 0C000000 		.4byte	.LFE8-.LFB8
+ 685 016e 01       		.uleb128 0x1
+ 686 016f 9C       		.byte	0x9c
+ 687 0170 83010000 		.4byte	0x183
+ 688 0174 0B       		.uleb128 0xb
+ 689 0175 9D000000 		.4byte	.LASF27
+ 690 0179 01       		.byte	0x1
+ 691 017a 4601     		.2byte	0x146
+ 692 017c 77000000 		.4byte	0x77
+ 693 0180 01       		.uleb128 0x1
+ 694 0181 50       		.byte	0x50
+ 695 0182 00       		.byte	0
+ 696 0183 09       		.uleb128 0x9
+ 697 0184 8A010000 		.4byte	.LASF28
+ 698 0188 01       		.byte	0x1
+ 699 0189 6501     		.2byte	0x165
+ 700 018b 77000000 		.4byte	0x77
+ 701 018f 00000000 		.4byte	.LFB9
+ 702 0193 14000000 		.4byte	.LFE9-.LFB9
+ 703 0197 01       		.uleb128 0x1
+ 704 0198 9C       		.byte	0x9c
+ 705 0199 09       		.uleb128 0x9
+ 706 019a BC000000 		.4byte	.LASF29
+ 707 019e 01       		.byte	0x1
+ 708 019f 8601     		.2byte	0x186
+ 709 01a1 77000000 		.4byte	0x77
+ 710 01a5 00000000 		.4byte	.LFB10
+ 711 01a9 0C000000 		.4byte	.LFE10-.LFB10
+ 712 01ad 01       		.uleb128 0x1
+ 713 01ae 9C       		.byte	0x9c
+ 714 01af 0A       		.uleb128 0xa
+ 715 01b0 28030000 		.4byte	.LASF30
+ 716 01b4 01       		.byte	0x1
+ 717 01b5 9F01     		.2byte	0x19f
+ 718 01b7 00000000 		.4byte	.LFB11
+ 719 01bb 0C000000 		.4byte	.LFE11-.LFB11
+ 720 01bf 01       		.uleb128 0x1
+ 721 01c0 9C       		.byte	0x9c
+ 722 01c1 D4010000 		.4byte	0x1d4
+ 723 01c5 0B       		.uleb128 0xb
+ 724 01c6 1A000000 		.4byte	.LASF31
+ 725 01ca 01       		.byte	0x1
+ARM GAS  C:\Users\Kotori\AppData\Local\Temp\ccXgvHOk.s 			page 24
+
+
+ 726 01cb 9F01     		.2byte	0x19f
+ 727 01cd 77000000 		.4byte	0x77
+ 728 01d1 01       		.uleb128 0x1
+ 729 01d2 50       		.byte	0x50
+ 730 01d3 00       		.byte	0
+ 731 01d4 09       		.uleb128 0x9
+ 732 01d5 03020000 		.4byte	.LASF32
+ 733 01d9 01       		.byte	0x1
+ 734 01da B601     		.2byte	0x1b6
+ 735 01dc 77000000 		.4byte	0x77
+ 736 01e0 00000000 		.4byte	.LFB12
+ 737 01e4 0C000000 		.4byte	.LFE12-.LFB12
+ 738 01e8 01       		.uleb128 0x1
+ 739 01e9 9C       		.byte	0x9c
+ 740 01ea 0A       		.uleb128 0xa
+ 741 01eb C9010000 		.4byte	.LASF33
+ 742 01ef 01       		.byte	0x1
+ 743 01f0 D101     		.2byte	0x1d1
+ 744 01f2 00000000 		.4byte	.LFB13
+ 745 01f6 0C000000 		.4byte	.LFE13-.LFB13
+ 746 01fa 01       		.uleb128 0x1
+ 747 01fb 9C       		.byte	0x9c
+ 748 01fc 0F020000 		.4byte	0x20f
+ 749 0200 0B       		.uleb128 0xb
+ 750 0201 C6030000 		.4byte	.LASF34
+ 751 0205 01       		.byte	0x1
+ 752 0206 D101     		.2byte	0x1d1
+ 753 0208 77000000 		.4byte	0x77
+ 754 020c 01       		.uleb128 0x1
+ 755 020d 50       		.byte	0x50
+ 756 020e 00       		.byte	0
+ 757 020f 09       		.uleb128 0x9
+ 758 0210 7C000000 		.4byte	.LASF35
+ 759 0214 01       		.byte	0x1
+ 760 0215 E901     		.2byte	0x1e9
+ 761 0217 77000000 		.4byte	0x77
+ 762 021b 00000000 		.4byte	.LFB14
+ 763 021f 0C000000 		.4byte	.LFE14-.LFB14
+ 764 0223 01       		.uleb128 0x1
+ 765 0224 9C       		.byte	0x9c
+ 766 0225 0A       		.uleb128 0xa
+ 767 0226 21000000 		.4byte	.LASF36
+ 768 022a 01       		.byte	0x1
+ 769 022b 2E02     		.2byte	0x22e
+ 770 022d 00000000 		.4byte	.LFB15
+ 771 0231 14000000 		.4byte	.LFE15-.LFB15
+ 772 0235 01       		.uleb128 0x1
+ 773 0236 9C       		.byte	0x9c
+ 774 0237 4E020000 		.4byte	0x24e
+ 775 023b 0C       		.uleb128 0xc
+ 776 023c 08000000 		.4byte	.LVL5
+ 777 0240 99010000 		.4byte	0x199
+ 778 0244 0C       		.uleb128 0xc
+ 779 0245 0C000000 		.4byte	.LVL6
+ 780 0249 0D010000 		.4byte	0x10d
+ 781 024d 00       		.byte	0
+ 782 024e 07       		.uleb128 0x7
+ARM GAS  C:\Users\Kotori\AppData\Local\Temp\ccXgvHOk.s 			page 25
+
+
+ 783 024f 75030000 		.4byte	.LASF37
+ 784 0253 01       		.byte	0x1
+ 785 0254 25       		.byte	0x25
+ 786 0255 00000000 		.4byte	.LFB0
+ 787 0259 5C000000 		.4byte	.LFE0-.LFB0
+ 788 025d 01       		.uleb128 0x1
+ 789 025e 9C       		.byte	0x9c
+ 790 025f F4020000 		.4byte	0x2f4
+ 791 0263 0D       		.uleb128 0xd
+ 792 0264 AD020000 		.4byte	.LASF38
+ 793 0268 01       		.byte	0x1
+ 794 0269 28       		.byte	0x28
+ 795 026a 6B000000 		.4byte	0x6b
+ 796 026e 00000000 		.4byte	.LLST0
+ 797 0272 0D       		.uleb128 0xd
+ 798 0273 5E000000 		.4byte	.LASF39
+ 799 0277 01       		.byte	0x1
+ 800 0278 2D       		.byte	0x2d
+ 801 0279 6B000000 		.4byte	0x6b
+ 802 027d 1E000000 		.4byte	.LLST1
+ 803 0281 0C       		.uleb128 0xc
+ 804 0282 20000000 		.4byte	.LVL11
+ 805 0286 25020000 		.4byte	0x225
+ 806 028a 0E       		.uleb128 0xe
+ 807 028b 28000000 		.4byte	.LVL12
+ 808 028f AF010000 		.4byte	0x1af
+ 809 0293 9E020000 		.4byte	0x29e
+ 810 0297 0F       		.uleb128 0xf
+ 811 0298 01       		.uleb128 0x1
+ 812 0299 50       		.byte	0x50
+ 813 029a 02       		.uleb128 0x2
+ 814 029b 09       		.byte	0x9
+ 815 029c FE       		.byte	0xfe
+ 816 029d 00       		.byte	0
+ 817 029e 0E       		.uleb128 0xe
+ 818 029f 2E000000 		.4byte	.LVL13
+ 819 02a3 5E010000 		.4byte	0x15e
+ 820 02a7 B1020000 		.4byte	0x2b1
+ 821 02ab 0F       		.uleb128 0xf
+ 822 02ac 01       		.uleb128 0x1
+ 823 02ad 50       		.byte	0x50
+ 824 02ae 01       		.uleb128 0x1
+ 825 02af 30       		.byte	0x30
+ 826 02b0 00       		.byte	0
+ 827 02b1 0E       		.uleb128 0xe
+ 828 02b2 34000000 		.4byte	.LVL14
+ 829 02b6 EA000000 		.4byte	0xea
+ 830 02ba C4020000 		.4byte	0x2c4
+ 831 02be 0F       		.uleb128 0xf
+ 832 02bf 01       		.uleb128 0x1
+ 833 02c0 50       		.byte	0x50
+ 834 02c1 01       		.uleb128 0x1
+ 835 02c2 40       		.byte	0x40
+ 836 02c3 00       		.byte	0
+ 837 02c4 0C       		.uleb128 0xc
+ 838 02c5 38000000 		.4byte	.LVL15
+ 839 02c9 0D010000 		.4byte	0x10d
+ARM GAS  C:\Users\Kotori\AppData\Local\Temp\ccXgvHOk.s 			page 26
+
+
+ 840 02cd 0E       		.uleb128 0xe
+ 841 02ce 40000000 		.4byte	.LVL16
+ 842 02d2 EA010000 		.4byte	0x1ea
+ 843 02d6 E1020000 		.4byte	0x2e1
+ 844 02da 0F       		.uleb128 0xf
+ 845 02db 01       		.uleb128 0x1
+ 846 02dc 50       		.byte	0x50
+ 847 02dd 02       		.uleb128 0x2
+ 848 02de 09       		.byte	0x9
+ 849 02df FD       		.byte	0xfd
+ 850 02e0 00       		.byte	0
+ 851 02e1 0C       		.uleb128 0xc
+ 852 02e2 44000000 		.4byte	.LVL17
+ 853 02e6 2D030000 		.4byte	0x32d
+ 854 02ea 0C       		.uleb128 0xc
+ 855 02eb 52000000 		.4byte	.LVL18
+ 856 02ef 38030000 		.4byte	0x338
+ 857 02f3 00       		.byte	0
+ 858 02f4 07       		.uleb128 0x7
+ 859 02f5 E1030000 		.4byte	.LASF40
+ 860 02f9 01       		.byte	0x1
+ 861 02fa B2       		.byte	0xb2
+ 862 02fb 00000000 		.4byte	.LFB2
+ 863 02ff 1C000000 		.4byte	.LFE2-.LFB2
+ 864 0303 01       		.uleb128 0x1
+ 865 0304 9C       		.byte	0x9c
+ 866 0305 1C030000 		.4byte	0x31c
+ 867 0309 0C       		.uleb128 0xc
+ 868 030a 0C000000 		.4byte	.LVL19
+ 869 030e 4E020000 		.4byte	0x24e
+ 870 0312 0C       		.uleb128 0xc
+ 871 0313 16000000 		.4byte	.LVL20
+ 872 0317 C8000000 		.4byte	0xc8
+ 873 031b 00       		.byte	0
+ 874 031c 10       		.uleb128 0x10
+ 875 031d 47000000 		.4byte	.LASF46
+ 876 0321 01       		.byte	0x1
+ 877 0322 15       		.byte	0x15
+ 878 0323 6B000000 		.4byte	0x6b
+ 879 0327 05       		.uleb128 0x5
+ 880 0328 03       		.byte	0x3
+ 881 0329 00000000 		.4byte	HCSR04_COUNTER_initVar
+ 882 032d 11       		.uleb128 0x11
+ 883 032e EC010000 		.4byte	.LASF41
+ 884 0332 EC010000 		.4byte	.LASF41
+ 885 0336 03       		.byte	0x3
+ 886 0337 7D       		.byte	0x7d
+ 887 0338 11       		.uleb128 0x11
+ 888 0339 74020000 		.4byte	.LASF42
+ 889 033d 74020000 		.4byte	.LASF42
+ 890 0341 03       		.byte	0x3
+ 891 0342 7E       		.byte	0x7e
+ 892 0343 00       		.byte	0
+ 893              		.section	.debug_abbrev,"",%progbits
+ 894              	.Ldebug_abbrev0:
+ 895 0000 01       		.uleb128 0x1
+ 896 0001 11       		.uleb128 0x11
+ARM GAS  C:\Users\Kotori\AppData\Local\Temp\ccXgvHOk.s 			page 27
+
+
+ 897 0002 01       		.byte	0x1
+ 898 0003 25       		.uleb128 0x25
+ 899 0004 0E       		.uleb128 0xe
+ 900 0005 13       		.uleb128 0x13
+ 901 0006 0B       		.uleb128 0xb
+ 902 0007 03       		.uleb128 0x3
+ 903 0008 0E       		.uleb128 0xe
+ 904 0009 1B       		.uleb128 0x1b
+ 905 000a 0E       		.uleb128 0xe
+ 906 000b 55       		.uleb128 0x55
+ 907 000c 17       		.uleb128 0x17
+ 908 000d 11       		.uleb128 0x11
+ 909 000e 01       		.uleb128 0x1
+ 910 000f 10       		.uleb128 0x10
+ 911 0010 17       		.uleb128 0x17
+ 912 0011 00       		.byte	0
+ 913 0012 00       		.byte	0
+ 914 0013 02       		.uleb128 0x2
+ 915 0014 24       		.uleb128 0x24
+ 916 0015 00       		.byte	0
+ 917 0016 0B       		.uleb128 0xb
+ 918 0017 0B       		.uleb128 0xb
+ 919 0018 3E       		.uleb128 0x3e
+ 920 0019 0B       		.uleb128 0xb
+ 921 001a 03       		.uleb128 0x3
+ 922 001b 0E       		.uleb128 0xe
+ 923 001c 00       		.byte	0
+ 924 001d 00       		.byte	0
+ 925 001e 03       		.uleb128 0x3
+ 926 001f 24       		.uleb128 0x24
+ 927 0020 00       		.byte	0
+ 928 0021 0B       		.uleb128 0xb
+ 929 0022 0B       		.uleb128 0xb
+ 930 0023 3E       		.uleb128 0x3e
+ 931 0024 0B       		.uleb128 0xb
+ 932 0025 03       		.uleb128 0x3
+ 933 0026 08       		.uleb128 0x8
+ 934 0027 00       		.byte	0
+ 935 0028 00       		.byte	0
+ 936 0029 04       		.uleb128 0x4
+ 937 002a 16       		.uleb128 0x16
+ 938 002b 00       		.byte	0
+ 939 002c 03       		.uleb128 0x3
+ 940 002d 0E       		.uleb128 0xe
+ 941 002e 3A       		.uleb128 0x3a
+ 942 002f 0B       		.uleb128 0xb
+ 943 0030 3B       		.uleb128 0x3b
+ 944 0031 05       		.uleb128 0x5
+ 945 0032 49       		.uleb128 0x49
+ 946 0033 13       		.uleb128 0x13
+ 947 0034 00       		.byte	0
+ 948 0035 00       		.byte	0
+ 949 0036 05       		.uleb128 0x5
+ 950 0037 35       		.uleb128 0x35
+ 951 0038 00       		.byte	0
+ 952 0039 49       		.uleb128 0x49
+ 953 003a 13       		.uleb128 0x13
+ARM GAS  C:\Users\Kotori\AppData\Local\Temp\ccXgvHOk.s 			page 28
+
+
+ 954 003b 00       		.byte	0
+ 955 003c 00       		.byte	0
+ 956 003d 06       		.uleb128 0x6
+ 957 003e 2E       		.uleb128 0x2e
+ 958 003f 00       		.byte	0
+ 959 0040 3F       		.uleb128 0x3f
+ 960 0041 19       		.uleb128 0x19
+ 961 0042 03       		.uleb128 0x3
+ 962 0043 0E       		.uleb128 0xe
+ 963 0044 3A       		.uleb128 0x3a
+ 964 0045 0B       		.uleb128 0xb
+ 965 0046 3B       		.uleb128 0x3b
+ 966 0047 0B       		.uleb128 0xb
+ 967 0048 27       		.uleb128 0x27
+ 968 0049 19       		.uleb128 0x19
+ 969 004a 11       		.uleb128 0x11
+ 970 004b 01       		.uleb128 0x1
+ 971 004c 12       		.uleb128 0x12
+ 972 004d 06       		.uleb128 0x6
+ 973 004e 40       		.uleb128 0x40
+ 974 004f 18       		.uleb128 0x18
+ 975 0050 9742     		.uleb128 0x2117
+ 976 0052 19       		.uleb128 0x19
+ 977 0053 00       		.byte	0
+ 978 0054 00       		.byte	0
+ 979 0055 07       		.uleb128 0x7
+ 980 0056 2E       		.uleb128 0x2e
+ 981 0057 01       		.byte	0x1
+ 982 0058 3F       		.uleb128 0x3f
+ 983 0059 19       		.uleb128 0x19
+ 984 005a 03       		.uleb128 0x3
+ 985 005b 0E       		.uleb128 0xe
+ 986 005c 3A       		.uleb128 0x3a
+ 987 005d 0B       		.uleb128 0xb
+ 988 005e 3B       		.uleb128 0x3b
+ 989 005f 0B       		.uleb128 0xb
+ 990 0060 27       		.uleb128 0x27
+ 991 0061 19       		.uleb128 0x19
+ 992 0062 11       		.uleb128 0x11
+ 993 0063 01       		.uleb128 0x1
+ 994 0064 12       		.uleb128 0x12
+ 995 0065 06       		.uleb128 0x6
+ 996 0066 40       		.uleb128 0x40
+ 997 0067 18       		.uleb128 0x18
+ 998 0068 9742     		.uleb128 0x2117
+ 999 006a 19       		.uleb128 0x19
+ 1000 006b 01       		.uleb128 0x1
+ 1001 006c 13       		.uleb128 0x13
+ 1002 006d 00       		.byte	0
+ 1003 006e 00       		.byte	0
+ 1004 006f 08       		.uleb128 0x8
+ 1005 0070 05       		.uleb128 0x5
+ 1006 0071 00       		.byte	0
+ 1007 0072 03       		.uleb128 0x3
+ 1008 0073 0E       		.uleb128 0xe
+ 1009 0074 3A       		.uleb128 0x3a
+ 1010 0075 0B       		.uleb128 0xb
+ARM GAS  C:\Users\Kotori\AppData\Local\Temp\ccXgvHOk.s 			page 29
+
+
+ 1011 0076 3B       		.uleb128 0x3b
+ 1012 0077 0B       		.uleb128 0xb
+ 1013 0078 49       		.uleb128 0x49
+ 1014 0079 13       		.uleb128 0x13
+ 1015 007a 02       		.uleb128 0x2
+ 1016 007b 18       		.uleb128 0x18
+ 1017 007c 00       		.byte	0
+ 1018 007d 00       		.byte	0
+ 1019 007e 09       		.uleb128 0x9
+ 1020 007f 2E       		.uleb128 0x2e
+ 1021 0080 00       		.byte	0
+ 1022 0081 3F       		.uleb128 0x3f
+ 1023 0082 19       		.uleb128 0x19
+ 1024 0083 03       		.uleb128 0x3
+ 1025 0084 0E       		.uleb128 0xe
+ 1026 0085 3A       		.uleb128 0x3a
+ 1027 0086 0B       		.uleb128 0xb
+ 1028 0087 3B       		.uleb128 0x3b
+ 1029 0088 05       		.uleb128 0x5
+ 1030 0089 27       		.uleb128 0x27
+ 1031 008a 19       		.uleb128 0x19
+ 1032 008b 49       		.uleb128 0x49
+ 1033 008c 13       		.uleb128 0x13
+ 1034 008d 11       		.uleb128 0x11
+ 1035 008e 01       		.uleb128 0x1
+ 1036 008f 12       		.uleb128 0x12
+ 1037 0090 06       		.uleb128 0x6
+ 1038 0091 40       		.uleb128 0x40
+ 1039 0092 18       		.uleb128 0x18
+ 1040 0093 9742     		.uleb128 0x2117
+ 1041 0095 19       		.uleb128 0x19
+ 1042 0096 00       		.byte	0
+ 1043 0097 00       		.byte	0
+ 1044 0098 0A       		.uleb128 0xa
+ 1045 0099 2E       		.uleb128 0x2e
+ 1046 009a 01       		.byte	0x1
+ 1047 009b 3F       		.uleb128 0x3f
+ 1048 009c 19       		.uleb128 0x19
+ 1049 009d 03       		.uleb128 0x3
+ 1050 009e 0E       		.uleb128 0xe
+ 1051 009f 3A       		.uleb128 0x3a
+ 1052 00a0 0B       		.uleb128 0xb
+ 1053 00a1 3B       		.uleb128 0x3b
+ 1054 00a2 05       		.uleb128 0x5
+ 1055 00a3 27       		.uleb128 0x27
+ 1056 00a4 19       		.uleb128 0x19
+ 1057 00a5 11       		.uleb128 0x11
+ 1058 00a6 01       		.uleb128 0x1
+ 1059 00a7 12       		.uleb128 0x12
+ 1060 00a8 06       		.uleb128 0x6
+ 1061 00a9 40       		.uleb128 0x40
+ 1062 00aa 18       		.uleb128 0x18
+ 1063 00ab 9742     		.uleb128 0x2117
+ 1064 00ad 19       		.uleb128 0x19
+ 1065 00ae 01       		.uleb128 0x1
+ 1066 00af 13       		.uleb128 0x13
+ 1067 00b0 00       		.byte	0
+ARM GAS  C:\Users\Kotori\AppData\Local\Temp\ccXgvHOk.s 			page 30
+
+
+ 1068 00b1 00       		.byte	0
+ 1069 00b2 0B       		.uleb128 0xb
+ 1070 00b3 05       		.uleb128 0x5
+ 1071 00b4 00       		.byte	0
+ 1072 00b5 03       		.uleb128 0x3
+ 1073 00b6 0E       		.uleb128 0xe
+ 1074 00b7 3A       		.uleb128 0x3a
+ 1075 00b8 0B       		.uleb128 0xb
+ 1076 00b9 3B       		.uleb128 0x3b
+ 1077 00ba 05       		.uleb128 0x5
+ 1078 00bb 49       		.uleb128 0x49
+ 1079 00bc 13       		.uleb128 0x13
+ 1080 00bd 02       		.uleb128 0x2
+ 1081 00be 18       		.uleb128 0x18
+ 1082 00bf 00       		.byte	0
+ 1083 00c0 00       		.byte	0
+ 1084 00c1 0C       		.uleb128 0xc
+ 1085 00c2 898201   		.uleb128 0x4109
+ 1086 00c5 00       		.byte	0
+ 1087 00c6 11       		.uleb128 0x11
+ 1088 00c7 01       		.uleb128 0x1
+ 1089 00c8 31       		.uleb128 0x31
+ 1090 00c9 13       		.uleb128 0x13
+ 1091 00ca 00       		.byte	0
+ 1092 00cb 00       		.byte	0
+ 1093 00cc 0D       		.uleb128 0xd
+ 1094 00cd 34       		.uleb128 0x34
+ 1095 00ce 00       		.byte	0
+ 1096 00cf 03       		.uleb128 0x3
+ 1097 00d0 0E       		.uleb128 0xe
+ 1098 00d1 3A       		.uleb128 0x3a
+ 1099 00d2 0B       		.uleb128 0xb
+ 1100 00d3 3B       		.uleb128 0x3b
+ 1101 00d4 0B       		.uleb128 0xb
+ 1102 00d5 49       		.uleb128 0x49
+ 1103 00d6 13       		.uleb128 0x13
+ 1104 00d7 02       		.uleb128 0x2
+ 1105 00d8 17       		.uleb128 0x17
+ 1106 00d9 00       		.byte	0
+ 1107 00da 00       		.byte	0
+ 1108 00db 0E       		.uleb128 0xe
+ 1109 00dc 898201   		.uleb128 0x4109
+ 1110 00df 01       		.byte	0x1
+ 1111 00e0 11       		.uleb128 0x11
+ 1112 00e1 01       		.uleb128 0x1
+ 1113 00e2 31       		.uleb128 0x31
+ 1114 00e3 13       		.uleb128 0x13
+ 1115 00e4 01       		.uleb128 0x1
+ 1116 00e5 13       		.uleb128 0x13
+ 1117 00e6 00       		.byte	0
+ 1118 00e7 00       		.byte	0
+ 1119 00e8 0F       		.uleb128 0xf
+ 1120 00e9 8A8201   		.uleb128 0x410a
+ 1121 00ec 00       		.byte	0
+ 1122 00ed 02       		.uleb128 0x2
+ 1123 00ee 18       		.uleb128 0x18
+ 1124 00ef 9142     		.uleb128 0x2111
+ARM GAS  C:\Users\Kotori\AppData\Local\Temp\ccXgvHOk.s 			page 31
+
+
+ 1125 00f1 18       		.uleb128 0x18
+ 1126 00f2 00       		.byte	0
+ 1127 00f3 00       		.byte	0
+ 1128 00f4 10       		.uleb128 0x10
+ 1129 00f5 34       		.uleb128 0x34
+ 1130 00f6 00       		.byte	0
+ 1131 00f7 03       		.uleb128 0x3
+ 1132 00f8 0E       		.uleb128 0xe
+ 1133 00f9 3A       		.uleb128 0x3a
+ 1134 00fa 0B       		.uleb128 0xb
+ 1135 00fb 3B       		.uleb128 0x3b
+ 1136 00fc 0B       		.uleb128 0xb
+ 1137 00fd 49       		.uleb128 0x49
+ 1138 00fe 13       		.uleb128 0x13
+ 1139 00ff 3F       		.uleb128 0x3f
+ 1140 0100 19       		.uleb128 0x19
+ 1141 0101 02       		.uleb128 0x2
+ 1142 0102 18       		.uleb128 0x18
+ 1143 0103 00       		.byte	0
+ 1144 0104 00       		.byte	0
+ 1145 0105 11       		.uleb128 0x11
+ 1146 0106 2E       		.uleb128 0x2e
+ 1147 0107 00       		.byte	0
+ 1148 0108 3F       		.uleb128 0x3f
+ 1149 0109 19       		.uleb128 0x19
+ 1150 010a 3C       		.uleb128 0x3c
+ 1151 010b 19       		.uleb128 0x19
+ 1152 010c 6E       		.uleb128 0x6e
+ 1153 010d 0E       		.uleb128 0xe
+ 1154 010e 03       		.uleb128 0x3
+ 1155 010f 0E       		.uleb128 0xe
+ 1156 0110 3A       		.uleb128 0x3a
+ 1157 0111 0B       		.uleb128 0xb
+ 1158 0112 3B       		.uleb128 0x3b
+ 1159 0113 0B       		.uleb128 0xb
+ 1160 0114 00       		.byte	0
+ 1161 0115 00       		.byte	0
+ 1162 0116 00       		.byte	0
+ 1163              		.section	.debug_loc,"",%progbits
+ 1164              	.Ldebug_loc0:
+ 1165              	.LLST0:
+ 1166 0000 0A000000 		.4byte	.LVL7
+ 1167 0004 0E000000 		.4byte	.LVL8
+ 1168 0008 0100     		.2byte	0x1
+ 1169 000a 53       		.byte	0x53
+ 1170 000b 16000000 		.4byte	.LVL9
+ 1171 000f 1A000000 		.4byte	.LVL10
+ 1172 0013 0100     		.2byte	0x1
+ 1173 0015 53       		.byte	0x53
+ 1174 0016 00000000 		.4byte	0
+ 1175 001a 00000000 		.4byte	0
+ 1176              	.LLST1:
+ 1177 001e 44000000 		.4byte	.LVL17
+ 1178 0022 51000000 		.4byte	.LVL18-1
+ 1179 0026 0100     		.2byte	0x1
+ 1180 0028 50       		.byte	0x50
+ 1181 0029 00000000 		.4byte	0
+ARM GAS  C:\Users\Kotori\AppData\Local\Temp\ccXgvHOk.s 			page 32
+
+
+ 1182 002d 00000000 		.4byte	0
+ 1183              		.section	.debug_aranges,"",%progbits
+ 1184 0000 94000000 		.4byte	0x94
+ 1185 0004 0200     		.2byte	0x2
+ 1186 0006 00000000 		.4byte	.Ldebug_info0
+ 1187 000a 04       		.byte	0x4
+ 1188 000b 00       		.byte	0
+ 1189 000c 0000     		.2byte	0
+ 1190 000e 0000     		.2byte	0
+ 1191 0010 00000000 		.4byte	.LFB1
+ 1192 0014 10000000 		.4byte	.LFE1-.LFB1
+ 1193 0018 00000000 		.4byte	.LFB3
+ 1194 001c 10000000 		.4byte	.LFE3-.LFB3
+ 1195 0020 00000000 		.4byte	.LFB4
+ 1196 0024 0C000000 		.4byte	.LFE4-.LFB4
+ 1197 0028 00000000 		.4byte	.LFB5
+ 1198 002c 0C000000 		.4byte	.LFE5-.LFB5
+ 1199 0030 00000000 		.4byte	.LFB6
+ 1200 0034 0C000000 		.4byte	.LFE6-.LFB6
+ 1201 0038 00000000 		.4byte	.LFB7
+ 1202 003c 0C000000 		.4byte	.LFE7-.LFB7
+ 1203 0040 00000000 		.4byte	.LFB8
+ 1204 0044 0C000000 		.4byte	.LFE8-.LFB8
+ 1205 0048 00000000 		.4byte	.LFB9
+ 1206 004c 14000000 		.4byte	.LFE9-.LFB9
+ 1207 0050 00000000 		.4byte	.LFB10
+ 1208 0054 0C000000 		.4byte	.LFE10-.LFB10
+ 1209 0058 00000000 		.4byte	.LFB11
+ 1210 005c 0C000000 		.4byte	.LFE11-.LFB11
+ 1211 0060 00000000 		.4byte	.LFB12
+ 1212 0064 0C000000 		.4byte	.LFE12-.LFB12
+ 1213 0068 00000000 		.4byte	.LFB13
+ 1214 006c 0C000000 		.4byte	.LFE13-.LFB13
+ 1215 0070 00000000 		.4byte	.LFB14
+ 1216 0074 0C000000 		.4byte	.LFE14-.LFB14
+ 1217 0078 00000000 		.4byte	.LFB15
+ 1218 007c 14000000 		.4byte	.LFE15-.LFB15
+ 1219 0080 00000000 		.4byte	.LFB0
+ 1220 0084 5C000000 		.4byte	.LFE0-.LFB0
+ 1221 0088 00000000 		.4byte	.LFB2
+ 1222 008c 1C000000 		.4byte	.LFE2-.LFB2
+ 1223 0090 00000000 		.4byte	0
+ 1224 0094 00000000 		.4byte	0
+ 1225              		.section	.debug_ranges,"",%progbits
+ 1226              	.Ldebug_ranges0:
+ 1227 0000 00000000 		.4byte	.LFB1
+ 1228 0004 10000000 		.4byte	.LFE1
+ 1229 0008 00000000 		.4byte	.LFB3
+ 1230 000c 10000000 		.4byte	.LFE3
+ 1231 0010 00000000 		.4byte	.LFB4
+ 1232 0014 0C000000 		.4byte	.LFE4
+ 1233 0018 00000000 		.4byte	.LFB5
+ 1234 001c 0C000000 		.4byte	.LFE5
+ 1235 0020 00000000 		.4byte	.LFB6
+ 1236 0024 0C000000 		.4byte	.LFE6
+ 1237 0028 00000000 		.4byte	.LFB7
+ 1238 002c 0C000000 		.4byte	.LFE7
+ARM GAS  C:\Users\Kotori\AppData\Local\Temp\ccXgvHOk.s 			page 33
+
+
+ 1239 0030 00000000 		.4byte	.LFB8
+ 1240 0034 0C000000 		.4byte	.LFE8
+ 1241 0038 00000000 		.4byte	.LFB9
+ 1242 003c 14000000 		.4byte	.LFE9
+ 1243 0040 00000000 		.4byte	.LFB10
+ 1244 0044 0C000000 		.4byte	.LFE10
+ 1245 0048 00000000 		.4byte	.LFB11
+ 1246 004c 0C000000 		.4byte	.LFE11
+ 1247 0050 00000000 		.4byte	.LFB12
+ 1248 0054 0C000000 		.4byte	.LFE12
+ 1249 0058 00000000 		.4byte	.LFB13
+ 1250 005c 0C000000 		.4byte	.LFE13
+ 1251 0060 00000000 		.4byte	.LFB14
+ 1252 0064 0C000000 		.4byte	.LFE14
+ 1253 0068 00000000 		.4byte	.LFB15
+ 1254 006c 14000000 		.4byte	.LFE15
+ 1255 0070 00000000 		.4byte	.LFB0
+ 1256 0074 5C000000 		.4byte	.LFE0
+ 1257 0078 00000000 		.4byte	.LFB2
+ 1258 007c 1C000000 		.4byte	.LFE2
+ 1259 0080 00000000 		.4byte	0
+ 1260 0084 00000000 		.4byte	0
+ 1261              		.section	.debug_line,"",%progbits
+ 1262              	.Ldebug_line0:
+ 1263 0000 8C010000 		.section	.debug_str,"MS",%progbits,1
+ 1263      02005600 
+ 1263      00000201 
+ 1263      FB0E0D00 
+ 1263      01010101 
+ 1264              	.LASF15:
+ 1265 0000 72656731 		.ascii	"reg16\000"
+ 1265      3600
+ 1266              	.LASF19:
+ 1267 0006 48435352 		.ascii	"HCSR04_COUNTER_Stop\000"
+ 1267      30345F43 
+ 1267      4F554E54 
+ 1267      45525F53 
+ 1267      746F7000 
+ 1268              	.LASF31:
+ 1269 001a 70657269 		.ascii	"period\000"
+ 1269      6F6400
+ 1270              	.LASF36:
+ 1271 0021 48435352 		.ascii	"HCSR04_COUNTER_ClearFIFO\000"
+ 1271      30345F43 
+ 1271      4F554E54 
+ 1271      45525F43 
+ 1271      6C656172 
+ 1272              	.LASF8:
+ 1273 003a 756E7369 		.ascii	"unsigned int\000"
+ 1273      676E6564 
+ 1273      20696E74 
+ 1273      00
+ 1274              	.LASF46:
+ 1275 0047 48435352 		.ascii	"HCSR04_COUNTER_initVar\000"
+ 1275      30345F43 
+ 1275      4F554E54 
+ 1275      45525F69 
+ARM GAS  C:\Users\Kotori\AppData\Local\Temp\ccXgvHOk.s 			page 34
+
+
+ 1275      6E697456 
+ 1276              	.LASF39:
+ 1277 005e 48435352 		.ascii	"HCSR04_COUNTER_interruptState\000"
+ 1277      30345F43 
+ 1277      4F554E54 
+ 1277      45525F69 
+ 1277      6E746572 
+ 1278              	.LASF35:
+ 1279 007c 48435352 		.ascii	"HCSR04_COUNTER_ReadCompare\000"
+ 1279      30345F43 
+ 1279      4F554E54 
+ 1279      45525F52 
+ 1279      65616443 
+ 1280              	.LASF11:
+ 1281 0097 666C6F61 		.ascii	"float\000"
+ 1281      7400
+ 1282              	.LASF27:
+ 1283 009d 636F756E 		.ascii	"counter\000"
+ 1283      74657200 
+ 1284              	.LASF7:
+ 1285 00a5 6C6F6E67 		.ascii	"long long unsigned int\000"
+ 1285      206C6F6E 
+ 1285      6720756E 
+ 1285      7369676E 
+ 1285      65642069 
+ 1286              	.LASF29:
+ 1287 00bc 48435352 		.ascii	"HCSR04_COUNTER_ReadCapture\000"
+ 1287      30345F43 
+ 1287      4F554E54 
+ 1287      45525F52 
+ 1287      65616443 
+ 1288              	.LASF1:
+ 1289 00d7 756E7369 		.ascii	"unsigned char\000"
+ 1289      676E6564 
+ 1289      20636861 
+ 1289      7200
+ 1290              	.LASF43:
+ 1291 00e5 474E5520 		.ascii	"GNU C11 5.4.1 20160609 (release) [ARM/embedded-5-br"
+ 1291      43313120 
+ 1291      352E342E 
+ 1291      31203230 
+ 1291      31363036 
+ 1292 0118 616E6368 		.ascii	"anch revision 237715] -mcpu=cortex-m3 -mthumb -g -O"
+ 1292      20726576 
+ 1292      6973696F 
+ 1292      6E203233 
+ 1292      37373135 
+ 1293 014b 67202D66 		.ascii	"g -ffunction-sections -ffat-lto-objects\000"
+ 1293      66756E63 
+ 1293      74696F6E 
+ 1293      2D736563 
+ 1293      74696F6E 
+ 1294              	.LASF14:
+ 1295 0173 72656738 		.ascii	"reg8\000"
+ 1295      00
+ 1296              	.LASF5:
+ 1297 0178 6C6F6E67 		.ascii	"long unsigned int\000"
+ARM GAS  C:\Users\Kotori\AppData\Local\Temp\ccXgvHOk.s 			page 35
+
+
+ 1297      20756E73 
+ 1297      69676E65 
+ 1297      6420696E 
+ 1297      7400
+ 1298              	.LASF28:
+ 1299 018a 48435352 		.ascii	"HCSR04_COUNTER_ReadCounter\000"
+ 1299      30345F43 
+ 1299      4F554E54 
+ 1299      45525F52 
+ 1299      65616443 
+ 1300              	.LASF9:
+ 1301 01a5 75696E74 		.ascii	"uint8\000"
+ 1301      3800
+ 1302              	.LASF25:
+ 1303 01ab 636F6E74 		.ascii	"control\000"
+ 1303      726F6C00 
+ 1304              	.LASF24:
+ 1305 01b3 696E7465 		.ascii	"interruptsMask\000"
+ 1305      72727570 
+ 1305      74734D61 
+ 1305      736B00
+ 1306              	.LASF12:
+ 1307 01c2 646F7562 		.ascii	"double\000"
+ 1307      6C6500
+ 1308              	.LASF33:
+ 1309 01c9 48435352 		.ascii	"HCSR04_COUNTER_WriteCompare\000"
+ 1309      30345F43 
+ 1309      4F554E54 
+ 1309      45525F57 
+ 1309      72697465 
+ 1310              	.LASF10:
+ 1311 01e5 75696E74 		.ascii	"uint16\000"
+ 1311      313600
+ 1312              	.LASF41:
+ 1313 01ec 4379456E 		.ascii	"CyEnterCriticalSection\000"
+ 1313      74657243 
+ 1313      72697469 
+ 1313      63616C53 
+ 1313      65637469 
+ 1314              	.LASF32:
+ 1315 0203 48435352 		.ascii	"HCSR04_COUNTER_ReadPeriod\000"
+ 1315      30345F43 
+ 1315      4F554E54 
+ 1315      45525F52 
+ 1315      65616450 
+ 1316              	.LASF45:
+ 1317 021d 433A5C55 		.ascii	"C:\\Users\\Kotori\\Documents\\PSoC Creator\\Project"
+ 1317      73657273 
+ 1317      5C4B6F74 
+ 1317      6F72695C 
+ 1317      446F6375 
+ 1318 024b 53484153 		.ascii	"SHAS_AreaController\\AreaController.cydsn\000"
+ 1318      5F417265 
+ 1318      61436F6E 
+ 1318      74726F6C 
+ 1318      6C65725C 
+ 1319              	.LASF42:
+ARM GAS  C:\Users\Kotori\AppData\Local\Temp\ccXgvHOk.s 			page 36
+
+
+ 1320 0274 43794578 		.ascii	"CyExitCriticalSection\000"
+ 1320      69744372 
+ 1320      69746963 
+ 1320      616C5365 
+ 1320      6374696F 
+ 1321              	.LASF21:
+ 1322 028a 48435352 		.ascii	"HCSR04_COUNTER_ReadControlRegister\000"
+ 1322      30345F43 
+ 1322      4F554E54 
+ 1322      45525F52 
+ 1322      65616443 
+ 1323              	.LASF38:
+ 1324 02ad 6374726C 		.ascii	"ctrl\000"
+ 1324      00
+ 1325              	.LASF23:
+ 1326 02b2 48435352 		.ascii	"HCSR04_COUNTER_WriteControlRegister\000"
+ 1326      30345F43 
+ 1326      4F554E54 
+ 1326      45525F57 
+ 1326      72697465 
+ 1327              	.LASF17:
+ 1328 02d6 73697A65 		.ascii	"sizetype\000"
+ 1328      74797065 
+ 1328      00
+ 1329              	.LASF6:
+ 1330 02df 6C6F6E67 		.ascii	"long long int\000"
+ 1330      206C6F6E 
+ 1330      6720696E 
+ 1330      7400
+ 1331              	.LASF18:
+ 1332 02ed 48435352 		.ascii	"HCSR04_COUNTER_Enable\000"
+ 1332      30345F43 
+ 1332      4F554E54 
+ 1332      45525F45 
+ 1332      6E61626C 
+ 1333              	.LASF13:
+ 1334 0303 63686172 		.ascii	"char\000"
+ 1334      00
+ 1335              	.LASF22:
+ 1336 0308 48435352 		.ascii	"HCSR04_COUNTER_SetInterruptMode\000"
+ 1336      30345F43 
+ 1336      4F554E54 
+ 1336      45525F53 
+ 1336      6574496E 
+ 1337              	.LASF30:
+ 1338 0328 48435352 		.ascii	"HCSR04_COUNTER_WritePeriod\000"
+ 1338      30345F43 
+ 1338      4F554E54 
+ 1338      45525F57 
+ 1338      72697465 
+ 1339              	.LASF44:
+ 1340 0343 47656E65 		.ascii	"Generated_Source\\PSoC5\\HCSR04_COUNTER.c\000"
+ 1340      72617465 
+ 1340      645F536F 
+ 1340      75726365 
+ 1340      5C50536F 
+ 1341              	.LASF2:
+ARM GAS  C:\Users\Kotori\AppData\Local\Temp\ccXgvHOk.s 			page 37
+
+
+ 1342 036b 73686F72 		.ascii	"short int\000"
+ 1342      7420696E 
+ 1342      7400
+ 1343              	.LASF37:
+ 1344 0375 48435352 		.ascii	"HCSR04_COUNTER_Init\000"
+ 1344      30345F43 
+ 1344      4F554E54 
+ 1344      45525F49 
+ 1344      6E697400 
+ 1345              	.LASF26:
+ 1346 0389 48435352 		.ascii	"HCSR04_COUNTER_WriteCounter\000"
+ 1346      30345F43 
+ 1346      4F554E54 
+ 1346      45525F57 
+ 1346      72697465 
+ 1347              	.LASF4:
+ 1348 03a5 6C6F6E67 		.ascii	"long int\000"
+ 1348      20696E74 
+ 1348      00
+ 1349              	.LASF16:
+ 1350 03ae 6C6F6E67 		.ascii	"long double\000"
+ 1350      20646F75 
+ 1350      626C6500 
+ 1351              	.LASF0:
+ 1352 03ba 7369676E 		.ascii	"signed char\000"
+ 1352      65642063 
+ 1352      68617200 
+ 1353              	.LASF34:
+ 1354 03c6 636F6D70 		.ascii	"compare\000"
+ 1354      61726500 
+ 1355              	.LASF3:
+ 1356 03ce 73686F72 		.ascii	"short unsigned int\000"
+ 1356      7420756E 
+ 1356      7369676E 
+ 1356      65642069 
+ 1356      6E7400
+ 1357              	.LASF40:
+ 1358 03e1 48435352 		.ascii	"HCSR04_COUNTER_Start\000"
+ 1358      30345F43 
+ 1358      4F554E54 
+ 1358      45525F53 
+ 1358      74617274 
+ 1359              	.LASF20:
+ 1360 03f6 48435352 		.ascii	"HCSR04_COUNTER_ReadStatusRegister\000"
+ 1360      30345F43 
+ 1360      4F554E54 
+ 1360      45525F52 
+ 1360      65616453 
+ 1361              		.ident	"GCC: (GNU Tools for ARM Embedded Processors) 5.4.1 20160609 (release) [ARM/embedded-5-bran

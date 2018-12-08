@@ -1,0 +1,6 @@
+C:\Users\Kotori\Documents\PSoC Creator\ProjectSHAS_AreaController\AreaController.cydsn\AreaController.cyprj|4b963a83-a01c-4dd6-b9b5-92fb6ea1c1d1
+C:\Program Files (x86)\Cypress\PSoC Creator\4.2\PSoC Creator\psoc\content\default\CyAnnotationLibrary\CyAnnotationLibrary.cylib\CyAnnotationLibrary.cyprj|51edb1cd-af98-4ea6-b200-db6d8ed7eca1
+C:\Users\Kotori\Documents\PSoC Creator\4.2\Downloads ( 4.2).cylib\Downloads ( 4.2).cyprj|57531733-f34a-41f6-8934-5c548f52bfbb
+C:\Program Files (x86)\Cypress\PSoC Creator\4.2\PSoC Creator\psoc\content\cycomponentlibraryupdates\CyComponentLibraryUpdates.cylib\CyComponentLibraryUpdates.cyprj|c6539bd1-1838-49eb-9bb7-af375ae9ccda
+C:\Program Files (x86)\Cypress\PSoC Creator\4.2\PSoC Creator\psoc\content\cycomponentlibrary\CyComponentLibrary.cylib\CyComponentLibrary.cyprj|43158389-2704-4337-8abb-150e4ae8e833
+C:\Program Files (x86)\Cypress\PSoC Creator\4.2\PSoC Creator\psoc\content\cyprimitives\CyPrimitives.cylib\CyPrimitives.cyprj|52ac270c-9e0b-424f-a1c0-060580fe5f8c

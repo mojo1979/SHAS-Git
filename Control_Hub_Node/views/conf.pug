@@ -1,0 +1,19 @@
+extends layout
+
+block content
+	div(class='page_block', id='page_title_block')
+		h1 #{title}
+		p #{jsonString}
+		div(class='form_wrapper', id='config_form_wrapper')
+			form#config_form(method='POST')
+				p Device Name:			
+				input.input_field(placeholder=''+devName type='text' name='confDevName')
+				br
+				p Device ID:
+				input.input_field(placeholder=''+devId type='text' name='confDevId')
+				br
+				p MySHAS ID:
+				input.input_field(placeholder=''+MySHASId type='text' name='confMySHAS')
+				br
+				input#submitButtonConf(type='submit' value='Apply Configuration')
+				

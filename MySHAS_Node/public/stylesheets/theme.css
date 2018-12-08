@@ -1,0 +1,355 @@
+/* HTML CSS Full Reset */
+
+html, body, div, span, applet, object, iframe,
+h1, h2, h3, h4, h5, h6, p, blockquote, pre,
+a, abbr, acronym, address, big, cite, code,
+del, dfn, em, img, ins, kbd, q, s, samp,
+small, strike, strong, sub, sup, tt, var,
+b, u, i, center,
+dl, dt, dd, ol, ul, li,
+fieldset, form, label, legend,
+table, caption, tbody, tfoot, thead, tr, th, td,
+article, aside, canvas, details, embed, 
+figure, figcaption, footer, header, hgroup, 
+menu, nav, output, ruby, section, summary,
+time, mark, audio, video {
+	margin: 0;
+	padding: 0;
+	border: 0;
+	font-size: 100%;
+	font: inherit;
+	vertical-align: baseline;
+}
+/* HTML5 display-role reset for older browsers */
+article, aside, details, figcaption, figure, 
+footer, header, hgroup, menu, nav, section {
+	display: block;
+}
+body {
+	line-height: 1;
+}
+ol, ul {
+	list-style: none;
+}
+blockquote, q {
+	quotes: none;
+}
+blockquote:before, blockquote:after,
+q:before, q:after {
+	content: '';
+	content: none;
+}
+table {
+	border-collapse: collapse;
+	border-spacing: 0;
+}
+
+/* Main Styling Begin */
+
+/* animations */
+
+@keyframes blockFadeIn {
+	from {
+		opacity:0;
+	}
+
+	to {
+		opacity: 1;
+	}
+}
+
+/* layout */
+
+html {
+	width: 100%;
+	height: 100%;
+}
+
+body {
+	width: 100%;
+	height: 100%;
+	background-color: #333;
+}
+
+div#logo_wrapper {
+	width: 250px;
+	height: 250px;
+	display: block;
+	position: relative;
+	background-image: url('https://myshas.online/images/logo.png');
+	background-position: center center;
+	background-repeat: no-repeat;
+	background-size: 100% 100%;
+	
+}
+
+div.viewport {
+	height: 100%;
+	width: 100%;
+	background-image: url('https://myshas.online/images/background.jpg');
+	background-position: center center;
+	background-repeat: no-repeat;
+	background-attachment: fixed;
+	display: flex;
+	align-items: center;
+	justify-content: center;
+	
+}
+
+div.viewport_content_wrapper {
+	width: 1000px;
+	height: 700px;
+	animation: blockFadeIn 1s ease-in-out;
+}
+
+div.blur {
+	width: 1000px;
+	height: 700px;
+	background-color: rgba(221,221,221,0.5);
+	background-image: url('https://myshas.online/images/background.jpg');
+	background-position: center center;
+	background-repeat: no-repeat;
+	background-attachment: fixed;
+	position: absolute;
+	filter: blur(4em);
+	/*border: 1px solid #000;*/
+	z-index: 1;
+}
+
+div.disp_block {
+	position: absolute;
+	z-index: 2;
+	/*border-radius: 15px;*/
+	/*box-shadow: 0px 0px 10px 0px #000;*/ 
+}
+
+div.block_title {
+	height: 500px;
+	width: 500px;
+	padding-left: 25px;
+	display: flex;
+	flex-direction: column;
+	justify-content: center;
+	align-items: center;
+}
+
+div.block_title h1 {
+	font-family: arial;
+	font-size: 38pt;
+	color: #FFF;
+	text-shadow: 3px 3px 3px #CCC;
+}
+
+div.block_title p {
+	padding-top: 50px;
+	font-family: arial;
+	font-size: 16pt;
+	text-align: center;
+	color: #FFF;
+	text-shadow: 3px 3px 3px #CCC;
+}
+
+/* Portal Style Begin */
+div#portal_block {
+	height: 700px;
+	width: 1000px;
+	display: flex;
+	flex-direction: row;
+	align-items: center;
+	justify-content: center;
+	
+}
+
+div#portal_block_wrapper {
+	height: 250px;
+	width: 500px;
+	display: flex;
+	align-items: center;
+	justify-content: center;
+}
+
+div#portal_block_login_btn {
+	height: 75px;
+	width: 200px;
+	border: solid 1px #2AE;
+	background: rgba(190,190,190,0.5);
+	display: flex;
+	align-items: center;
+	justify-content: center;
+	font-family: arial;
+	font-size: 36pt;
+	color: #FFF;
+	border-radius: 15px;
+	text-shadow: 3px 3px 3px #666;
+	-moz-user-select: none;	
+}
+
+
+
+div#portal_block_login_btn:hover {
+	background: rgba(190,190,190,0.8);
+	cursor: pointer;
+	
+}
+
+/* Login Style Begin */
+
+div#login_block {
+	height: 700px;
+	width: 1000px;
+	display: flex;
+	flex-direction: row;
+	align-items: center;
+	justify-content: center;
+}
+
+div#login_block_form {
+	height: 250px;
+	width: 500px;
+	display: flex;
+	flex-direction: column;
+	align-items: center;
+	justify-content: center;
+}
+
+div#login_form_message h1 {
+	font-family: arial;
+	color: red;
+	font-size: 14pt;
+	padding-bottom: 25px;
+}
+
+div#login_form_wrapper {
+	height: 150px;
+	width: 200px;
+	background-color: rgba(211,211,211,0.2);
+	border: 1px solid #2AE;
+	border-radius: 15px;
+	padding: 40px;	
+}
+
+form#myshas_login_form {
+	font-family: arial;
+	
+}
+
+form#myshas_login_form input.input_field {
+	background: none;
+	font-size: 14pt;
+	border: none;
+	width: 200px;
+	color: #fff;
+	border-bottom: solid 1px #2AD;
+}
+
+form#myshas_login_form input.input_field:focus {
+	background-color: rgba(190,190,190,0.2);
+	font-size: 14pt;
+	color: #fff;
+	border-bottom: solid 1px #2AF;
+}
+
+form#myshas_login_form input#submitButton {
+	background-color: rgba(190,190,190,0.2);
+	border-radius: 5px;
+	border: solid 1px #2AE;
+	font-size: 14pt;
+	color: #fff;
+	
+}
+
+/* Overview Style */
+
+div#overview_block {
+        height: 700px;
+	width: 1000px;
+	display: flex;
+	flex-direction: row;
+	align-items: center;
+	justify-content: center;
+}
+
+div#overview_block_wrapper {
+	height: 200px;
+	width: 500px;
+}
+
+div#overview_block_wrapper h1 {
+	font-family: arial;
+	color: #FFF;
+	font-size: 24pt;
+	font-weight: bold;
+}
+
+div#overview_block_wrapper h2 {
+	font-family: arial;
+	color: #FFF;
+	font-size: 20pt;
+	font-weight: bold;
+}
+
+div#overview_block_wrapper p {
+	font-family: arial;
+	color: #FFF;
+	font-size: 16pt;
+}
+
+/* Controller Status Style */
+
+div#contoller_block {
+	height: 500px;
+	width: 1000px;
+	position: relative;
+	display: flex;
+	flex-direction: column;
+	/*align-items: center;
+	justify-content: center;*/
+}
+
+div#controller_block_title {
+	height: 100px;
+	width: 1000px;
+	display: flex;
+	flex-direction: row;
+	justify-content: left;
+}
+
+div#controller_block_title div#logo_wrapper {
+	width: 75px;
+	height: 75px;
+	
+}
+
+div#contoller_block_wrapper {
+	width: 1000px;
+	height: 500px;
+}
+
+div.table_view_wrapper {
+	display: flex;
+}
+
+div.table_view_cell {
+	flex: 50%;
+	padding: 10px;
+}
+
+table.senstable td, th {
+	font-family: arial;
+	font-size: 16pt;
+	color: #fff;
+	padding: 2px;
+        border-left: 1px solid #fff;
+	border-bottom: 1px solid #fff;
+	width: 150px;
+	height: 25px;
+}
+
+table.senstable th {
+	font-weight: bold;
+}
+
+table.senstable {
+	border: 1px solid #fff;
+	border-collapse: collapse;
+}

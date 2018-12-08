@@ -1,0 +1,25 @@
+extends layout
+
+block content
+	#device_block.page_block
+		#device_block_title.block_title
+			h1 #{title}
+		#device_block_wrapper.wrapper
+			p #{data}
+			p #{sensStat1}
+			p #{sensStat2}
+			p #{sensStat3}
+			p #{sensStat4}
+			form#device_command_form(method='POST')
+				input.input_field(placeholder='Command Front Area Controller' type='text' name='commandFAC')
+				br
+				input.input_field(placeholder='Command Living Room Area Controller' type='text' name='commandLAV')
+				br
+				input.input_field(placeholder='Command Bedroom Area Controller' type='text' name='commandBEAC')
+				br
+				input.input_field(placeholder='Command Bathroom Area Controller' type='text' name='commandBAAC')
+				br
+				input#submitButton(type='submit' value='Run Command')
+				
+
+	
